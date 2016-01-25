@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register your home!</h1>
+    {%  if registered %}
+    <strong>thank you for registering!</strong>
+    <a href="{% url 'accounts:user_login' %}">Return to login.</a><br />
+    {% else %}
+    <form id="user_form" action="{% url 'accounts:register_user' %}" method="post"
+            enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <input type="submit" name="submit" value="Register"/>
+    </form>
+    {%  endif %}
+</body>
+</html>

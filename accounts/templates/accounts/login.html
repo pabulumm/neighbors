@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neighbors</title>
+</head>
+<h1>Welcome to Neighbors!</h1>
+<body>
+    <form action="{% url 'accounts:user_login' %}" method="post">
+    {% csrf_token %}
+        <label for="username">Username</label><input type="text" id="username" name="username_text"/>
+        <label for="password">Password</label><input type="password" id="password" name="password_text"/>
+
+        <input type="submit" id="submit" name="submit" value="Sign in" /><br />
+        <a href="{% url 'accounts:register_user'  %}"><input type="button" name="register" value="Register"></a>
+        <a href="#">Forgot Password?</a>
+    </form>
+</body>
+</html>
+

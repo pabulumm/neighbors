@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neighbors</title>
+</head>
+<body>
+    <form id="expense_form" action="{% url 'budget:expense_detail' %}" method="post"
+            enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ expense_form.as_p }}
+        <input type="submit" name="submit" value="Create Budget"/>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
+<head>
+    <meta charset="UTF-8">
+    <title>Neighbors</title>
+</head>
+<body>
+    <div id="header">
+        <h1>Neighborhood home!</h1>
+    </div>
+
+
+    <div id="body">
+        {{ neighborhood.division_title }}
+        <br />
+        {% if neighborhood.budget == NULL %}
+        <a href="{% url 'budget:create' %}"><input type="button" value="Create Neighborhood Budget"></a>
+        {% else %}
+        <a href="{% url 'budget:manage' %}"><input type="button" value="Manage Neighborhood Budget"></a>
+        {% endif %}
+        <br />
+
+        <a id="profile" href="{% url 'accounts:user_profile' %}"><input type="button" value="Manage Account"></a>
+
+        <br />
+        <br />
+
+        <a id="logout" href="{% url 'accounts:user_logout' %}">Log out</a>
+    </div>
+
+
+</body>
+</html>

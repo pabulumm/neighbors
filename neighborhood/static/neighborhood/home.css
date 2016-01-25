@@ -1,0 +1,66 @@
+h1 {
+	color: #336600;
+	font-size: 24px;
+}
+
+.tab-content iframe {
+	margin: 30px 20px 30px 20px;
+	border: 2px solid red;
+}
+
+.nav a {
+	color: #336600;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 14px 10px;
+	text-transform: uppercase;
+}
+
+.home-menu a {
+	color: #336600;
+	font-size: 18px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.home-menu li {
+	padding-right: 20px;
+}
+
+.home-menu .container {
+	padding-bottom: 50px;
+}
+
+.jumbotron {
+	background-image:url("http://www.summitpost.org/images/original/250824.jpg");
+	height: 600px;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.jumbotron .container {
+	position: relative;
+	top: 10px;
+}
+
+.jumbotron h1 {
+	color: #fff;
+	font-size: 52px;
+	font-weight: bold;
+}
+
+.jumbotron p {
+	font-size: 20px;
+	color: #fff;
+}
+
+.footer {
+	border-top: solid;
+	border-color: rgb(150,150,150);
+	background-color: rgb(230,230,230);
+}
+
+.footer .container {
+	background-color: rgb(230,230,230);
+	height: 100px;
+}
