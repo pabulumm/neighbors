@@ -10,12 +10,10 @@
     <div id="header">
         <h1>Neighborhood home!</h1>
     </div>
-
-
     <div id="body">
         {{ neighborhood.division_title }}
         <br />
-        {% if neighborhood.budget == NULL %}
+        {% if neighborhood.has_budget == False %}
         <a href="{% url 'budget:create' %}"><input type="button" value="Create Neighborhood Budget"></a>
         {% else %}
         <a href="{% url 'budget:manage' %}"><input type="button" value="Manage Neighborhood Budget"></a>
@@ -25,6 +23,7 @@
         <a id="profile" href="{% url 'accounts:user_profile' %}"><input type="button" value="Manage Account"></a>
 
         <br />
+        <a href="{% url 'neighborhood:neighborhood_info' %}"><input type="button" value="Neighborhood Information"></a>
         <br />
 
         <a id="logout" href="{% url 'accounts:user_logout' %}">Log out</a>

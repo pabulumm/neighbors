@@ -5,8 +5,19 @@
     <title>Neighbors</title>
 </head>
 <body>
+    <p>Budget Title: {{ budget.title }}</p>
+    <p>Budget Neighborhood: {{ budget.neighborhood }}</p>
+    <p>Budget Total Funds: {{ budget.total_funds }}</p>
+    <p>Budget Total Expenses: {{ budget.total_expenses }}</p>
+    <p>Budget Residence Fee: {{ budget.residence_fee }}</p>
+    <p>Budget Creation Date: {{ budget.created_date }}</p>
 
-    <a href="{% url 'budget:expense_create' %}"><input type="button" value="New Expense"></a><br />
+    <h3>Expenses</h3>
+    <p>
+        {% for  %}
+    </p>
+
+    <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br />
 
 
     <a href="{% url 'neighborhood:neighborhood_home' %}">Return to Neighborhood.</a><br />

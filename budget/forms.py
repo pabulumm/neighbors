@@ -5,10 +5,23 @@ class BudgetForm(forms.ModelForm):
 
 	class Meta:
 		model = Budget
-		fields = ('title',)
+		fields = ('title',
+				  'neighborhood_id',
+				  'total_funds',
+				  'total_expenses',
+				  'residence_fee',)
 
 
 class ExpenseForm(forms.ModelForm):
+	TYPES = (
+		('1', 'Improvement'),
+		('2', 'Repair'),
+		('3', 'Recreation'),
+		('4', 'Fee'),
+		('5', 'Other'),
+	)
+
+	type = forms.ChoiceField(choices=TYPES)
 
 	class Meta:
 		model = Expense
@@ -17,5 +30,4 @@ class ExpenseForm(forms.ModelForm):
 				  'cost',
 				  'start_date',
 				  'end_date',
-				  'type',
-				  'budget')
+				  'budget_id')

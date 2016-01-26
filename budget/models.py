@@ -3,19 +3,28 @@ from django.utils import timezone
 import datetime
 from neighborhood.models import Neighborhood
 
+
 class Budget(models.Model):
+	id = models.AutoField(primary_key=True)
 	title = models.CharField(max_length=60, default='Community Budget',verbose_name="Budget Title")
-	residence_fee = models.DecimalField(max_digits=8, decimal_places=2)
+	total_funds = models.DecimalField(max_digits=14, decimal_places=2, default=0.00, verbose_name="Total Funds")
+	total_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0.00, verbose_name="Total Expenses")
+	residence_fee = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Residence Fee")
 	created_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
-	neighborhood = models.OneToOneField(Neighborhood, default=1, on_delete=models.CASCADE)
+	neighborhood_id = models.IntegerField()
 
 	def __str__(self):
 		return self.title
 
+	
+class ExpenseManager(models.Manager):
+	def get_budget_expenses_by_date(self, budget_id):
+		return Expense.objects.filter(budget=Budget.objects.get(id=budget_id))
+
 
 class Expense(models.Model):
 	id = models.AutoField(primary_key=True)
-	budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
+	budget_id = models.IntegerField()
 	title = models.CharField(max_length=60, default='HOA Division',verbose_name="Neighborhood Title")
 	description = models.TextField(verbose_name="Description", default="Description of why and how this expense is needed")
 	cost = models.DecimalField(max_digits=12, decimal_places=2)
@@ -27,3 +36,4 @@ class Expense(models.Model):
 
 	def __str__(self):
 		return self.title
+

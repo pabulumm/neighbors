@@ -106,6 +106,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-LOGIN_URL 			= '/neighborhood/home/'
-LOGIN_REDIRECT_URL	= '/accounts/login/'
-LOGIN_ERROR_URL		= '/login-error/'
+LOGIN_URL = '/account/login/'
+LOGIN_REDIRECT_URL = 'neighborhood.views.neighborhood_home'
+LOGIN_ERROR_URL = '/login-error/'
