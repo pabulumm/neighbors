@@ -11,15 +11,20 @@ class Budget(models.Model):
 	total_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0.00, verbose_name="Total Expenses")
 	residence_fee = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Residence Fee")
 	created_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
-	neighborhood_id = models.IntegerField()
+	neighborhood_id = models.IntegerField(default=-1)
 
 	def __str__(self):
 		return self.title
 
-	
+
 class ExpenseManager(models.Manager):
-	def get_budget_expenses_by_date(self, budget_id):
+	@staticmethod
+	def get_budget_expenses_by_date(budget_id):
 		return Expense.objects.filter(budget=Budget.objects.get(id=budget_id))
+
+	@staticmethod
+	def get_expense_by_id(expense_id):
+		return Expense.objects.filter(id=expense_id)
 
 
 class Expense(models.Model):

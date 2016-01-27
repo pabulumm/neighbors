@@ -14,7 +14,12 @@
 
     <h3>Expenses</h3>
     <p>
-        {% for  %}
+        {% for expense in expense_list %}
+            <p>Expense:
+                id={{ expense.id }}
+                title={{ expense.title }}
+                cost={{ expense.cost }}</p>
+        {% endfor %}
     </p>
 
     <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br />

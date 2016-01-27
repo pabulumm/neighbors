@@ -6,7 +6,6 @@ class BudgetForm(forms.ModelForm):
 	class Meta:
 		model = Budget
 		fields = ('title',
-				  'neighborhood_id',
 				  'total_funds',
 				  'total_expenses',
 				  'residence_fee',)

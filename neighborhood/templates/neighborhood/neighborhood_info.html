@@ -11,9 +11,11 @@
 
     <p>Division Creation date: {{ neighborhood.create_date }}</p>
 
-    <p>Division Residence Fee: {{ neighborhood.residence_fee }}
+    <p>Division Residence Fee: {{ neighborhood.residence_fee }}</p>
 
-    </p><a href="{% url 'neighborhood:neighborhood_home' %}" id="home_button"><input type="button" value="Neighborhood"></a>
+    <p>Division Has Budget: {{ neighborhood.has_budget }}</p>
+
+    <a href="{% url 'neighborhood:neighborhood_home' %}" id="home_button"><input type="button" value="Neighborhood"></a>
 
 </body>
 </html>
