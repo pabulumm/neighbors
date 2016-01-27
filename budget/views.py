@@ -16,8 +16,15 @@ EXPENSE_KEY = 'expense'
 	have a budget already attached to it. Uses a Django form to get input
 	from user and create the budget
 
-	INPUT FIELDS:
-		-
+	FIELDS TO USER:
+		- title
+		- total_funds : initial
+		- total_expenses : initial
+		- residence_fee
+
+	FIELDS TO AUTO ASSIGN:
+		- neighborhood_id
+		- create_date
 """
 @login_required
 def create_budget(request):

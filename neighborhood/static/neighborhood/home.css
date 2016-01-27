@@ -9,7 +9,7 @@ h1 {
 }
 
 .nav a {
-	color: #336600;
+	color: #ffff00;
 	font-size: 16px;
 	font-weight: bold;
 	padding: 14px 10px;
@@ -32,8 +32,8 @@ h1 {
 }
 
 .jumbotron {
-	background-image:url("http://www.summitpost.org/images/original/250824.jpg");
-	height: 600px;
+	background-image:url("#");
+	height: 300px;
 	background-repeat: no-repeat;
 	background-size: cover;
 }

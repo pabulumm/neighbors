@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
 <head>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
 <body>
-    <div id="header">
-        <h1>Neighborhood home!</h1>
+
+    <div class="nav">
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="{% url 'neighborhood:neighborhood_info' %}">Neighborhood Information</a>
+                <li><a href="{% url 'budget:manage' %}">Manage Neighborhood Budget</a></li>
+                <li><a href="{% url 'accounts:user_profile' %}">Manage Account</a></li>
+                <li><a href="#">Discussion Board</a></li>
+                <li><a href="#">Polls</a></li>
+            </ul>
+        </div>
     </div>
-    <div id="body">
-        {{ neighborhood.division_title }}
-        <br />
-        {% if neighborhood.has_budget == False %}
-        <a href="{% url 'budget:create' %}"><input type="button" value="Create Neighborhood Budget"></a>
-        {% else %}
-        <a href="{% url 'budget:manage' %}"><input type="button" value="Manage Neighborhood Budget"></a>
-        {% endif %}
-        <br />
 
-        <a id="profile" href="{% url 'accounts:user_profile' %}"><input type="button" value="Manage Account"></a>
 
-        <br />
-        <a href="{% url 'neighborhood:neighborhood_info' %}"><input type="button" value="Neighborhood Information"></a>
-        <br />
-
-        <a id="logout" href="{% url 'accounts:user_logout' %}">Log out</a>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Welcome to the Neighborhood!</h1>
+            <p>{{ neighborhood.division_title }} Division</p>
+        </div>
     </div>
+
+                <a id="logout" href="{% url 'accounts:user_logout' %}">Log out</a>
 
 
 </body>
