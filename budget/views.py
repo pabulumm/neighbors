@@ -23,6 +23,7 @@ EXPENSE_KEY = 'expense'
 		- residence_fee
 
 	FIELDS TO AUTO ASSIGN:
+		- budget_id
 		- neighborhood_id
 		- create_date
 """
@@ -50,7 +51,7 @@ def create_budget(request):
 	of expenses with a budget_id attr matching the current budget.id
 """
 @login_required
-def manage_budget(request, ):
+def manage_budget(request):
 	try:
 		budget = Budget.objects.get(neighborhood_id=request.session['neighborhood_id'])
 	except ObjectDoesNotExist:
