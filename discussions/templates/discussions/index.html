@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Neighbors</title>
 </head>
 <body>
+    <h1>Discussion Board</h1>
+
+    {% for discussion in discussion_list %}
+        <h6><a href="{% url 'discussions:detail' discussion.id %}">{{ discussion.title }}</a></h6>
+        <p>Creator ID: {{ discussion.create_date }}
+            Date Created: {{ discussion.create_date }}</p>
+        <p></p>
+    {% endfor %}
 
 </body>
 </html>

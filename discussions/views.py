@@ -13,4 +13,4 @@ def discussion_detail(request, discussion_id):
 	discussion = get_object_or_404(Discussion, discussion_id)
 	comments = Comment.objects.filter(discussion=discussion)
 	return render(request, 'discussions/detail.html', {'discussion': discussion,
-													   'comment_list': comments})
+													   'comments': comments})
