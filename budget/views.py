@@ -33,9 +33,9 @@ def create_budget(request):
 	if request.method == 'POST':
 		budget_form = BudgetForm(request.POST)
 		if budget_form.is_valid():
-			neighborhood.has_budget = True
 			budget = budget_form.save()
 			budget.neighborhood_id = neighborhood.id
+			neighborhood.has_budget = True
 			budget.save()
 			neighborhood.budget = budget
 		return HttpResponseRedirect('/budget/manage_budget/')
