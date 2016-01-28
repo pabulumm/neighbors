@@ -7,9 +7,8 @@ class BudgetForm(forms.ModelForm):
 	class Meta:
 		model = Budget
 		fields = ('title',
-				  'total_funds',
-				  'total_expenses',
-				  'residence_fee',)
+				  'residence_fee',
+				  'neighborhood',)
 
 
 class ExpenseForm(forms.ModelForm):
@@ -21,4 +20,5 @@ class ExpenseForm(forms.ModelForm):
 				  'cost',
 				  'start_date',
 				  'end_date',
-				  'types')
+				  'types',
+				  'budget',)

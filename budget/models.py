@@ -8,9 +8,9 @@ class Budget(models.Model):
 	title = models.CharField(max_length=60, default='Community Budget',verbose_name="Budget Title")
 	total_funds = models.DecimalField(max_digits=14, decimal_places=2, default=0.00, verbose_name="Total Funds")
 	total_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0.00, verbose_name="Total Expenses")
-	residence_fee = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Residence Fee")
+	residence_fee = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Residence Fee", default=10.00)
 	created_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
-	neighborhood_id = models.IntegerField(default=-1)
+	neighborhood = models.ForeignKey(Neighborhood)
 
 	def __str__(self):
 		return self.title
@@ -42,25 +42,25 @@ class Expense(models.Model):
 	FEE = 'FEE'
 	OTHER = 'OTH'
 	EXPENSE_TYPES = (
-		(IMPROVEMENT, 'Freshman'),
-		(REPAIR, 'Sophomore'),
-		(RECREATION, 'Junior'),
-		(FEE, 'Senior'),
-		(OTHER, 'Senior'),
+		(IMPROVEMENT, 'Improvement'),
+		(REPAIR, 'Repair'),
+		(RECREATION, 'Recreation'),
+		(FEE, 'Fee'),
+		(OTHER, 'Other'),
 	)
 	types = models.CharField(max_length=3,
 									  choices=EXPENSE_TYPES,
 									  default=REPAIR)
 	id = models.AutoField(primary_key=True)
-	budget_id = models.IntegerField()
-	title = models.CharField(max_length=60, default='HOA Division',verbose_name="Neighborhood Title")
+	title = models.CharField(max_length=60, default='Expense',verbose_name="Expense Title")
 	description = models.TextField(verbose_name="Description", default="Description of why and how this expense is needed")
 	cost = models.DecimalField(max_digits=12, decimal_places=2)
 	created_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
-	start_date = models.DateField(verbose_name="Starts on")
-	end_date = models.DateField(verbose_name="Ends on")
+	start_date = models.DateTimeField(verbose_name="Starts on")
+	end_date = models.DateTimeField(verbose_name="Ends on")
 	type = models.CharField(max_length=50, verbose_name='Type of Expense')
 	approved = models.BooleanField(default=False)
+	budget = models.ForeignKey(Budget)
 
 	def __str__(self):
 		return self.title

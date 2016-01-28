@@ -7,11 +7,9 @@ from neighborhood.models import Neighborhood
 from .forms import BudgetForm, ExpenseForm
 from .models import ExpenseManager, Budget, Expense
 
-EXPENSE_KEY = 'expense'
-
 
 """
-	CREATE BUDGET
+	---CREATE BUDGET---
 	This is the view passed to the user when their neighborhood does not
 	have a budget already attached to it. Uses a Django form to get input
 	from user and create the budget
@@ -33,11 +31,11 @@ def create_budget(request):
 	if request.method == 'POST':
 		budget_form = BudgetForm(request.POST)
 		if budget_form.is_valid():
+			budget_form.neighborhood = neighborhood
 			budget = budget_form.save()
-			budget.neighborhood_id = neighborhood.id
-			neighborhood.has_budget = True
+			budget.neighborhood = neighborhood
 			budget.save()
-			neighborhood.budget = budget
+			neighborhood.budget_id = budget.id
 		return HttpResponseRedirect('/budget/manage_budget/')
 	else:
 		budget_form = BudgetForm()
@@ -45,7 +43,7 @@ def create_budget(request):
 
 
 """
-	MANAGE BUDGET
+	---MANAGE BUDGET---
 	This is the view passed to the user when their neighborhood has a viewable
 	budget. It displays the attributes of a Budget model in addition to the list
 	of expenses with a budget_id attr matching the current budget.id
@@ -54,35 +52,37 @@ def create_budget(request):
 def manage_budget(request):
 	try:
 		budget = Budget.objects.get(neighborhood_id=request.session['neighborhood_id'])
+		expense_list = ExpenseManager.get_budget_expenses_by_date(budget.id).order_by('-created_date')
+		request.session['budget_id'] = budget.id
 	except ObjectDoesNotExist:
 		return HttpResponseRedirect('/budget/new_budget/')
-	expense_list = ExpenseManager.get_budget_expenses_by_date(budget.id)
 	return render(request, 'budget/manage_budget.html', {'budget': budget,
 														 'expense_list': expense_list} )
 
 
 """
-	NEW EXPENSE
+	---NEW EXPENSE---
 	This is the view passed to the user when they wish to create a new
 	expense to be added to the budget once approved. It uses a Django
 	form to create the new expense object.
 """
 @login_required
 def new_expense(request):
-	budget = get_object_or_404(Neighborhood, pk=request.session['neighborhood_id']).budget
+	budget = get_object_or_404(Budget, pk=request.session['budget_id'])
 	if request.method == 'POST':
 		expense_form = ExpenseForm(request.POST)
 		if expense_form.is_valid():
 			expense = expense_form.save()
 			expense.budget = budget
 			expense.save()
+			return HttpResponseRedirect('/budget/manage_budget/')
 	else:
 		expense_form = ExpenseForm()
 	return render(request, 'budget/new_expense.html', {'expense_form': expense_form})
 
 
 """
-	EXPENSE DETAIL
+	---EXPENSE DETAIL---
 	This is the view passed to the user when they select an expense
 	from the expense list displayed on the budget home page. It displays
 	the attributes of the expense object to the user.

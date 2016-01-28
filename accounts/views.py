@@ -85,5 +85,5 @@ def register_user(request):
 @login_required
 def user_profile(request):
 	user_prof = request.user.userprofile
-	return render(request, 'accounts/user_profile.html', { 'house': user_prof})
+	return render(request, 'accounts/user_profile.html', {'house': user_prof})
 

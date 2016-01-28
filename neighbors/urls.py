@@ -22,5 +22,6 @@ urlpatterns = [
 	url(r'^neighborhood/', include('neighborhood.urls', namespace="neighborhood")),
 	url(r'^account/', include('accounts.urls', namespace="accounts")),
 	url(r'^budget/', include('budget.urls', namespace="budget")),
+	url(r'^discussions/', include('discussions.urls', namespace="discussions")),
 	url(r'^admin/', include(admin.site.urls)),
 ]

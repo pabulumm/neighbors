@@ -13,11 +13,10 @@
     <div class="nav">
         <div class="container">
             <ul class="nav nav-pills">
-                <li class="active"><a href="{% url 'neighborhood:neighborhood_info' %}">Neighborhood Information</a>
-                <li><a href="{% url 'budget:manage' %}">Manage Neighborhood Budget</a></li>
+                <li><a href="{% url 'neighborhood:neighborhood_home' %}">Neighborhood Home</a>
+                <li><a href="#">About Neighbors</a></li>
                 <li><a href="{% url 'accounts:user_profile' %}">Manage Account</a></li>
-                <li><a href="#">Discussion Board</a></li>
-                <li><a href="#">Polls</a></li>
+                <li><a href="{% url 'accounts:user_logout' %}">Sign out</a></li>
             </ul>
         </div>
     </div>
@@ -30,7 +29,17 @@
         </div>
     </div>
 
-                <a id="logout" href="{% url 'accounts:user_logout' %}">Log out</a>
+    <div class="home-menu">
+        <div class="container">
+            <ul class="nav nav-tabs">
+				<li class="active"><a href="#">Polls</a></li>
+				<li><a href="{% url 'discussions:index' %}">Discussions</a></li>
+                <li><a href="{% url 'budget:manage' %}">Budget</a></li>
+                <li><a href="{% url 'neighborhood:neighborhood_info' %}"> Information</a>
+			</ul>
+        </div>
+    </div>
+
 
 
 </body>
