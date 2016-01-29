@@ -7,18 +7,8 @@
 <body>
     <form id="discussion_form" action="{% url 'discussions:new_discussion' %}" method="post">
         {% csrf_token %}
-        <label for="topic">Discussion Title/Topic</label>
-        <input id="topic"
-               name="topic"
-               type="text"
-               maxlength="200"
-               value="Discussion Title">
-        <label for="description">Topic Description</label>
-        <input id="description"
-               name="description"
-               type="text"
-               value="Topic Description"
-               maxlength="1000">
+        {{ discussion_form.as_p }}
+        <input type="submit" name="submit" value="Post Discussion"/>
     </form>
 </body>
 </html>

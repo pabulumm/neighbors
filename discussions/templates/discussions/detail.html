@@ -6,10 +6,16 @@
 </head>
 <body>
     <h1>{{ discussion.title }}</h1>
+    <p>{{ discussion.description }}</p>
     {% for comment in comments %}
-        <p>{{ comment.creator_id }} Said:<br />
+        <p>{{ comment.creator }} Said:<br />
         {{ comment.text }}<br />
         on: {{ comment.create_date }}</p>
     {% endfor %}
+
+    <a href="{% url 'discussions:new_comment' %}"><input type="button" value="Comment"></a><br />
+
+    <a href="{% url 'discussions:index' %}">Return to Discussion Board</a><br />
+
 </body>
 </html>

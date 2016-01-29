@@ -32,7 +32,7 @@
     <div class="home-menu">
         <div class="container">
             <ul class="nav nav-tabs">
-				<li class="active"><a href="#">Polls</a></li>
+				<li><a href="{% url 'polls:index' %}">Polls</a></li>
 				<li><a href="{% url 'discussions:index' %}">Discussions</a></li>
                 <li><a href="{% url 'budget:manage' %}">Budget</a></li>
                 <li><a href="{% url 'neighborhood:neighborhood_info' %}"> Information</a>

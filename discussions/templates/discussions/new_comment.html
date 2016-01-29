@@ -5,13 +5,16 @@
     <title>Neighbors</title>
 </head>
 <body>
-    <form id="discussion_form" action="{% url 'discussions:new_discussion' %}" method="post">
+    <h1>Make a Comment</h1>
+    {% if done %}
+    <strong>Comment posted successfully!</strong>
+    <a href="{% url 'discussions:detail' discussion_id %}">Return to discussion.</a><br />
+    {% else %}
+    <form id="comment_form" action="{% url 'discussions:new_comment' %}" method="post">
         {% csrf_token %}
-        <label for="comment_text">Comment</label>
-        <input id="comment_text"
-               name="comment_text"
-               type="text"
-               maxlength="1000">
+        {{ comment_form.as_p }}
+        <input type="submit" name="submit" value="Post Comment">
     </form>
+    {% endif %}
 </body>
 </html>

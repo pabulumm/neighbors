@@ -8,11 +8,14 @@
     <h1>Discussion Board</h1>
 
     {% for discussion in discussion_list %}
-        <h6><a href="{% url 'discussions:detail' discussion.id %}">{{ discussion.title }}</a></h6>
+        <a href="{% url 'discussions:detail' discussion.id %}"><h3>{{ discussion.title }}</h3></a>
         <p>Creator ID: {{ discussion.create_date }}
             Date Created: {{ discussion.create_date }}</p>
         <p></p>
     {% endfor %}
 
+
+    <a href="{% url 'discussions:new_discussion' %}"><input type="button" value="New Discussion"></a><br />
+    <a href="{% url 'neighborhood:neighborhood_home' %}">Return to Neighborhood</a>
 </body>
 </html>

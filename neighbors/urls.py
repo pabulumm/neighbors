@@ -23,5 +23,6 @@ urlpatterns = [
 	url(r'^account/', include('accounts.urls', namespace="accounts")),
 	url(r'^budget/', include('budget.urls', namespace="budget")),
 	url(r'^discussions/', include('discussions.urls', namespace="discussions")),
+	url(r'^polls/', include('polls.urls', namespace="polls")),
 	url(r'^admin/', include(admin.site.urls)),
 ]
