@@ -107,6 +107,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = ''
+
 
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = 'neighborhood.views.neighborhood_home'

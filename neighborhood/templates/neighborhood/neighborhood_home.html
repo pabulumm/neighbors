@@ -5,6 +5,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="{% static 'neighborhood/scripts.js' %}" type="text/javascript"></script>
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
@@ -32,7 +35,7 @@
     <div class="home-menu">
         <div class="container">
             <ul class="nav nav-tabs">
-				<li><a href="{% url 'polls:index' %}">Polls</a></li>
+				<li><a class="active" href="{% url 'polls:index' %}">Polls</a></li>
 				<li><a href="{% url 'discussions:index' %}">Discussions</a></li>
                 <li><a href="{% url 'budget:manage' %}">Budget</a></li>
                 <li><a href="{% url 'neighborhood:neighborhood_info' %}"> Information</a>
