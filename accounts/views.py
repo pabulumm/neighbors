@@ -9,6 +9,9 @@ from .forms import UserForm, UserProfileForm
 from .models import UserProfile
 
 
+"""
+	---USER_LOGIN---
+"""
 def user_login(request):
 	if request.method == 'POST':
 		# get username and password from input text
@@ -39,12 +42,18 @@ def user_login(request):
 		return render(request, 'accounts/login.html', {})
 
 
+"""
+	---USER LOGOUT---
+"""
 @login_required
 def user_logout(request):
 	logout(request)
 	return HttpResponseRedirect('/')
 
 
+"""
+	---REGISTER USER---
+"""
 def register_user(request):
 	context = RequestContext(request)
 	registered = False
@@ -82,6 +91,9 @@ def register_user(request):
 													  'registered': registered})
 
 
+"""
+	---USER PROFILE---
+"""
 @login_required
 def user_profile(request):
 	user_prof = request.user.userprofile

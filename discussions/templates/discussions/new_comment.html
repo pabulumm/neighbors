@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neighbors</title>
+</head>
+<body>
+    <form id="discussion_form" action="{% url 'discussions:new_discussion' %}" method="post">
+        {% csrf_token %}
+        <label for="comment_text">Comment</label>
+        <input id="comment_text"
+               name="comment_text"
+               type="text"
+               maxlength="1000">
+    </form>
+</body>
+</html>
