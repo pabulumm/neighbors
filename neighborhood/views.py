@@ -20,3 +20,8 @@ def neighborhood_info(request):
 	neighborhood = Neighborhood.objects.get(id=request.session['neighborhood_id'])
 	return render(request, 'neighborhood/neighborhood_info.html', {'neighborhood': neighborhood})
 
+
+def about(request):
+	return render(request, 'neighborhood/about.html', {})
+
+

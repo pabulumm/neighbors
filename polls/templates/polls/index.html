@@ -1,6 +1,7 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 
+    <h1>Polls</h1>
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
@@ -9,6 +10,6 @@
     </ul>
 {% else %}
     <p>No polls are available.</p>
-    <a href="{% url 'polls: %}"
-    <a href="{% url 'neighborhood:home' %}">Return to Neighborhood</a>
 {% endif %}
+    <a href="{% url 'polls:new' %}"><input type="button" name="new_poll" value="New Poll"></a><br />
+    <a href="{% url 'neighborhood:neighborhood_home' %}">Return to Neighborhood</a>

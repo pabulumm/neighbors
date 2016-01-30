@@ -1,13 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
+from django.forms import formset_factory
+
+from neighborhood.models import Neighborhood
 
 from .models import Question, Choice
-
-
-# Create your views here.
+from .forms import QuestionForm, ChoiceForm
 
 
 class IndexView(generic.ListView):
@@ -41,7 +41,34 @@ class ResultsView(generic.DetailView):
 
 
 def new_poll(request):
-	pass
+	ChoiceFormSet = formset_factory(ChoiceForm, extra=2)
+	if request.method == 'POST':
+		# Validate the poll topic Question and Choices
+		question_form = QuestionForm(request.POST)
+		choice_formset = ChoiceFormSet(request.POST)
+		if question_form.is_valid() and choice_formset.is_valid():
+			# Save question_form and create Question object
+			question = question_form.save()
+			question.neighborhood = get_object_or_404(Neighborhood, pk=request.session['neighborhood_id'])
+			question.creator = request.user
+			question.save()
+			# Save each choice form into Choice object
+			for choice_form in choice_formset:
+				choice = choice_form.save()
+				choice.question = question
+				choice.save()
+			return HttpResponseRedirect('/polls/index')
+			# choice_form.is_valid() failed
+		# question_form.is_valid() failed
+		else:
+			return HttpResponse("Poll topic is not valid")
+	# not a request.POST
+	# create blank forms to return
+	else:
+		question_form = QuestionForm()
+		choice_formset = ChoiceFormSet()
+	return render(request, 'polls/new_poll.html', {'question_form': question_form,
+												   'choice_formset': choice_formset})
 
 
 def vote(request, question_id):
@@ -49,7 +76,7 @@ def vote(request, question_id):
 	try:
 		selected_choice = p.choice_set.get(pk=request.POST['choice'])
 	except (KeyError, Choice.DoesNotExist):
-		# Redisplay the quesiton voting form
+		# Redisplay the question voting form
 		return render(request, 'polls/detail.html', {
 			'question': p,
 			'error_message': "You didn't select a choice",
