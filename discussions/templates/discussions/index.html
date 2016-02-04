@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
 <body>
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Welcome to the Neighborhood!</h1>
+            <p>{{ neighborhood.division_title }} Division</p>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li><a href="{% url 'neighborhood:neighborhood_home' %}">Home</a></li>
+                <li><a class="active" href="{% url 'polls:index' %}">Polls</a></li>
+				<li><a href="{% url 'discussions:index' %}">Discussions</a></li>
+                <li><a href="{% url 'budget:manage' %}">Budget</a></li>
+                <li><a href="{% url 'neighborhood:about' %}">About Neighbors</a></li>
+                <li><a href="{% url 'accounts:user_profile' %}">Manage Account</a></li>
+                <li><a href="{% url 'accounts:user_logout' %}">Sign out</a></li>
+            </ul>
+        </div>
+    </div>
     <h1>Discussion Board</h1>
 
     {% for discussion in discussion_list %}

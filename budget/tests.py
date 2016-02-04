@@ -1,3 +1,13 @@
 from django.test import TestCase
+from .models import Budget, Expense
 
-# Create your tests here.
+
+class BudgetTestCase(TestCase):
+	def setUp(self):
+		pass
+
+
+class ExpenseTestCase(TestCase):
+	def setUp(self):
+		pass
+

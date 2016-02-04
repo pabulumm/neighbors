@@ -22,9 +22,21 @@ def discussion_index(request):
 def discussion_detail(request, d_id):
 	discussion = get_object_or_404(Discussion, pk=d_id)
 	request.session['discussion_id'] = discussion.id
+	if request.method == 'POST':
+		comment_form = CommentForm(request.POST)
+		if comment_form.is_valid():
+			comment = comment_form.save()
+			comment.discussion = discussion
+			comment.creator = request.user
+			comment.save()
+		else:
+			return HttpResponse("There was an ERROR when saving your comment")
+	else:
+		comment_form = CommentForm()
 	comments = Comment.objects.filter(discussion=discussion)
 	return render(request, 'discussions/detail.html', {'discussion': discussion,
-													   'comments': comments})
+													   'comments': comments,
+													   'comment_form': comment_form})
 
 """
 	---NEW DISCUSSION---

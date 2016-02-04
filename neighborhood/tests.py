@@ -1,9 +1,13 @@
 from django.test import TestCase
+from django.core.urlresolvers import reverse
+from .models import Neighborhood
 
-# Create your tests here.
 
 class NeighborhoodViewTests(TestCase):
-	def test_neighborhood_home(self):
-		resp = self.client.get('/neighborhood/home/')
-		self.assertEqual(resp.status_code, 200)
+	def setUp(self):
+		pass
+
+	def test_neighborhood_home_without_login(self):
+		resp = self.client.get('neighborhood:neighborhood_home')
+		self.assertEqual(resp.status_code, 404)
 
