@@ -14,7 +14,7 @@
         <div class="container">
             <h1>Welcome to the Neighborhood!</h1>
             <p>{{ neighborhood.division_title }} Division</p>
-        </div>
+        </div> <!-- end container -->
     </div>
 
     <div class="nav">
@@ -28,18 +28,39 @@
                 <li><a href="{% url 'accounts:user_profile' %}">Manage Account</a></li>
                 <li><a href="{% url 'accounts:user_logout' %}">Sign out</a></li>
             </ul>
-        </div>
+        </div> <!-- end container -->
     </div>
 
-    <p>Division Title: {{ neighborhood.division_title }}</p>
+    <div class="content">
+        <div class="container">
+            <p>Division Title: {{ neighborhood.division_title }}</p>
+            <p>Division ID: {{ neighborhood.id }}</p>
+            <p>Division Creation date: {{ neighborhood.create_date }}</p>
+            <p>Division Residence Fee: {{ neighborhood.residence_fee }}</p>
+            <p>Division Has Budget: {{ neighborhood.has_budget }}</p>
+        </div> <!-- end container -->
 
-    <p>Division ID: {{ neighborhood.id }}</p>
+    </div>
 
-    <p>Division Creation date: {{ neighborhood.create_date }}</p>
 
-    <p>Division Residence Fee: {{ neighborhood.residence_fee }}</p>
-
-    <p>Division Has Budget: {{ neighborhood.has_budget }}</p>
+    <div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h3>About</h3>
+					<p>Info/links regarding Neighbors information.</p>
+				</div>
+				<div class="col-md-4">
+					<h3>Contact</h3>
+					<p>Info/links for contacting Neighbors peeps</p>
+				</div>
+				<div class="col-md-4">
+					<h3>Help</h3>
+					<p>Help and FAQ shit.</p>
+				</div>
+			</div> <!-- end row -->
+		</div> <!-- end container -->
+	</div> <!-- end footer -->
 
 
 </body>

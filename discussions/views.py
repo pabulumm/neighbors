@@ -21,7 +21,6 @@ def discussion_index(request):
 @login_required
 def discussion_detail(request, d_id):
 	discussion = get_object_or_404(Discussion, pk=d_id)
-	request.session['discussion_id'] = discussion.id
 	if request.method == 'POST':
 		comment_form = CommentForm(request.POST)
 		if comment_form.is_valid():
@@ -60,7 +59,6 @@ def new_discussion(request):
 
 """
 	---NEW COMMENT---
-"""
 @login_required
 def new_comment(request):
 	done = False
@@ -81,5 +79,6 @@ def new_comment(request):
 															'discussion_id': discussion.id,
 															'done': done})
 
+"""
 
 

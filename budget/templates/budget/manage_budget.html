@@ -31,27 +31,49 @@
         </div>
     </div>
 
-    <p>Budget Title: {{ budget.title }}</p>
-    <p>Budget Neighborhood: {{ budget.neighborhood }}</p>
-    <p>Budget Total Funds: {{ budget.total_funds }}</p>
-    <p>Budget Total Expenses: {{ budget.total_expenses }}</p>
-    <p>Budget Residence Fee: {{ budget.residence_fee }}</p>
-    <p>Budget Creation Date: {{ budget.created_date }}</p>
+    <div class="content">
+        <div class="container">
+            <p>Budget Title: {{ budget.title }}</p>
+            <p>Budget Neighborhood: {{ budget.neighborhood }}</p>
+            <p>Budget Total Funds: {{ budget.total_funds }}</p>
+            <p>Budget Total Expenses: {{ budget.total_expenses }}</p>
+            <p>Budget Residence Fee: {{ budget.residence_fee }}</p>
+            <p>Budget Creation Date: {{ budget.created_date }}</p>
 
-    <h3>Expenses</h3>
-    <p>
-        {% for expense in expense_list %}
-            <p>Expense:
-                id={{ expense.id }}
-                title={{ expense.title }}
-                cost={{ expense.cost }}</p>
-        {% endfor %}
-    </p>
+            <h3>Expenses</h3>
+            <p>
+                {% for expense in expense_list %}
+                    <p>Expense:
+                        id={{ expense.id }}
+                        title={{ expense.title }}
+                        cost={{ expense.cost }}</p>
+                {% endfor %}
+            </p>
 
-    <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br />
+            <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br />
 
 
-    <a href="{% url 'neighborhood:neighborhood_home' %}">Return to Neighborhood.</a><br />
+        </div>
+    </div>
+
+    <div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h3>About</h3>
+					<p>Info/links regarding Neighbors information.</p>
+				</div>
+				<div class="col-md-4">
+					<h3>Contact</h3>
+					<p>Info/links for contacting Neighbors peeps</p>
+				</div>
+				<div class="col-md-4">
+					<h3>Help</h3>
+					<p>Help and FAQ shit.</p>
+				</div>
+			</div> <!-- end row -->
+		</div> <!-- end container -->
+	</div> <!-- end footer -->
 
 </body>
 </html>

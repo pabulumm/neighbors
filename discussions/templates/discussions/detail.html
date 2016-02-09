@@ -13,7 +13,13 @@
         on: {{ comment.create_date }}</p>
     {% endfor %}
 
-    <a href="{% url 'discussions:new_comment' %}"><input type="button" value="Comment"></a><br />
+    <p>
+    <form id="comment_form" action="{% url 'discussions:detail' discussion.id %}" method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" name="submit" value="Post Comment">
+    </form>
+    </p>
 
     <a href="{% url 'discussions:index' %}">Return to Discussion Board</a><br />
 

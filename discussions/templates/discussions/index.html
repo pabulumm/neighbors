@@ -30,17 +30,40 @@
             </ul>
         </div>
     </div>
-    <h1>Discussion Board</h1>
 
-    {% for discussion in discussion_list %}
-        <a href="{% url 'discussions:detail' discussion.id %}"><h3>{{ discussion.title }}</h3></a>
-        <p>Creator ID: {{ discussion.create_date }}
-            Date Created: {{ discussion.create_date }}</p>
-        <p></p>
-    {% endfor %}
+    <div class="content">
+        <div class="container">
+            <h1>Discussion Board</h1>
+            {% for discussion in discussion_list %}
+                <a href="{% url 'discussions:detail' discussion.id %}"><h3>{{ discussion.title }}</h3></a>
+                <p>Creator ID: {{ discussion.create_date }}
+                    Date Created: {{ discussion.create_date }}</p>
+                <p></p>
+            {% endfor %}
 
 
-    <a href="{% url 'discussions:new_discussion' %}"><input type="button" value="New Discussion"></a><br />
-    <a href="{% url 'neighborhood:neighborhood_home' %}">Return to Neighborhood</a>
+            <a href="{% url 'discussions:new_discussion' %}"><input type="button" value="New Discussion"></a><br />
+        </div>
+    </div>
+
+    <div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h3>About</h3>
+					<p>Info/links regarding Neighbors information.</p>
+				</div>
+				<div class="col-md-4">
+					<h3>Contact</h3>
+					<p>Info/links for contacting Neighbors peeps</p>
+				</div>
+				<div class="col-md-4">
+					<h3>Help</h3>
+					<p>Help and FAQ shit.</p>
+				</div>
+			</div> <!-- end row -->
+		</div> <!-- end container -->
+	</div> <!-- end footer -->
+
 </body>
 </html>
