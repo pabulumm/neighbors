@@ -16,16 +16,6 @@ class Budget(models.Model):
 		return self.title
 
 
-class ExpenseManager(models.Manager):
-
-	@staticmethod
-	def get_budget_expenses_by_date(budget_id):
-		return Expense.objects.filter(budget=Budget.objects.get(id=budget_id))
-
-	@staticmethod
-	def get_expense_by_id(expense_id):
-		return Expense.objects.filter(id=expense_id)
-
 """
 	EXPENSE CLASS
 	Expenses are a cost charge to be added to the budget upon
@@ -48,9 +38,7 @@ class Expense(models.Model):
 		(FEE, 'Fee'),
 		(OTHER, 'Other'),
 	)
-	types = models.CharField(max_length=3,
-									  choices=EXPENSE_TYPES,
-									  default=REPAIR)
+	types = models.CharField(max_length=3, choices=EXPENSE_TYPES, default=REPAIR)
 	id = models.AutoField(primary_key=True)
 	title = models.CharField(max_length=60, default='Expense',verbose_name="Expense Title")
 	description = models.TextField(verbose_name="Description", default="Description of why and how this expense is needed")
@@ -65,3 +53,10 @@ class Expense(models.Model):
 	def __str__(self):
 		return self.title
 
+	def approve(self):
+		self.approved = True
+		return self.approved is True
+
+	def unapprove(self):
+		self.approved = False
+		return self.approved is False

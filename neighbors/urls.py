@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic import TemplateView
+
+from accounts.views import user_login
 
 urlpatterns = [
-	url(r'^$', TemplateView.as_view(template_name='neighborhood/index.html'), name='index'),
+	url(r'^$', user_login, name='index'),
 	url(r'^neighborhood/', include('neighborhood.urls', namespace="neighborhood")),
 	url(r'^account/', include('accounts.urls', namespace="accounts")),
 	url(r'^budget/', include('budget.urls', namespace="budget")),

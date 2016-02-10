@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
 <body>
+    <div>
+        <h1>{{ expense.title }}</h1>
+        <p>Cost: {{ expense.cost }}</p>
+        <p>Starts: {{ expense.start_date }}</p>
+        <p>Ends: {{ expense.end_date }}</p>
+        <p>Type: {{ expense.type }}</p>
+        <p>Description: {{ expense.description }}</p>
+        <p>Status: {{ expense.approved }}</p>
 
+        <p>
+        <form action="{% url 'budget:expense_detail' expense.id %}" method="post">
+        {% csrf_token %}
+            <input type="submit" value="Approve"></a>
+        </form>
+        </p><br />
+        <p><a href="{% url 'budget:manage' %}">Return to Budget</a></p>
+    </div>
 </body>
 </html>

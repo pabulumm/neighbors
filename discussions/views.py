@@ -57,28 +57,4 @@ def new_discussion(request):
 	return render(request, 'discussions/new_discussion.html', {'discussion_form': discussion_form})
 
 
-"""
-	---NEW COMMENT---
-@login_required
-def new_comment(request):
-	done = False
-	discussion = get_object_or_404(Discussion, pk=request.session['discussion_id'])
-	if request.method == 'POST':
-		comment_form = CommentForm(request.POST)
-		if comment_form.is_valid():
-			comment = comment_form.save()
-			comment.discussion = discussion
-			comment.creator = request.user
-			comment.save()
-			done = True
-		else:
-			return HttpResponse("There was an ERROR when saving your comment")
-	else:
-		comment_form = CommentForm()
-	return render(request, 'discussions/new_comment.html', {'comment_form': comment_form,
-															'discussion_id': discussion.id,
-															'done': done})
-
-"""
-
 

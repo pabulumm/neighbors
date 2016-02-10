@@ -2,9 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
@@ -33,20 +33,18 @@
 
     <div class="content">
         <div class="container">
-            <p>Budget Title: {{ budget.title }}</p>
-            <p>Budget Neighborhood: {{ budget.neighborhood }}</p>
-            <p>Budget Total Funds: {{ budget.total_funds }}</p>
-            <p>Budget Total Expenses: {{ budget.total_expenses }}</p>
-            <p>Budget Residence Fee: {{ budget.residence_fee }}</p>
-            <p>Budget Creation Date: {{ budget.created_date }}</p>
+            <h1>{{ budget.title }}</h1>
+            <p>Neighborhood: {{ budget.neighborhood }}</p>
+            <p>Total Funds: {{ budget.total_funds }}</p>
+            <p>Total Expenses: {{ budget.total_expenses }}</p>
+            <p>Residence Fee: {{ budget.residence_fee }}</p>
+            <p>Creation Date: {{ budget.created_date }}</p>
 
             <h3>Expenses</h3>
             <p>
                 {% for expense in expense_list %}
-                    <p>Expense:
-                        id={{ expense.id }}
-                        title={{ expense.title }}
-                        cost={{ expense.cost }}</p>
+                    <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
+                        cost={{ expense.cost }} : approved={{ expense.approved }}</p>
                 {% endfor %}
             </p>
 

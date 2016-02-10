@@ -1,0 +1,34 @@
+.jumbotron .container {
+	position: relative;
+	top: 10px;
+    padding-left:10%;
+}
+
+.jumbotron {
+    padding-top: 10%;
+	background-image:url("images/View-Down-Neighborhood-Street.jpg");
+	height: 600px;
+	background-size: cover;
+}
+
+.jumbotron h1 {
+    padding-left: auto;
+    padding-right: auto;
+	font-size: 76px;
+	color: #fff;
+    font-weight: bold;
+}
+
+.jumbotron p {
+    padding-left: 18%;
+	font-size: 20px;
+	color: #fff;
+}
+
+.jumbotron label {
+	font-size: 20px;
+	color: #fff;
+}
+
+
+

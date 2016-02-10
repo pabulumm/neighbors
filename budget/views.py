@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404, \
+	HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
 from neighborhood.models import Neighborhood
 
 from .forms import BudgetForm, ExpenseForm
-from .models import ExpenseManager, Budget, Expense
+from .models import Budget, Expense
 
 
 """
@@ -52,7 +53,7 @@ def create_budget(request):
 def manage_budget(request):
 	try:
 		budget = Budget.objects.get(neighborhood_id=request.session['neighborhood_id'])
-		expense_list = ExpenseManager.get_budget_expenses_by_date(budget.id).order_by('-created_date')
+		expense_list = Expense.objects.filter(budget=budget).order_by('-created_date')
 		request.session['budget_id'] = budget.id
 	except ObjectDoesNotExist:
 		return HttpResponseRedirect('/budget/new_budget/')
@@ -89,5 +90,16 @@ def new_expense(request):
 """
 @login_required
 def expense_detail(request, expense_id):
-	expense = get_object_or_404(Expense, expense_id)
+	expense = get_object_or_404(Expense, pk=expense_id)
+	if request.method == 'POST':
+		expense.approve()
+		expense.save()
 	return render(request, 'budget/expense_detail.html', {'expense': expense})
+
+
+@login_required
+def approve_expense(request, expense_id):
+	expense = get_object_or_404(Expense, pk=expense_id)
+	expense.approve()
+	return render(request, 'budget/expense_detail.html', {'expense': expense})
+
