@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from neighborhood.models import Neighborhood
 
+import datetime
+
 
 class Budget(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -43,7 +45,7 @@ class Expense(models.Model):
 	title = models.CharField(max_length=60, default='Expense',verbose_name="Expense Title")
 	description = models.TextField(verbose_name="Description", default="Description of why and how this expense is needed")
 	cost = models.DecimalField(max_digits=12, decimal_places=2)
-	created_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
+	create_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
 	start_date = models.DateTimeField(verbose_name="Starts on")
 	end_date = models.DateTimeField(verbose_name="Ends on")
 	type = models.CharField(max_length=50, verbose_name='Type of Expense')
@@ -58,3 +60,7 @@ class Expense(models.Model):
 
 	def unapprove(self):
 		self.approved = False
+
+	def was_recently_approved(self):
+		now = timezone.now()
+		return now - datetime.timedelta(days=5) <= self.create_date <= now
