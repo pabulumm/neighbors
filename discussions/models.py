@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+import datetime
+
 
 from accounts.models import User
 from neighborhood.models import Neighborhood
@@ -19,9 +21,17 @@ class Discussion(models.Model):
 	create_date = models.DateTimeField(default=timezone.now)
 	creator = models.ForeignKey(User, null=True)
 	neighborhood = models.ForeignKey(Neighborhood, null=True)
+	last_modified = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):  # __unicode__ on Python 2
 		return self.title
+
+	def update_last_modified(self):
+		self.last_modified = timezone.now()
+
+	def was_published_recently(self):
+		now = timezone.now()
+		return now - datetime.timedelta(days=5) <= self.create_date <= now
 
 
 class Comment(models.Model):
@@ -32,6 +42,6 @@ class Comment(models.Model):
 	discussion = models.ForeignKey(Discussion, null=True)
 
 	def __str__(self):  # __unicode__ on Python 2
-		return self.id
+		return self.text
 
 

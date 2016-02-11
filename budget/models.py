@@ -55,8 +55,6 @@ class Expense(models.Model):
 
 	def approve(self):
 		self.approved = True
-		return self.approved is True
 
 	def unapprove(self):
 		self.approved = False
-		return self.approved is False

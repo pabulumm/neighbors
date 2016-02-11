@@ -32,3 +32,12 @@ class Choice(models.Model):
 
 	def __str__(self):  # __unicode__ on Python 2
 		return self.choice_text
+
+
+class Vote(models.Model):
+	question = models.ForeignKey(Question, null=True)
+	choice = models.ForeignKey(Choice, null=True)
+	user = models.ForeignKey(User, null=True)
+
+	class Meta:
+		unique_together = (('user','choice'),)

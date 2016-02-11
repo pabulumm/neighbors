@@ -28,6 +28,7 @@ def discussion_detail(request, d_id):
 			comment.discussion = discussion
 			comment.creator = request.user
 			comment.save()
+			discussion.update_last_modified()
 		else:
 			return HttpResponse("There was an ERROR when saving your comment")
 	else:
