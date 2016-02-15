@@ -32,11 +32,14 @@ AUTH_PROFILE_MODEL = 'accounts.UserProfile'
 
 INSTALLED_APPS = (
 	'django.contrib.admin',
-	'django.contrib.auth',
+	'django.contrib.auth'
+	'django.contrib.gis',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'django.contrib.gis',
+	'world',
 	'neighborhood',
 	'discussions',
 	'accounts',
