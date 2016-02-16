@@ -50,7 +50,6 @@ class Expense(models.Model):
 	end_date = models.DateTimeField(verbose_name="Ends on")
 	type = models.CharField(max_length=50, verbose_name='Type of Expense')
 	approved = models.BooleanField(default=False)
-	approval_date = models.DateTimeField(null=True)
 	budget = models.ForeignKey(Budget)
 
 	def __str__(self):
@@ -58,16 +57,10 @@ class Expense(models.Model):
 
 	def approve(self):
 		self.approved = True
-		self.approval_date = timezone.now()
 
 	def unapprove(self):
 		self.approved = False
 
 	def was_recently_approved(self):
-		if self.approved:
-			now = timezone.now()
-			return now - datetime.timedelta(days=7) <= self.approval_date <= now
-		else:
-			return False
-
-
+		now = timezone.now()
+		return now - datetime.timedelta(days=5) <= self.create_date <= now
