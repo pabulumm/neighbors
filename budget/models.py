@@ -11,7 +11,7 @@ class Budget(models.Model):
 	total_funds = models.DecimalField(max_digits=14, decimal_places=2, default=0.00, verbose_name="Total Funds")
 	total_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0.00, verbose_name="Total Expenses")
 	residence_fee = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Residence Fee", default=10.00)
-	created_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
+	create_date = models.DateTimeField(default=timezone.now, verbose_name="Created on")
 	neighborhood = models.ForeignKey(Neighborhood)
 
 	def __str__(self):

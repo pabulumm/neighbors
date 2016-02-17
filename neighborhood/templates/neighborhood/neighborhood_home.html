@@ -2,9 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     {% load staticfiles %}
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
@@ -44,9 +47,22 @@
             <p>Division ID: {{ neighborhood.id }}</p>
             <p>Division Creation date: {{ neighborhood.create_date }}</p>
             <p>Division Residence Fee: {{ neighborhood.residence_fee }}</p>
-            <p>Division Has Budget: {{ neighborhood.has_budget }}</p>
         </div> <!-- end container -->
 
+    </div>
+
+    <div class="map_box">
+        <div class="container">
+
+            <div id="map" class="map"></div>
+
+            <!-- START LEAFLET JS SCRIPT -->
+            <script>
+                L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
+                var map = L.mapbox.map('map', 'pabulum.p658n1lm').setView([34.223563, -119.064314], 4);
+            </script><!-- END LEAFLET JS SCRIPT -->
+
+       </div>
     </div>
 
 

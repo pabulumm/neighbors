@@ -38,14 +38,16 @@
             <p>Total Funds: {{ budget.total_funds }}</p>
             <p>Total Expenses: {{ budget.total_expenses }}</p>
             <p>Residence Fee: {{ budget.residence_fee }}</p>
-            <p>Creation Date: {{ budget.created_date }}</p>
+            <p>Creation Date: {{ budget.create_date }}</p>
 
             <h3>Expenses</h3>
             <p>
-                {% for expense in expense_list %}
-                    <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
-                        cost={{ expense.cost }} : approved={{ expense.approved }}</p>
-                {% endfor %}
+                {% if expense_list %}
+                    {% for expense in expense_list %}
+                        <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
+                            cost={{ expense.cost }} : approved={{ expense.approved }}</p>
+                    {% endfor %}
+                {% endif %}
             </p>
 
             <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br />

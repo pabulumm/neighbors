@@ -5,7 +5,7 @@ from neighborhood.models import Neighborhood
 
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 	family_name = models.CharField(max_length=50, default='family_name')
 	neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
 	join_date = models.DateField(default=timezone.now)

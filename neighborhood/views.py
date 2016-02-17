@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render
+
+from world.forms import GeoMapForm
 from .models import Neighborhood
+from budget.models import Budget
 
 
 @login_required
@@ -9,10 +11,11 @@ def neighborhood_home(request):
 	# get the user profile from the user object
 	user_profile = request.user.userprofile
 	neighborhood = user_profile.neighborhood
-	neighborhood.has_budget = True
 	request.session['neighborhood_id'] = neighborhood.id
+	map_form = GeoMapForm()
 	return render(request, 'neighborhood/neighborhood_home.html', {'neighborhood': neighborhood,
-																	'user_profile': user_profile })
+																	'user_profile': user_profile,
+																   	'map_form': map_form })
 
 
 @login_required

@@ -68,3 +68,10 @@ h1 {
 	background-color: rgb(230,230,230);
 	height: 100px;
 }
+
+.map {
+	height:500px;
+	width:100%;
+    padding:100px;
+
+}
