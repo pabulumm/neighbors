@@ -34,11 +34,25 @@
         </div> <!-- end container -->
     </div>
 
-    <!-- GEO DJANGO MAP HERE -->
-    <!-- TOP DISCUSSIONS -->
-    <!-- TOP POLLS -->
+
+    <div class="map_box">
+        <div class="container">
 
 
+       </div>
+    </div>
+
+            <div id="map" class="map"></div>
+
+    <!-- START LEAFLET JS SCRIPT -->
+    <script>
+        L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
+        var map = L.mapbox.map('map', 'mapbox.streets').setView([34.220912, -119.055079], 16);
+        //var my_house = L.latlng(34.221542, -119.055518);
+        //var icon = new L.Icon.Default;
+        //L.marker(my_house,{icon: icon}).addTo(map);
+        L.marker([34.221542, -119.055518]).addTo(map);
+    </script><!-- END LEAFLET JS SCRIPT -->
 
 
     <div class="content">
@@ -49,20 +63,6 @@
             <p>Division Residence Fee: {{ neighborhood.residence_fee }}</p>
         </div> <!-- end container -->
 
-    </div>
-
-    <div class="map_box">
-        <div class="container">
-
-            <div id="map" class="map"></div>
-
-            <!-- START LEAFLET JS SCRIPT -->
-            <script>
-                L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
-                var map = L.mapbox.map('map', 'pabulum.p658n1lm').setView([34.223563, -119.064314], 4);
-            </script><!-- END LEAFLET JS SCRIPT -->
-
-       </div>
     </div>
 
 
