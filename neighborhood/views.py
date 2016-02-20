@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import render
 
 from world.forms import GeoMapForm
@@ -7,6 +8,7 @@ from budget.models import Budget
 
 
 @login_required
+@ensure_csrf_cookie
 def neighborhood_home(request):
 	# get the user profile from the user object
 	user_profile = request.user.userprofile
