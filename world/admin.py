@@ -3,7 +3,7 @@ from . import models
 
 
 admin.site.register(models.WorldBorder)
-admin.site.register(models.HouseMarker)
+admin.site.register(models.Marker)
 admin.site.register(models.ConstructionMarker)
 admin.site.register(models.ExpenseMarker)
 admin.site.register(models.TheftMarker)

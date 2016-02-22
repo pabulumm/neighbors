@@ -25,6 +25,6 @@ urlpatterns = [
 	url(r'^budget/', include('budget.urls', namespace="budget")),
 	url(r'^discussions/', include('discussions.urls', namespace="discussions")),
 	url(r'^polls/', include('polls.urls', namespace="polls")),
-	url(r'^world/', include('world.urls', namespace="world")),
+	url(r'^markers/', include('markers.urls', namespace="markers")),
 	url(r'^admin/', include(admin.site.urls)),
 ]

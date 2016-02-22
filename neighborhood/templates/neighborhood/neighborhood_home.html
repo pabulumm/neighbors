@@ -45,14 +45,16 @@
 
             <div id="map" class="map">
                 <nav class='menu-ui'>
-                    <a href="#" id="road_block">Road Blocks</a>
-                    <a href="#" id="construction">Construction</a>
-                    <a href="#" id="theft">Theft</a>
-                    <a href="#" id="expense">Expense</a>
-                    <a href="#" id="yard_sale">Yard Sale</a>
-                    <a href="#" id="pool_spa">Pool/Spa</a>
-                    <a href="#" id="trash">Trash</a>
-                    <a href="#" id="hazard">Hazard</a>
+                        <a id="road_block">Road Blocks</a>
+                        <a href="#" id="construction">Construction</a>
+                        <a href="#" id="theft">Theft</a>
+                        <a href="#" id="expense">Expense</a>
+                        <a href="#" id="yard_sale">Yard Sale</a>
+                        <a href="#" id="pool_spa">Pool/Spa</a>
+                        <a href="#" id="trash">Trash</a>
+                        <a href="#" id="hazard">Hazard</a>
+                        <a id="new_marker">New Marker</a>
+
                 </nav>
             </div>
 
@@ -74,17 +76,38 @@
             }
             return cookieValue;
         }
+
+        // Grab csrf token for AJAX calls
         var csrftoken = getCookie('csrftoken');
 
-
+        // Load the access token and load the map at the neighborhood center
+        // TBD add custom center point for neighborhood map loading
         L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
         var map = L.mapbox.map('map', 'mapbox.streets').setView([34.220912, -119.055079], 16);
-        L.marker([34.221542, -119.055518]).addTo(map);
 
+        // Create holders for new marker info
         var name;
         var lat,lon;
-
         var marker;
+
+        $(document).ready(function() {
+            $.ajax({
+                url: "{% url 'markers:get_all_markers' %}",
+                type: 'GET',
+                data : {
+                    csrfmiddlewaretoken: csrftoken
+                },
+                success : function(json) {
+                    console.log(json);
+                    $(json['markers']).each(function() {
+                        L.marker([this.lat,this.lon]).addTo(map);
+                    })
+                },
+                error : function(xhr,errmsg,err) {
+                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            })
+        });
 
         map.on('click', function(e) {
             // create a variable to hold to new marker
@@ -98,6 +121,10 @@
             lon = e.latlng.lng;
         });
 
+        $('#new_marker').on('click', function() {
+
+        });
+
         $('#map').on('click', '.cancel', function() {
             map.removeLayer(marker);
             alert('Marker removed');
@@ -106,7 +133,7 @@
         $('#map').on('click', '.save', function() {
             // AJAX call to save new marker as GeoDjango model
             $.ajax({
-                url: "{% url 'world:new_marker' %}",
+                url: "{% url 'markers:new_marker' %}",
                 type: "Post",
                 data : {
                     name: name,
