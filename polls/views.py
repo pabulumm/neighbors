@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 from django.forms import formset_factory
+from django.contrib.auth.decorators import login_required
 
 from neighborhood.models import Neighborhood
 
@@ -40,6 +41,7 @@ class ResultsView(generic.DetailView):
 	template_name = 'polls/results.html'
 
 
+@login_required
 def new_poll(request):
 	ChoiceFormSet = formset_factory(ChoiceForm, extra=2)
 	if request.method == 'POST':
@@ -71,6 +73,10 @@ def new_poll(request):
 												   'choice_formset': choice_formset})
 
 
+#def get_recent_polls(request):
+	#n_id = request.session['neighborhood_id']
+	#recent_polls = [poll for poll in Question.objects.filter(neighborhood_id=n_id).order_by('las')]
+@login_required
 def vote(request, question_id):
 	question = get_object_or_404(Question, pk=question_id)
 	try:
@@ -94,5 +100,8 @@ def vote(request, question_id):
 			# with POST data. This prevents data from being posted twice if a
 			# user hits the Back button.
 			return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+
 
 # end

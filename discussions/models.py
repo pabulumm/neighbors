@@ -33,6 +33,17 @@ class Discussion(models.Model):
 		now = timezone.now()
 		return now - datetime.timedelta(days=5) <= self.create_date <= now
 
+	was_published_recently.admin_order_field = 'pub_date'
+	was_published_recently.boolean = True
+	was_published_recently.short_description = 'Published Recently?'
+
+	def as_dict(self):
+		return {
+			'title': self.title,
+			'description': self.description,
+			'last_modified': self.last_modified
+		}
+
 
 class Comment(models.Model):
 	id = models.AutoField(primary_key=True)

@@ -2,8 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import render
 
-from world.forms import GeoMapForm
 from .models import Neighborhood
+from budget.models import Budget, Expense
+from discussions.models import Discussion
 
 
 
@@ -14,10 +15,20 @@ def neighborhood_home(request):
 	user_profile = request.user.userprofile
 	neighborhood = user_profile.neighborhood
 	request.session['neighborhood_id'] = neighborhood.id
-	map_form = GeoMapForm()
+	try:
+		recent_discussion_dict = [dis for dis in Discussion.objects
+									 .filter(neighborhood_id=neighborhood.id)
+									 .order_by('-last_modified')[:5]]
+		budget = Budget.objects.get(neighborhood=neighborhood)
+		expense_list = Expense.objects.filter(budget=budget)
+	except NameError:
+		return render(request, 'neighborhood/neighborhood_home.html', {'neighborhood': neighborhood,
+																	'user_profile': user_profile})
 	return render(request, 'neighborhood/neighborhood_home.html', {'neighborhood': neighborhood,
 																	'user_profile': user_profile,
-																   	'map_form': map_form})
+																	'discussions': recent_discussion_dict,
+																    'expense_list': expense_list,
+																    'budget': budget})
 
 
 @login_required

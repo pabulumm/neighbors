@@ -9,17 +9,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
+    <script src="{% static 'neighborhood/d3pie.min.js'%}"></script>
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
 <body>
-
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Welcome to the Neighborhood!</h1>
-            <p>{{ neighborhood.division_title }} Division</p>
-        </div> <!-- end container -->
-    </div>
 
     <div class="nav">
         <div class="container">
@@ -36,15 +31,17 @@
     </div>
 
 
-    <div class="map_box">
-        <div class="container">
+    <div class="map_section">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="home-menu">
+                    <h1>{{ neighborhood.division_title }}</h1>
 
-
-       </div>
-    </div>
-
-            <div id="map" class="map">
-                <nav class='menu-ui'>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div id="map" class="map">
+                    <nav class='menu-ui'>
                         <a id="road_block">Road Blocks</a>
                         <a href="#" id="construction">Construction</a>
                         <a href="#" id="theft">Theft</a>
@@ -53,10 +50,92 @@
                         <a href="#" id="pool_spa">Pool/Spa</a>
                         <a href="#" id="trash">Trash</a>
                         <a href="#" id="hazard">Hazard</a>
-                        <a id="new_marker">New Marker</a>
-
-                </nav>
+                        <a href="#" id="new_marker">New Marker</a>
+                    </nav>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>{{ budget.title }}</h1>
+                    <p>Neighborhood: {{ budget.neighborhood }}</p>
+                    <p>Total Funds: {{ budget.total_funds }}</p>
+                    <p>Total Expenses: {{ budget.total_expenses }}</p>
+                    <p>Residence Fee: {{ budget.residence_fee }}</p>
+                    <p>Creation Date: {{ budget.create_date }}</p>
+
+                    <h3>Expenses</h3>
+                        {% if expense_list %}
+                            {% for expense in expense_list %}
+                                <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
+                                    cost={{ expense.cost }} : approved={{ expense.approved }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br />
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div id="pie" class="pie"></div>
+
+    <script>
+        var pie = new d3pie("pie", {
+            header: {
+                title: {
+                    text: "A Simple Donut Pie"
+                },
+                    location: "pie-center"
+                },
+                size: {
+                    pieInnerRadius: "80%"
+                },
+                data: {
+                    sortOrder: "label-asc",
+                content: [
+                    { label: "JavaScript", value: 1 },
+                    { label: "Ruby", value: 2 },
+                    { label: "Java", value: 3 },
+                    { label: "C++", value: 2 },
+                    { label: "Objective-C", value: 6 }
+                ]
+            }
+        });
+        pie.redraw();
+    </script>
+
+    <div class="content">
+        <div class="container">
+            <h1>Discussion Board</h1>
+            {% for discussion in discussions %}
+                <a href="{% url 'discussions:detail' discussion.id %}">
+                    <h3>{{ discussion.title }}</h3></a>
+                <p>Creator ID: {{ discussion.create_date }}
+                    Date Created: {{ discussion.create_date }}</p>
+                <p></p>
+            {% endfor %}
+
+
+            <a href="{% url 'discussions:new_discussion' %}"><input type="button" value="New Discussion"></a><br />
+        </div>
+    </div>
+
+    <div class="polls">
+
+    </div>
+
+    <div class="discussions">
+
+    </div>
 
                 <!-- MAPBOX.JS SCRIPT -->
     <script>
@@ -88,9 +167,12 @@
         // Create holders for new marker info
         var name;
         var lat,lon;
-        var marker;
+        var pin;
+        var mark_latlng;
 
         $(document).ready(function() {
+
+            // Getting all markers in db and loading to map
             $.ajax({
                 url: "{% url 'markers:get_all_markers' %}",
                 type: 'GET',
@@ -111,23 +193,99 @@
 
         map.on('click', function(e) {
             // create a variable to hold to new marker
-            marker = L.marker(e.latlng).addTo(map);
-            marker.bindPopup('<button id="save" class="save">Save</button>' +
-                '<button class="cancel">Cancel</button>').openPopup();
-
-            // grab the position of the click
-            name = "Test Name";
-            lat = e.latlng.lat;
-            lon = e.latlng.lng;
+            if (pin) {
+                pin.setLatLng(e.latlng);
+                mark_latlng = e.latlng;
+            }
+            else {
+                pin = L.marker(e.latlng).addTo(map)
+                        .bindPopup('<button>Save</button>')
+                        .openPopup();
+                mark_latlng = e.latlng;
+            }
         });
 
-        $('#new_marker').on('click', function() {
+        map.getContainer().querySelector('#new_marker').onclick = function() {
+        // $('#new_marker').on('click', function() {
+            //if (pin) {
+                // get coordinates of the pin and remove it from the map
+                pin.removeFrom(map);
 
-        });
+                // add a marker to the map at the pin's position
+                L.marker(mark_latlng).addTo(map);
+                alert('wtf');
+                /*
+                L.mapbox.featureLayer({
+                    // this feature is in the GeoJSON format: see geojson.org
+                    // for the full specification
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        // coordinates here are in longitude, latitude order because
+                        // x, y is the standard for GeoJSON and many formats
+                        coordinates: [mark_latlng.lng, mark_latlng.lat]
+                    },
+                    properties: {
+                        title: 'Pin',
+                        description: 'current pin placement',
+                        // one can customize markers by adding simplestyle properties
+                        // https://www.mapbox.com/guides/an-open-platform/#simplestyle
+                        'marker-size': 'large',
+                        'marker-color': '#4d79ff',
+                        'marker-symbol': 'cross'
+                    }
+                }).addTo(map);
+                */
+
+
+                // grab the position of the click
+                name = "Test Name";
+                // AJAX call to save new marker as GeoDjango model
+                $.ajax({
+                    url: "{% url 'markers:new_marker' %}",
+                    type: "Post",
+                    data : {
+                        name: name,
+                        lat: mark_latlng.lat,
+                        lon: mark_latlng.lng,
+                        csrfmiddlewaretoken: csrftoken
+                    },
+                    success : function(json) {
+                        console.log(json);
+                        alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
+                    },
+                    error : function(xhr,errmsg,err) {
+                        alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                    }
+                });
+           // }
+        };
+        //});
 
         $('#map').on('click', '.cancel', function() {
             map.removeLayer(marker);
             alert('Marker removed');
+        });
+
+        $('#map').on('click', '#newmarker', function() {
+            // AJAX call to save new marker as GeoDjango model
+            $.ajax({
+                url: "{% url 'markers:new_marker' %}",
+                type: "Post",
+                data : {
+                    name: name,
+                    lat: mark_latlng.lat,
+                    lon: mark_latlng.lng,
+                    csrfmiddlewaretoken: csrftoken
+                },
+                success : function(json) {
+                    console.log(json);
+                    alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
+                },
+                error : function(xhr,errmsg,err) {
+                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            })
         });
 
         $('#map').on('click', '.save', function() {

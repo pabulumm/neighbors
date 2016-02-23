@@ -3,6 +3,10 @@ h1 {
 	font-size: 24px;
 }
 
+.nav {
+    background-color: #bab9be
+}
+
 .nav a {
 	color: #1E90FF;
 	font-size: 16px;
@@ -71,10 +75,17 @@ h1 {
 
 #map {
 	height:500px;
-	width:80%;
-    margin-left: 10%;
+    margin-right:100px;
     margin-top: 50px;
     margin-bottom: 50px;
+}
+
+.home-menu {
+	height:500px;
+    margin-left: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+	border: 2px solid red;
 }
 
 .menu-ui {
