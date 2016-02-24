@@ -2,355 +2,404 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     {% load staticfiles %}
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/home.css' %}"/>
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
-    <script src="{% static 'neighborhood/d3pie.min.js'%}"></script>
     <meta charset="UTF-8">
     <title>Neighbors</title>
 </head>
 <body>
 
-    <div class="nav">
-        <div class="container">
-            <ul class="nav nav-pills">
-                <li><a href="{% url 'neighborhood:neighborhood_home' %}">Home</a></li>
-                <li><a class="active" href="{% url 'polls:index' %}">Polls</a></li>
-				<li><a href="{% url 'discussions:index' %}">Discussions</a></li>
-                <li><a href="{% url 'budget:manage' %}">Budget</a></li>
-                <li><a href="{% url 'neighborhood:about' %}">About Neighbors</a></li>
-                <li><a href="{% url 'accounts:user_profile' %}">Manage Account</a></li>
-                <li><a href="{% url 'accounts:user_logout' %}">Sign out</a></li>
-            </ul>
-        </div> <!-- end container -->
+<div class="nav">
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li><a href="{% url 'neighborhood:neighborhood_home' %}">Home</a></li>
+            <li><a class="active" href="{% url 'polls:index' %}">Polls</a></li>
+            <li><a href="{% url 'discussions:index' %}">Discussions</a></li>
+            <li><a href="{% url 'budget:manage' %}">Budget</a></li>
+            <li><a href="{% url 'neighborhood:about' %}">About Neighbors</a></li>
+            <li><a href="{% url 'accounts:user_profile' %}">Manage Account</a></li>
+            <li><a href="{% url 'accounts:user_logout' %}">Sign out</a></li>
+        </ul>
+    </div> <!-- end container -->
+</div>
+
+
+<div class="map_section">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="home-menu">
+                <h1>{{ neighborhood.division_title }}</h1>
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="map" class="map">
+                <nav class='menu-ui'>
+                    <a id="road_block">Road Blocks</a>
+                    <a href="#" id="construction">Construction</a>
+                    <a href="#" id="theft">Theft</a>
+                    <a href="#" id="expense">Expense</a>
+                    <a href="#" id="yard_sale">Yard Sale</a>
+                    <a href="#" id="pool_spa">Pool/Spa</a>
+                    <a href="#" id="trash">Trash</a>
+                    <a href="#" id="hazard">Hazard</a>
+                    <a href="#" id="new_marker">New Marker</a>
+                </nav>
+            </div>
+        </div>
     </div>
+</div>
 
-
-    <div class="map_section">
+<div class="content">
+    <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <div class="home-menu">
-                    <h1>{{ neighborhood.division_title }}</h1>
+            <div class="col-md-6">
+                <h1>{{ budget.title }}</h1>
+                <p>Neighborhood: {{ budget.neighborhood }}</p>
+                <p>Total Funds: {{ budget.total_funds }}</p>
+                <p>Total Expenses: {{ budget.total_expenses }}</p>
+                <p>Residence Fee: {{ budget.residence_fee }}</p>
+                <p>Creation Date: {{ budget.create_date }}</p>
 
-                </div>
+                <h3>Expenses</h3>
+                {% if expense_list %}
+                    {% for expense in expense_list %}
+                        <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
+                            cost={{ expense.cost }} : approved={{ expense.approved }}</p>
+                    {% endfor %}
+                {% endif %}
+                <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br/>
             </div>
-            <div class="col-md-9">
-                <div id="map" class="map">
-                    <nav class='menu-ui'>
-                        <a id="road_block">Road Blocks</a>
-                        <a href="#" id="construction">Construction</a>
-                        <a href="#" id="theft">Theft</a>
-                        <a href="#" id="expense">Expense</a>
-                        <a href="#" id="yard_sale">Yard Sale</a>
-                        <a href="#" id="pool_spa">Pool/Spa</a>
-                        <a href="#" id="trash">Trash</a>
-                        <a href="#" id="hazard">Hazard</a>
-                        <a href="#" id="new_marker">New Marker</a>
-                    </nav>
-                </div>
+            <div class="col-md-6">
+                <div id="chart"></div>
             </div>
         </div>
-    </div>
 
-    <div class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1>{{ budget.title }}</h1>
-                    <p>Neighborhood: {{ budget.neighborhood }}</p>
-                    <p>Total Funds: {{ budget.total_funds }}</p>
-                    <p>Total Expenses: {{ budget.total_expenses }}</p>
-                    <p>Residence Fee: {{ budget.residence_fee }}</p>
-                    <p>Creation Date: {{ budget.create_date }}</p>
-
-                    <h3>Expenses</h3>
-                        {% if expense_list %}
-                            {% for expense in expense_list %}
-                                <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
-                                    cost={{ expense.cost }} : approved={{ expense.approved }}</p>
-                            {% endfor %}
-                        {% endif %}
-                    <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br />
-                </div>
-                <div class="col-md-6">
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
-
-    <div id="pie" class="pie"></div>
-
-    <script>
-        var pie = new d3pie("pie", {
-            header: {
-                title: {
-                    text: "A Simple Donut Pie"
-                },
-                    location: "pie-center"
-                },
-                size: {
-                    pieInnerRadius: "80%"
-                },
-                data: {
-                    sortOrder: "label-asc",
-                content: [
-                    { label: "JavaScript", value: 1 },
-                    { label: "Ruby", value: 2 },
-                    { label: "Java", value: 3 },
-                    { label: "C++", value: 2 },
-                    { label: "Objective-C", value: 6 }
-                ]
-            }
-        });
-        pie.redraw();
-    </script>
-
-    <div class="content">
-        <div class="container">
-            <h1>Discussion Board</h1>
-            {% for discussion in discussions %}
-                <a href="{% url 'discussions:detail' discussion.id %}">
-                    <h3>{{ discussion.title }}</h3></a>
-                <p>Creator ID: {{ discussion.create_date }}
-                    Date Created: {{ discussion.create_date }}</p>
-                <p></p>
-            {% endfor %}
-
-
-            <a href="{% url 'discussions:new_discussion' %}"><input type="button" value="New Discussion"></a><br />
-        </div>
-    </div>
-
-    <div class="polls">
 
     </div>
-
-    <div class="discussions">
-
-    </div>
-
-                <!-- MAPBOX.JS SCRIPT -->
-    <script>
-        //For getting CSRF token
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-        // Grab csrf token for AJAX calls
-        var csrftoken = getCookie('csrftoken');
-
-        // Load the access token and load the map at the neighborhood center
-        // TBD add custom center point for neighborhood map loading
-        L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
-        var map = L.mapbox.map('map', 'mapbox.streets').setView([34.220912, -119.055079], 16);
-
-        // Create holders for new marker info
-        var name;
-        var lat,lon;
-        var pin;
-        var mark_latlng;
-
-        $(document).ready(function() {
-
-            // Getting all markers in db and loading to map
-            $.ajax({
-                url: "{% url 'markers:get_all_markers' %}",
-                type: 'GET',
-                data : {
-                    csrfmiddlewaretoken: csrftoken
-                },
-                success : function(json) {
-                    console.log(json);
-                    $(json['markers']).each(function() {
-                        L.marker([this.lat,this.lon]).addTo(map);
-                    })
-                },
-                error : function(xhr,errmsg,err) {
-                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                }
-            })
-        });
-
-        map.on('click', function(e) {
-            // create a variable to hold to new marker
-            if (pin) {
-                pin.setLatLng(e.latlng);
-                mark_latlng = e.latlng;
-            }
-            else {
-                pin = L.marker(e.latlng).addTo(map)
-                        .bindPopup('<button>Save</button>')
-                        .openPopup();
-                mark_latlng = e.latlng;
-            }
-        });
-
-        map.getContainer().querySelector('#new_marker').onclick = function() {
-        // $('#new_marker').on('click', function() {
-            //if (pin) {
-                // get coordinates of the pin and remove it from the map
-                pin.removeFrom(map);
-
-                // add a marker to the map at the pin's position
-                L.marker(mark_latlng).addTo(map);
-                alert('wtf');
-                /*
-                L.mapbox.featureLayer({
-                    // this feature is in the GeoJSON format: see geojson.org
-                    // for the full specification
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Point',
-                        // coordinates here are in longitude, latitude order because
-                        // x, y is the standard for GeoJSON and many formats
-                        coordinates: [mark_latlng.lng, mark_latlng.lat]
-                    },
-                    properties: {
-                        title: 'Pin',
-                        description: 'current pin placement',
-                        // one can customize markers by adding simplestyle properties
-                        // https://www.mapbox.com/guides/an-open-platform/#simplestyle
-                        'marker-size': 'large',
-                        'marker-color': '#4d79ff',
-                        'marker-symbol': 'cross'
-                    }
-                }).addTo(map);
-                */
+</div>
 
 
-                // grab the position of the click
-                name = "Test Name";
-                // AJAX call to save new marker as GeoDjango model
-                $.ajax({
-                    url: "{% url 'markers:new_marker' %}",
-                    type: "Post",
-                    data : {
-                        name: name,
-                        lat: mark_latlng.lat,
-                        lon: mark_latlng.lng,
-                        csrfmiddlewaretoken: csrftoken
-                    },
-                    success : function(json) {
-                        console.log(json);
-                        alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
-                    },
-                    error : function(xhr,errmsg,err) {
-                        alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                    }
+<script>
+    (function (d3) {
+        'use strict';
+
+        var dataset = [
+            {label: 'Landscaping', count: 10},
+            {label: 'Construction', count: 20},
+            {label: 'Projects', count: 30},
+            {label: 'Expenses', count: 40}
+        ];
+
+        var width = 360;
+        var height = 360;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 75;
+        var legendRectSize = 18;                                  // NEW
+        var legendSpacing = 4;                                    // NEW
+
+        var color = d3.scale.category20b();
+
+        var svg = d3.select('#chart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .append('g')
+                .attr('transform', 'translate(' + (width / 2) +
+                        ',' + (height / 2) + ')');
+
+        var arc = d3.svg.arc()
+                .innerRadius(radius - donutWidth)
+                .outerRadius(radius);
+
+        var pie = d3.layout.pie()
+                .value(function (d) {
+                    return d.count;
+                })
+                .sort(null);
+
+        var path = svg.selectAll('path')
+                .data(pie(dataset))
+                .enter()
+                .append('path')
+                .attr('d', arc)
+                .attr('fill', function (d, i) {
+                    return color(d.data.label);
                 });
-           // }
-        };
-        //});
 
-        $('#map').on('click', '.cancel', function() {
-            map.removeLayer(marker);
-            alert('Marker removed');
-        });
+        var legend = svg.selectAll('.legend')                     // NEW
+                .data(color.domain())                                   // NEW
+                .enter()                                                // NEW
+                .append('g')                                            // NEW
+                .attr('class', 'legend')                                // NEW
+                .attr('transform', function (d, i) {                     // NEW
+                    var height = legendRectSize + legendSpacing;          // NEW
+                    var offset = height * color.domain().length / 2;     // NEW
+                    var horz = -2 * legendRectSize;                       // NEW
+                    var vert = i * height - offset;                       // NEW
+                    return 'translate(' + horz + ',' + vert + ')';        // NEW
+                });                                                     // NEW
 
-        $('#map').on('click', '#newmarker', function() {
-            // AJAX call to save new marker as GeoDjango model
-            $.ajax({
-                url: "{% url 'markers:new_marker' %}",
-                type: "Post",
-                data : {
-                    name: name,
-                    lat: mark_latlng.lat,
-                    lon: mark_latlng.lng,
-                    csrfmiddlewaretoken: csrftoken
-                },
-                success : function(json) {
-                    console.log(json);
-                    alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
-                },
-                error : function(xhr,errmsg,err) {
-                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                }
-            })
-        });
+        legend.append('rect')                                     // NEW
+                .attr('width', legendRectSize)                          // NEW
+                .attr('height', legendRectSize)                         // NEW
+                .style('fill', color)                                   // NEW
+                .style('stroke', color);                                // NEW
 
-        $('#map').on('click', '.save', function() {
-            // AJAX call to save new marker as GeoDjango model
-            $.ajax({
-                url: "{% url 'markers:new_marker' %}",
-                type: "Post",
-                data : {
-                    name: name,
-                    lat: lat,
-                    lon: lon,
-                    csrfmiddlewaretoken: csrftoken
-                },
-                success : function(json) {
-                    console.log(json);
-                    alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
-                },
-                error : function(xhr,errmsg,err) {
-                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                }
-            })
-        });
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        legend.append('text')                                     // NEW
+                .attr('x', legendRectSize + legendSpacing)              // NEW
+                .attr('y', legendRectSize - legendSpacing)              // NEW
+                .text(function (d) {
+                    return d;
+                });                       // NEW
+
+    })(window.d3);
+</script>
+
+<div class="content">
+    <div class="container">
+        <h1>Discussion Board</h1>
+        {% for discussion in discussions %}
+            <a href="{% url 'discussions:detail' discussion.id %}">
+                <h3>{{ discussion.title }}</h3></a>
+            <p>Creator ID: {{ discussion.create_date }}
+                Date Created: {{ discussion.create_date }}</p>
+            <p></p>
+        {% endfor %}
+
+
+        <a href="{% url 'discussions:new_discussion' %}"><input type="button" value="New Discussion"></a><br/>
+    </div>
+</div>
+
+<div class="polls">
+
+</div>
+
+<div class="discussions">
+
+</div>
+
+<!-- MAPBOX.JS SCRIPT -->
+<script>
+    //For getting CSRF token
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
                 }
             }
+        }
+        return cookieValue;
+    }
+
+    // Grab csrf token for AJAX calls
+    var csrftoken = getCookie('csrftoken');
+
+    // Load the access token and load the map at the neighborhood center
+    // TBD add custom center point for neighborhood map loading
+    L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
+    var map = L.mapbox.map('map', 'mapbox.streets').setView([34.220912, -119.055079], 16);
+
+    // Create holders for new marker info
+    var name;
+    var lat, lon;
+    var pin;
+    var mark_latlng;
+
+    $(document).ready(function () {
+
+        // Getting all markers in db and loading to map
+        $.ajax({
+            url: "{% url 'markers:get_all_markers' %}",
+            type: 'GET',
+            data: {
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (json) {
+                console.log(json);
+                $(json['markers']).each(function () {
+                    L.marker([this.lat, this.lon]).addTo(map);
+                })
+            },
+            error: function (xhr, errmsg, err) {
+                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        })
+    });
+
+    map.on('click', function (e) {
+        // create a variable to hold to new marker
+        if (pin) {
+            pin.setLatLng(e.latlng);
+            mark_latlng = e.latlng;
+        }
+        else {
+            pin = L.marker(e.latlng).addTo(map)
+                    .bindPopup('<button>Save</button>')
+                    .openPopup();
+            mark_latlng = e.latlng;
+        }
+    });
+
+    map.getContainer().querySelector('#new_marker').onclick = function () {
+        // $('#new_marker').on('click', function() {
+        //if (pin) {
+        // get coordinates of the pin and remove it from the map
+        pin.removeFrom(map);
+
+        // add a marker to the map at the pin's position
+        L.marker(mark_latlng).addTo(map);
+        alert('wtf');
+        /*
+         L.mapbox.featureLayer({
+         // this feature is in the GeoJSON format: see geojson.org
+         // for the full specification
+         type: 'Feature',
+         geometry: {
+         type: 'Point',
+         // coordinates here are in longitude, latitude order because
+         // x, y is the standard for GeoJSON and many formats
+         coordinates: [mark_latlng.lng, mark_latlng.lat]
+         },
+         properties: {
+         title: 'Pin',
+         description: 'current pin placement',
+         // one can customize markers by adding simplestyle properties
+         // https://www.mapbox.com/guides/an-open-platform/#simplestyle
+         'marker-size': 'large',
+         'marker-color': '#4d79ff',
+         'marker-symbol': 'cross'
+         }
+         }).addTo(map);
+         */
+
+
+        // grab the position of the click
+        name = "Test Name";
+        // AJAX call to save new marker as GeoDjango model
+        $.ajax({
+            url: "{% url 'markers:new_marker' %}",
+            type: "Post",
+            data: {
+                name: name,
+                lat: mark_latlng.lat,
+                lon: mark_latlng.lng,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (json) {
+                console.log(json);
+                alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
+            },
+            error: function (xhr, errmsg, err) {
+                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
         });
-    </script>
+        // }
+    };
+    //});
+
+    $('#map').on('click', '.cancel', function () {
+        map.removeLayer(marker);
+        alert('Marker removed');
+    });
+
+    $('#map').on('click', '#newmarker', function () {
+        // AJAX call to save new marker as GeoDjango model
+        $.ajax({
+            url: "{% url 'markers:new_marker' %}",
+            type: "Post",
+            data: {
+                name: name,
+                lat: mark_latlng.lat,
+                lon: mark_latlng.lng,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (json) {
+                console.log(json);
+                alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
+            },
+            error: function (xhr, errmsg, err) {
+                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        })
+    });
+
+    $('#map').on('click', '.save', function () {
+        // AJAX call to save new marker as GeoDjango model
+        $.ajax({
+            url: "{% url 'markers:new_marker' %}",
+            type: "Post",
+            data: {
+                name: name,
+                lat: lat,
+                lon: lon,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (json) {
+                console.log(json);
+                alert('Created a House marker at latitude:' + json['lat'] + ' and longitude:' + json['lon'])
+            },
+            error: function (xhr, errmsg, err) {
+                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        })
+    });
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+</script>
 
 
-    <div class="content">
-        <div class="container">
-            <p>Division Title: {{ neighborhood.division_title }}</p>
-            <p>Division ID: {{ neighborhood.id }}</p>
-            <p>Division Creation date: {{ neighborhood.create_date }}</p>
-            <p>Division Residence Fee: {{ neighborhood.residence_fee }}</p>
-        </div> <!-- end container -->
+<div class="content">
+    <div class="container">
+        <p>Division Title: {{ neighborhood.division_title }}</p>
+        <p>Division ID: {{ neighborhood.id }}</p>
+        <p>Division Creation date: {{ neighborhood.create_date }}</p>
+        <p>Division Residence Fee: {{ neighborhood.residence_fee }}</p>
+    </div> <!-- end container -->
 
-    </div>
+</div>
 
 
-    <div class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4">
-					<h3>About</h3>
-					<p>Info/links regarding Neighbors information.</p>
-				</div>
-				<div class="col-md-4">
-					<h3>Contact</h3>
-					<p>Info/links for contacting Neighbors peeps</p>
-				</div>
-				<div class="col-md-4">
-					<h3>Help</h3>
-					<p>Help and FAQ shit.</p>
-				</div>
-			</div> <!-- end row -->
-		</div> <!-- end container -->
-	</div> <!-- end footer -->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>About</h3>
+                <p>Info/links regarding Neighbors information.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Contact</h3>
+                <p>Info/links for contacting Neighbors peeps</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Help</h3>
+                <p>Help and FAQ shit.</p>
+            </div>
+        </div> <!-- end row -->
+    </div> <!-- end container -->
+</div> <!-- end footer -->
 
 
 </body>
