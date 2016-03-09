@@ -40,7 +40,7 @@ h1 {
 }
 
 .jumbotron {
-    background-image: url("images/Highland_Heritage_Regional_Park_Panorama_Falcon_Creek_Highlands_Ranch.jpg");
+    background-image: url("../images/Highland_Heritage_Regional_Park_Panorama_Falcon_Creek_Highlands_Ranch.jpg");
     height: 350px;
     background-size: cover;
 }

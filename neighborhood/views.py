@@ -21,11 +21,11 @@ def neighborhood_home(request):
 		budget = Budget.objects.filter(neighborhood=neighborhood)
 		expense_list = Expense.objects.filter(budget=budget)
 	except NameError:
-		return render(request, 'neighborhood/neighborhood_home.html', {'neighborhood': neighborhood})
-	return render(request, 'neighborhood/neighborhood_home.html', {'neighborhood': neighborhood,
-																   'discussions': recent_discussion_dict,
-																   'expense_list': expense_list,
-																   'budget': budget})
+		return render(request, 'neighborhood/about.html', {'neighborhood': neighborhood})
+	return render(request, 'neighborhood/about.html', {'neighborhood': neighborhood,
+													  'discussions': recent_discussion_dict,
+													  'expense_list': expense_list,
+													  'budget': budget})
 
 
 @login_required
