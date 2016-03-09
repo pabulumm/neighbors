@@ -32,13 +32,13 @@
 
 <div class="map_section">
     <div class="row">
-        <div class="col-md-3">
+        <!--<div class="col-md-3">
             <div class="home-menu">
                 <h1>{{ neighborhood.division_title }}</h1>
 
             </div>
-        </div>
-        <div class="col-md-9">
+        </div>-->
+        <div class="col-md-12">
             <div id="map" class="map">
                 <nav class='menu-ui'>
                     <a id="road_block">Road Blocks</a>
@@ -52,6 +52,9 @@
                     <a href="#" id="new_marker">New Marker</a>
                 </nav>
             </div>
+            <div class="container">
+                <h1>WHADDDAFUCKSUP</h1>
+            </div>
         </div>
     </div>
 </div>
@@ -59,14 +62,15 @@
 <div class="content">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <h1>{{ budget.title }}</h1>
                 <p>Neighborhood: {{ budget.neighborhood }}</p>
                 <p>Total Funds: {{ budget.total_funds }}</p>
                 <p>Total Expenses: {{ budget.total_expenses }}</p>
                 <p>Residence Fee: {{ budget.residence_fee }}</p>
                 <p>Creation Date: {{ budget.create_date }}</p>
-
+            </div>
+            <div class="col-md-3">
                 <h3>Expenses</h3>
                 {% if expense_list %}
                     {% for expense in expense_list %}

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 AUTH_PROFILE_MODEL = 'accounts.UserProfile'
 
 INSTALLED_APPS = (
+	'django_extensions',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',

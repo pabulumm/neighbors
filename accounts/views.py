@@ -1,18 +1,16 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 
-from neighborhood.views import neighborhood_home
-
-from .forms import UserForm, UserProfileForm
 from .models import UserProfile
+from .forms import UserForm
+from neighborhood.models import Neighborhood, House
 
 
 def user_login(request):
 	"""
 		---USER_LOGIN---
-	@:param: request
+	:param request:
 	"""
 	if request.method == 'POST':
 		# get username and password from input text
@@ -62,34 +60,29 @@ def register_user(request):
 	if request.method == 'POST':
 		# Using forms to collect new user data
 		user_form = UserForm(request.POST)
-		profile_form = UserProfileForm(request.POST)
-
-		if user_form.is_valid() and profile_form.is_valid():
-			# We have checked that the forms are valid now save the user
-			user = user_form.save()
-			profile_form = profile_form.save()
-
-			# Now we hash the password with the set_password method.
-			# Once hashed, we can update the user object.
-			user.set_password(user.password)
-			user.save()
-
-			# Now sort out the UserProfile instance.
-			# Since we need to set the user attribute ourselves, we set commit=False.
-			# This delays saving the model until we're ready to avoid integrity problems.
-			profile = UserProfile(user=user, family_name=profile_form.family_name,
-								  address=profile_form.address,
-								  neighborhood=profile_form.neighborhood)
-			profile.save()
-			registered = True
+		if user_form.is_valid():
+			neighborhood = Neighborhood.objects.get(division_title=request.POST['neighborhood_text'])
+			house = House.objects.filter(neighborhood=neighborhood,
+										 permission_code=request.POST['perm_code_text'])
+			if house:
+				# We have checked that the forms are valid now save the user
+				user = user_form.save()
+				# Now we hash the password with the set_password method.
+				# Once hashed, we can update the user object.
+				user.set_password(user.password)
+				user.save()
+				user_profile = UserProfile(user=user, house=house)
+				user_profile.save()
+				return HttpResponseRedirect('/')
+			else:
+				# no house object was returned, invalid info provided
+				return HttpResponse("The neighborhood and permission code you have entered do not match any existing neighborhood.")
 	# Not a HTTP POST, so we render our form using two ModelForm instances.
 	# These forms will be blank, ready for user input.
 	else:
 		user_form = UserForm()
-		profile_form = UserProfileForm()
 	# Render the template depending on the context.
 	return render(request, 'accounts/register.html', {'user_form': user_form,
-													  'profile_form': profile_form,
 													  'registered': registered})
 
 

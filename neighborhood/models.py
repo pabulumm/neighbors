@@ -10,3 +10,12 @@ class Neighborhood(models.Model):
 	def __str__(self):
 		return self.division_title
 
+
+class House(models.Model):
+	id = models.AutoField(primary_key=True)
+	address = models.CharField(max_length=200)
+	neighborhood = models.ForeignKey(Neighborhood)
+	permission_code = models.CharField(max_length=25)
+
+	def __str__(self):
+		return self.address
