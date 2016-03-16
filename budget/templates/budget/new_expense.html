@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>Neighbors</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'budget/style.css' %}"/>
 </head>
 <body>
-    <form id="expense_form" action="{% url 'budget:new_expense' %}" method="post"
-            enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ expense_form.as_p }}
-        <input type="submit" name="submit" value="Create Expense"/>
-    </form>
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-info" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-info" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
+    </div>
+    <div class="icons">
+        <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container col-md-4 col-md-offset-4 ">
+        <h1 class="orange-text">New Expense</h1>
+        <form id="expense_form" action="{% url 'budget:new_expense' %}" method="post"
+                enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ expense_form.as_p }}
+            <input class='btn btn-default' type="submit" name="submit" value="Create Expense"/>
+        </form>
+        <a href="{% url 'neighborhood:home' %}">Return</a>
+    </div>
+</div>
+
 
 </body>
 </html>

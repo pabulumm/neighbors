@@ -8,15 +8,15 @@ from .models import Marker
 @login_required
 def new_marker(request):
 	if request.method == 'POST' and request.is_ajax():
-		n_id = request.session['neighborhood_id']
+		neighborhood = request.user.userprofile.house.neighborhood
 		name = request.POST['name']
 		lat = request.POST['lat']
 		lon = request.POST['lon']
-		marker_type = "Testing"
-		new_house_marker = Marker(neighborhood_id=n_id,
-								  name=name, lat=lat, lon=lon, marker_type=marker_type)
+		type_of_marker = request.POST['type_of_marker']
+		new_house_marker = Marker(neighborhood_id=neighborhood.id,
+								  name=name, lat=lat, lon=lon, type_of_marker=type_of_marker)
 		new_house_marker.save()
-		return HttpResponse(json.dumps({'name': name, 'lat': lat, 'lon': lon}), content_type='application/json')
+		return HttpResponse(json.dumps({'name': name, 'lat': lat, 'lon': lon, 'type_of_marker': type_of_marker}), content_type='application/json')
 
 
 @login_required

@@ -19,7 +19,7 @@ def create_budget(request):
 	from user and create the budget
 	:param request
 	"""
-	neighborhood = Neighborhood.objects.get(id=request.session['neighborhood_id'])
+	neighborhood = request.user.userprofile.house.neighborhood
 	if request.method == 'POST':
 		budget_form = BudgetForm(request.POST)
 		if budget_form.is_valid():
@@ -43,7 +43,7 @@ def manage_budget(request):
 	:param request
 	"""
 	try:
-		neighborhood = Neighborhood.objects.get(id=request.session['neighborhood_id'])
+		neighborhood = request.user.userprofile.house.neighborhood
 		budget = Budget.objects.get(neighborhood=neighborhood)
 		request.session['budget_id'] = budget.id
 		expense_list = Expense.objects.filter(budget=budget).order_by('-create_date')
@@ -64,14 +64,15 @@ def new_expense(request):
 	form to create the new expense object.
 	:param request
 	"""
-	budget = get_object_or_404(Budget, pk=request.session['budget_id'])
+	neighborhood = request.user.userprofile.house.neighborhood
+	budget = Budget.objects.get(neighborhood=neighborhood)
 	if request.method == 'POST':
 		expense_form = ExpenseForm(request.POST)
 		if expense_form.is_valid():
 			expense = expense_form.save()
 			expense.budget = budget
 			expense.save()
-			return HttpResponseRedirect('/budget/manage_budget/')
+			return HttpResponseRedirect('/neighborhood/status/')
 	else:
 		expense_form = ExpenseForm()
 	return render(request, 'budget/new_expense.html', {'expense_form': expense_form})

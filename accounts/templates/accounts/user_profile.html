@@ -2,67 +2,43 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     {% load staticfiles %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-          crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/home.css' %}" />
     <meta charset="UTF-8">
     <title>Neighbors</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}"/>
 </head>
 <body>
-
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Welcome to the Neighborhood!</h1>
-            <p>{{ neighborhood.division_title }} Division</p>
-        </div>
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-default" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-default" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
     </div>
-
-    <div class="nav">
-        <div class="container">
-            <ul class="nav nav-pills">
-                <li><a href="{% url 'neighborhood:neighborhood_home' %}">Home</a></li>
-                <li><a class="active" href="{% url 'polls:index' %}">Polls</a></li>
-				<li><a href="{% url 'discussions:index' %}">Discussions</a></li>
-                <li><a href="{% url 'budget:manage' %}">Budget</a></li>
-                <li><a href="{% url 'neighborhood:about' %}">About Neighbors</a></li>
-                <li><a href="{% url 'accounts:user_profile' %}">Manage Account</a></li>
-                <li><a href="{% url 'accounts:user_logout' %}">Sign out</a></li>
-            </ul>
-        </div>
+    <div class="icons">
+        <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
     </div>
-
-    <div class="content">
-        <div class="container">
-            <h1>{{ house.family_name }} Account</h1>
-
-            <p>User: {{ house.user }}</p>
-            <p>Neighborhood: {{ house.user.username }}</p>
-            <p>Family Name: {{ house.family_name }}</p>
-            <p>Join Date: {{ house.join_date }}</p>
-            <p>Address: {{ house.address }}</p>
-
-        </div>
+</div>
+<div class="content">
+    <div class="container">
+        <h1 class="orange-text">{{ house.family_name }} Account</h1>
+        <p>User: {{ house.user }}</p>
+        <p>Neighborhood: {{ house.user.username }}</p>
+        <p>Family Name: {{ house.family_name }}</p>
+        <p>Join Date: {{ house.join_date }}</p>
+        <p>Address: {{ house.address }}</p>
+        <a href="{% url 'neighborhood:home' %}">Return</a>
     </div>
-
-    <div class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4">
-					<h3>About</h3>
-					<p>Info/links regarding Neighbors information.</p>
-				</div>
-				<div class="col-md-4">
-					<h3>Contact</h3>
-					<p>Info/links for contacting Neighbors peeps</p>
-				</div>
-				<div class="col-md-4">
-					<h3>Help</h3>
-					<p>Help and FAQ shit.</p>
-				</div>
-			</div> <!-- end row -->
-		</div> <!-- end container -->
-	</div> <!-- end footer -->
-
+</div>
 
 
 </body>

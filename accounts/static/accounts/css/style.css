@@ -7,6 +7,17 @@ h1 {
     margin-left: auto;
 }
 
+
+.content .container {
+    background-color: #ffffff;
+    padding: 32px;
+    margin-top: 5%;
+}
+
+.content a {
+    float:right;
+}
+
 .login-page {
     width: 360px;
     padding: 8% 0 0;
@@ -109,6 +120,7 @@ h1 {
 .container .info span .fa {
     color: #EF3B3A;
 }
+
 
 body {
     background: #2377f6; /* fallback for old browsers */

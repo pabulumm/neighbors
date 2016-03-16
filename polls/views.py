@@ -59,7 +59,7 @@ def new_poll(request):
 				choice = choice_form.save()
 				choice.question = question
 				choice.save()
-			return HttpResponseRedirect('/polls')
+			return HttpResponseRedirect('/neighborhood/home')
 			# choice_form.is_valid() failed
 		# question_form.is_valid() failed
 		else:

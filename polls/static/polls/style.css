@@ -5,3 +5,14 @@ li a {
 body {
 
 }
+
+.content .container {
+    background-color: #ffffff;
+    padding: 32px;
+    margin-top: 5%;
+
+}
+
+.content a {
+    float:right;
+}

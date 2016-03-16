@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8/>
+    {% load staticfiles %}
+    <title>Neighbors</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
+
+
+</head>
+<body>
+
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-info" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-info" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
+    </div>
+    <div class="icons">
+        <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
+    </div>
+    </a>
+</div>
+<!-- Set the display of this container to none so we can
+     add it programmatically to `legendControl` -->
+<div class="content">
+    <div class="feed">
+        <h1 class="orange-text">Neighborly News Now.</h1>
+        <span class="blue"></span>
+    </div>
+
+    <div id='legend' style='display:none;'>
+        <h2 class="orange-text"><strong>WHATS HOT IN THE HOOD.</strong></h2>
+        <div id="leg_div" class='legend clearfix'>
+            <span class="white"></span>
+            <span class="green"></span>
+            <span class="gray"></span>
+            <span class="light-blue"></span>
+            <span class="blue"></span>
+            <small>Source: <a href="#link to source">Name of source</a></small>
+        </div>
+    </div>
+    <div id='map' class='streets'></div>
+</div>
+<!--
+<div class="footer">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>About</h3>
+            <p>Info/links regarding Neighbors information.</p>
+        </div>
+        <div class="col-md-4">
+            <h3>Contact</h3>
+            <p>Info/links for contacting Neighbors peeps</p>
+        </div>
+        <div class="col-md-4">
+            <h3>Help</h3>
+            <p>Help and FAQ shit.</p>
+        </div>
+    </div>
+</div>  end footer-->
+
+<script>
+
+    /**
+     * CUSTOM ICON INSTANTIATION
+     *
+     * Types of Markers -
+     *
+            HOUSE = 'HOU'
+            EVENT = 'EVE'
+            TRASH = 'TRA'
+            CONSTRUCTION = 'CON'
+            POOL = 'POL'
+            SPA = 'SPA'
+            THEFT = 'THF'
+            YARD_SALE = 'YAR'
+     */
+
+    var houseIcon = L.icon({
+        iconUrl: "{% static 'markers/png/house-32.png' %}",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    var eventIcon = L.icon({
+        iconUrl: "{% static 'markers/png/event-32.png' %}",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    var trashIcon = L.icon({
+        iconUrl: "{% static 'markers/png/trash-32.png' %}",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    var theftIcon = L.icon({
+        iconUrl: "{% static 'markers/png/burglar-32.png' %}",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    var poolIcon = L.icon({
+        iconUrl: "{% static 'markers/png/pool-32.png' %}",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    var yardSaleIcon = L.icon({
+        iconUrl: "{% static 'markers/png/shopping-tag-32.png' %}",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    var constructionIcon = L.icon({
+        iconUrl: "{% static 'markers/png/bulldozer-32.png' %}",
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -16]
+    });
+
+    /**
+     * MARKER TYPE SELECTION POPUP
+     */
+
+
+    //For getting CSRF token
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    // Grab csrf token for AJAX calls
+    var csrftoken = getCookie('csrftoken');
+
+
+
+    L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
+    var map = L.mapbox.map('map', 'mapbox.streets', {
+        legendControl: {
+            position: 'topleft'
+        },
+        zoomControl: false
+    }).setView([34.220912, -119.055079], 16);
+
+    // move zoom control location to top right corner
+    new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
+    //map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
+    // Create holders for new marker info
+    var name = "Sample Marker Name";
+    var lat, lon;
+    var pin;
+    var type_of_marker = "YARD_SALE";
+    var mark_latlng;
+
+    // create new custom icon
+
+
+    $(document).ready(function () {
+
+
+    });
+
+    map.on('click', function (e) {
+        if (pin) { // pin placed already, move it
+            pin.setLatLng(e.latlng).openPopup();
+            mark_latlng = e.latlng;
+        }
+        else { // no pin yet, make new pin
+            mark_latlng = e.latlng;
+            pin = L.marker(mark_latlng).addTo(map)
+                    .bindPopup('<button id=house>House</button><button id=event>Event</button><br />' +
+                            '<button id=const>Construction</button><button id=trash>Trash</button><br />' +
+                            '<button id=theft>Theft</button><button id=yard>Yard Sale</button><br />' +
+                            '<button class=save>SAVE</button>')
+                    .openPopup();
+        }
+    });
+
+    $(document).ready(function() {
+        // Getting all markers in db and loading to map
+        $.ajax({
+            url: "{% url 'markers:get_all_markers' %}",
+            type: 'GET',
+            data: {
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (json) {
+                console.log(json);
+                $(json['markers']).each(function () {
+                    L.marker([this.lat, this.lon]).setIcon(getIconType(this.type_of_marker)).addTo(map);
+                })
+            },
+            error: function (xhr, errmsg, err) {
+                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+
+        $('#map').on('click', '#house', function() {
+            pin.setIcon(houseIcon);
+            type_of_marker = "HOUSE";
+        });
+        $('#map').on('click', '#yard', function() {
+            pin.setIcon(yardSaleIcon);
+            type_of_marker = 'YARD_SALE';
+        });
+        $('#map').on('click', '#const', function() {
+            pin.setIcon(constructionIcon);
+            type_of_marker = 'CONSTRUCTION';
+        });
+        $('#map').on('click', '#theft', function() {
+            pin.setIcon(theftIcon);
+            type_of_marker = 'THEFT';
+        });
+        $('#map').on('click', '#event', function() {
+            pin.setIcon(eventIcon);
+            type_of_marker = 'EVENT';
+        });
+        $('#map').on('click', '#trash', function() {
+            pin.setIcon(trashIcon);
+            type_of_marker = 'TRASH';
+        });
+        $('#map').on('click', '.save', function () {
+            // AJAX call to save new marker as GeoDjango model
+            $.ajax({
+                url: "{% url 'markers:new_marker' %}",
+                type: "Post",
+                data: {
+                    name: name,
+                    lat: mark_latlng.lat,
+                    lon: mark_latlng.lng,
+                    type_of_marker: type_of_marker,
+                    csrfmiddlewaretoken: csrftoken
+                },
+                success: function (json) {
+                    console.log(json);
+                    alert('Created a ' + json[type_of_marker] + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
+                },
+                error: function (xhr, errmsg, err) {
+                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            })
+        });
+    });
+
+    function getIconType(type) {
+        switch(type) {
+            case 'HOUSE':
+                return houseIcon;
+            case 'YARD_SALE':
+                return yardSaleIcon;
+            case 'CONSTRUCTION':
+                return constructionIcon;
+            case 'THEFT':
+                return theftIcon;
+            case 'EVENT':
+                return eventIcon;
+            case 'TRASH':
+                return trashIcon;
+            default:
+                return L.Icon.default;
+        }
+    }
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+</script>
+</body>
+</html>

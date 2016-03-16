@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>Neighbors</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'discussions/style.css' %}"/>
 </head>
 <body>
-    <form id="discussion_form" action="{% url 'discussions:new_discussion' %}" method="post">
-        {% csrf_token %}
-        {{ discussion_form.as_p }}
-        <input type="submit" name="submit" value="Post Discussion"/>
-    </form>
+
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-default" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-default" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
+    </div>
+    <a id="account" class="btn btn-default" href="{% url 'accounts:user_profile' %}">account</a>
+</div>
+<div class="content">
+    <div class="container col-md-2 col-md-offset-5">
+        <h1 class="orange-text">New Discussion</h1>
+        <form id="discussion_form" action="{% url 'discussions:new_discussion' %}" method="post">
+            {% csrf_token %}
+            {{ discussion_form.as_p }}
+            <input class='btn btn-default' type="submit" name="submit" value="Post Discussion"/>
+        </form>
+        <a href="{% url 'neighborhood:status' %}">Return</a>
+    </div>
+</div>
+
 </body>
 </html>

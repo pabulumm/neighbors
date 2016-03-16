@@ -1,10 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load staticfiles %}
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
     <title>Title</title>
 </head>
-<body>
+<body class="blue">
 
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-info" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-info" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
+    </div>
+    <div class="icons">
+        <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="holder">
+        <div class="row">
+
+            <div class="section" id="calendar">
+                <div class="col-md-6">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=9fk7an49aqsp2r825scmp9tj50%40group.calendar.google.com&ctz=America/Los_Angeles"
+                            style="border: 20px solid #54E5B0" width="600" height="450" frameborder="0" scrolling="no"></iframe>
+                </div>
+            </div>
+            <div class="section" id="budget">
+                <div class="col-md-3">
+                    <div class="row">
+                        {% if budget %}
+                            <p>Budget instance accessible.</p>
+                        {% else %}
+                            <p>Unable to access budget.</p>
+
+                        {% endif %}
+                        <h1>Budget</h1>
+                        <p>Neighborhood: {{ budget.neighborhood }}</p>
+                        <p>Total Funds: {{ budget.total_funds }}</p>
+                        <p>Total Expenses: {{ budget.total_expenses }}</p>
+                        <p>Residence Fee: {{ budget.residence_fee }}</p>
+                        <p>Creation Date: {{ budget.create_date }}</p>
+                    </div>
+                    <div class="row">
+                        <h3>Expenses</h3>
+                        {% if expense_list %}
+                            {% for expense in expense_list %}
+                                <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
+                                    cost={{ expense.cost }} : approved={{ expense.approved }}</p>
+                            {% endfor %}
+                        {% endif %}
+                        <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br/>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div id="chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="section" id="polls">
+                <div class="col-md-6">
+                    <h1>Polls</h1>
+                    {% if latest_question_list %}
+                        <ul>
+                            {% for question in latest_question_list %}
+                                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No polls are available.</p>
+                    {% endif %}
+                    <a href="{% url 'polls:new' %}"><input type="button" name="new_poll" value="New Poll"></a><br/>
+                </div>
+            </div>
+            <div class="section" id="discussions">
+                <div class="col-md-6">
+                    <h1>Discussions</h1>
+                    {% for discussion in discussions %}
+                        <a href="{% url 'discussions:detail' discussion.id %}">
+                            <h3>{{ discussion.title }}</h3></a>
+                        <p>Creator ID: {{ discussion.create_date }}
+                            Date Created: {{ discussion.create_date }}</p>
+                        <p></p>
+                    {% endfor %}
+                    <a href="{% url 'discussions:new_discussion' %}"><input type="button"
+                                                                            value="New Discussion"></a><br/>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<!--
+<div class="footer">
+   <div class="row">
+       <div class="col-md-4">
+           <h3>About</h3>
+           <p>Info/links regarding Neighbors information.</p>
+       </div>
+       <div class="col-md-4">
+           <h3>Contact</h3>
+           <p>Info/links for contacting Neighbors peeps</p>
+       </div>
+       <div class="col-md-4">
+           <h3>Help</h3>
+           <p>Help and FAQ shit.</p>
+       </div>
+   </div>
+</div> end footer -->
+
+<script>
+    (function (d3) {
+        'use strict';
+
+        var dataset = [
+            {label: 'Landscaping', count: 10},
+            {label: 'Construction', count: 20},
+            {label: 'Projects', count: 30},
+            {label: 'Expenses', count: 40}
+        ];
+
+        var width = 360;
+        var height = 360;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 75;
+        var legendRectSize = 18;                                  // NEW
+        var legendSpacing = 4;                                    // NEW
+
+        var color = d3.scale.category20b();
+
+        var svg = d3.select('#chart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .append('g')
+                .attr('transform', 'translate(' + (width / 2) +
+                        ',' + (height / 2) + ')');
+
+        var arc = d3.svg.arc()
+                .innerRadius(radius - donutWidth)
+                .outerRadius(radius);
+
+        var pie = d3.layout.pie()
+                .value(function (d) {
+                    return d.count;
+                })
+                .sort(null);
+
+        var path = svg.selectAll('path')
+                .data(pie(dataset))
+                .enter()
+                .append('path')
+                .attr('d', arc)
+                .attr('fill', function (d, i) {
+                    return color(d.data.label);
+                });
+
+        var legend = svg.selectAll('.legend')                     // NEW
+                .data(color.domain())                                   // NEW
+                .enter()                                                // NEW
+                .append('g')                                            // NEW
+                .attr('class', 'legend')                                // NEW
+                .attr('transform', function (d, i) {                     // NEW
+                    var height = legendRectSize + legendSpacing;          // NEW
+                    var offset = height * color.domain().length / 2;     // NEW
+                    var horz = -2 * legendRectSize;                       // NEW
+                    var vert = i * height - offset;                       // NEW
+                    return 'translate(' + horz + ',' + vert + ')';        // NEW
+                });                                                     // NEW
+
+        legend.append('rect')                                     // NEW
+                .attr('width', legendRectSize)                          // NEW
+                .attr('height', legendRectSize)                         // NEW
+                .style('fill', color)                                   // NEW
+                .style('stroke', color);                                // NEW
+
+        legend.append('text')                                     // NEW
+                .attr('x', legendRectSize + legendSpacing)              // NEW
+                .attr('y', legendRectSize - legendSpacing)              // NEW
+                .text(function (d) {
+                    return d;
+                });                       // NEW
+
+    })(window.d3);
+</script>
 </body>
 </html>

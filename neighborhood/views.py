@@ -2,8 +2,11 @@ from budget.models import Budget, Expense
 from discussions.models import Discussion
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponse
+from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
+
+from polls.models import Question
 from .models import Neighborhood
 
 
@@ -13,19 +16,33 @@ def neighborhood_home(request):
 	# get the user profile from the user object
 
 	neighborhood = request.user.userprofile.house.neighborhood
-	request.session['neighborhood_id'] = neighborhood.id
+	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood})
+
+
+@login_required
+def neighborhood_status(request):
+	# get the user profile from the user object
+
+	neighborhood = request.user.userprofile.house.neighborhood
 	try:
 		recent_discussion_dict = [dis for dis in Discussion.objects
 													 .filter(neighborhood_id=neighborhood.id)
 													 .order_by('-last_modified')[:5]]
 		budget = Budget.objects.filter(neighborhood=neighborhood)
 		expense_list = Expense.objects.filter(budget=budget)
+		poll_list = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 	except NameError:
-		return render(request, 'neighborhood/about.html', {'neighborhood': neighborhood})
-	return render(request, 'neighborhood/about.html', {'neighborhood': neighborhood,
-													  'discussions': recent_discussion_dict,
-													  'expense_list': expense_list,
-													  'budget': budget})
+		return render(request, 'neighborhood/status.html', {'neighborhood': neighborhood})
+	return render(request, 'neighborhood/status.html', {'neighborhood': neighborhood,
+														'budget': budget,
+														'discussions': recent_discussion_dict,
+														'expense_list': expense_list,
+														'latest_question_list': poll_list})
+
+
+@login_required
+def get_neighborhood_news(request):
+	pass
 
 
 @login_required
@@ -51,4 +68,4 @@ def get_neighborhoods(request):
 
 
 def about(request):
-	return render(request, 'neighborhood/about.html', {})
+	return render(request, 'neighborhood/map_home.html', {})

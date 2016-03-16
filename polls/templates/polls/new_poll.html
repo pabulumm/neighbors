@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>Neighbors</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"/>
 </head>
 <body>
 
-    <h1>New Poll</h1>
-    <p>
-    <form name="poll_form" action="{% url 'polls:new' %}" method="post">
-        {% csrf_token %}
-        {{ question_form.as_p }}
-        {{ choice_formset.as_p }}
-        <input type="submit" name="submit" value="Create">
-    </form>
-    </p>
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-default" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-default" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
+    </div>
+    <div class="icons">
+        <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
+    </div>
+    </a>
+</div>
+<div class="content">
+    <div class="container col-md-2 col-md-offset-5 ">
+        <h1>New Poll</h1>
+        <form name="poll_form" action="{% url 'polls:new' %}" method="post">
+            {% csrf_token %}
+            {{ question_form.as_p }}
+            {{ choice_formset.as_p }}
+            <input class='btn btn-default' type="submit" name="submit" value="Create">
+        </form>
+        <a href="{% url 'neighborhood:home' %}">Return</a>
+    </div>
+</div>
 
-    <a href="{% url 'polls:index' %}">Cancel</a>
+
 
 </body>
 </html>
