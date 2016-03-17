@@ -40,6 +40,7 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'django.contrib.gis',
 	'markers',
+	'messaging',
 	'neighborhood',
 	'discussions',
 	'accounts',

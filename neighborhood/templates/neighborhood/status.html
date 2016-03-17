@@ -65,7 +65,7 @@
                                     cost={{ expense.cost }} : approved={{ expense.approved }}</p>
                             {% endfor %}
                         {% endif %}
-                        <a href="{% url 'budget:new_expense' %}"><input type="button" value="New Expense"></a><br/>
+                        <a class="btn btn-default" href="{% url 'budget:new_expense' %}">New Expense</a><br/>
                     </div>
                 </div>
                 <div class="col-md-3">
