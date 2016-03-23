@@ -7,6 +7,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 
 from polls.models import Question
+from markers.models import Marker
 from .models import Neighborhood
 
 
@@ -14,9 +15,10 @@ from .models import Neighborhood
 @ensure_csrf_cookie
 def neighborhood_home(request):
 	# get the user profile from the user object
-
 	neighborhood = request.user.userprofile.house.neighborhood
-	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood})
+	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
+	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
+														  'markers': markers})
 
 
 @login_required

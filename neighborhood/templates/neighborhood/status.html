@@ -9,42 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
 
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-    <title>Title</title>
+    <title>Neighbors</title>
 </head>
 <body class="blue">
 
@@ -71,14 +37,23 @@
     <div class="holder">
         <div class="row">
 
-            <div class="section" id="calendar">
-                <div class="col-md-6">
-                    <iframe src="https://calendar.google.com/calendar/embed?src=9fk7an49aqsp2r825scmp9tj50%40group.calendar.google.com&ctz=America/Los_Angeles"
-                            style="border: 20px solid #54E5B0" width="600" height="450" frameborder="0" scrolling="no"></iframe>
+            <div class="section">
+                <div id="calendar" class="">
+                    <iframe id="calendar-frame"
+                            src="https://calendar.google.com/calendar/embed?src=9fk7an49aqsp2r825scmp9tj50%40group.calendar.google.com&ctz=America/Los_Angeles"
+                            style="border:0 solid" frameborder="0" scrolling="no"></iframe>
                 </div>
             </div>
-            <div class="section" id="budget">
-                <div class="col-md-3">
+            <div class="section">
+
+                <div id="budget" class="">
+                    <div class="chart-menu">
+                        <button id="expense-chart" class="btn btn-default">Expenses</button>
+                        <button id="history-chart" class="btn btn-default">Performance History</button>
+                    </div>
+                    <div id="piechart"></div>
+                    <div id="linechart"></div>
+            <!--
                     <div class="row">
                         {% if budget %}
                             <p>Budget instance accessible.</p>
@@ -102,16 +77,14 @@
                             {% endfor %}
                         {% endif %}
                         <a class="btn btn-default" href="{% url 'budget:new_expense' %}">New Expense</a><br/>
-                    </div>
+                    </div>-->
                 </div>
-                <div class="col-md-3">
-                    <div id="pieChart" style="width: 500px; height: 300px;"></div>
-                </div>
+
             </div>
         </div>
         <div class="row">
-            <div class="section" id="polls">
-                <div class="col-md-6">
+            <div class="section">
+                <div id="polls" class="col-md-6">
                     <h1>Polls</h1>
                     {% if latest_question_list %}
                         <ul>
@@ -122,11 +95,11 @@
                     {% else %}
                         <p>No polls are available.</p>
                     {% endif %}
-                    <a href="{% url 'polls:new' %}"><input type="button" name="new_poll" value="New Poll"></a><br/>
+                    <a class="btn btn-default" href="{% url 'polls:new' %}">New Poll</a><br/>
                 </div>
             </div>
-            <div class="section" id="discussions">
-                <div class="col-md-6">
+            <div class="section">
+                <div id="discussions" class="col-md-6">
                     <h1>Discussions</h1>
                     {% for discussion in discussions %}
                         <a href="{% url 'discussions:detail' discussion.id %}">
@@ -135,8 +108,7 @@
                             Date Created: {{ discussion.create_date }}</p>
                         <p></p>
                     {% endfor %}
-                    <a href="{% url 'discussions:new_discussion' %}"><input type="button"
-                                                                            value="New Discussion"></a><br/>
+                    <a class="btn btn-default" href="{% url 'discussions:new_discussion' %}">New Discussion</a><br/>
                 </div>
             </div>
         </div>
@@ -144,6 +116,7 @@
 
     </div>
 </div>
+
 <!--
 <div class="footer">
    <div class="row">
@@ -161,82 +134,86 @@
        </div>
    </div>
 </div> end footer -->
-
-
 <script>
-    (function (d3) {
-        'use strict';
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
 
-        var dataset = [
-            {label: 'Landscaping', count: 10},
-            {label: 'Construction', count: 20},
-            {label: 'Projects', count: 30},
-            {label: 'Expenses', count: 40}
-        ];
+        var data1 = google.visualization.arrayToDataTable([
+            ['Type', 'Cost per Month'],
+            ['Landscaping', 1200.00],
+            ['Improvements', 4000.00],
+            ['Labor', 2000.00],
+            ['Repair', 600.00],
+            ['Maintenance', 1700.00]
+        ]);
 
-        var width = 360;
-        var height = 360;
-        var radius = Math.min(width, height) / 2;
-        var donutWidth = 75;
-        var legendRectSize = 18;                                  // NEW
-        var legendSpacing = 4;                                    // NEW
+        var options1 = {
+            title: 'Neighborhood Expenses'
+        };
 
-        var color = d3.scale.category20b();
+        var data2 = google.visualization.arrayToDataTable([
+            ['Year', 'Sales', 'Expenses'],
+            ['2004', 1000, 400],
+            ['2005', 1170, 460],
+            ['2006', 660, 1120],
+            ['2007', 1030, 540]
+        ]);
 
-        var svg = d3.select('#chart')
-                .append('svg')
-                .attr('width', width)
-                .attr('height', height)
-                .append('g')
-                .attr('transform', 'translate(' + (width / 2) +
-                        ',' + (height / 2) + ')');
+        var options2 = {
+            title: 'Company Performance',
+            curveType: 'function',
+            legend: {position: 'bottom'}
+        };
 
-        var arc = d3.svg.arc()
-                .innerRadius(radius - donutWidth)
-                .outerRadius(radius);
+        var chart1 = new google.visualization.PieChart(document.getElementById('piechart'));
+        var chart2 = new google.visualization.LineChart(document.getElementById('linechart'));
 
-        var pie = d3.layout.pie()
-                .value(function (d) {
-                    return d.count;
-                })
-                .sort(null);
+        function selectHandler() {
+          var selectedItem = chart1.getSelection()[0];
+          if (selectedItem) {
+            var category = data.getValue(selectedItem.row, 0);
+            alert('The user selected ' + category);
+          }
+        }
 
-        var path = svg.selectAll('path')
-                .data(pie(dataset))
-                .enter()
-                .append('path')
-                .attr('d', arc)
-                .attr('fill', function (d, i) {
-                    return color(d.data.label);
-                });
+        function readyHandler() {
 
-        var legend = svg.selectAll('.legend')                     // NEW
-                .data(color.domain())                                   // NEW
-                .enter()                                                // NEW
-                .append('g')                                            // NEW
-                .attr('class', 'legend')                                // NEW
-                .attr('transform', function (d, i) {                     // NEW
-                    var height = legendRectSize + legendSpacing;          // NEW
-                    var offset = height * color.domain().length / 2;     // NEW
-                    var horz = -2 * legendRectSize;                       // NEW
-                    var vert = i * height - offset;                       // NEW
-                    return 'translate(' + horz + ',' + vert + ')';        // NEW
-                });                                                     // NEW
+        }
 
-        legend.append('rect')                                     // NEW
-                .attr('width', legendRectSize)                          // NEW
-                .attr('height', legendRectSize)                         // NEW
-                .style('fill', color)                                   // NEW
-                .style('stroke', color);                                // NEW
+        google.visualization.events.addListener(chart1, 'select', selectHandler);
+        google.visualization.events.addListener(chart1, 'ready', readyHandler);
 
-        legend.append('text')                                     // NEW
-                .attr('x', legendRectSize + legendSpacing)              // NEW
-                .attr('y', legendRectSize - legendSpacing)              // NEW
-                .text(function (d) {
-                    return d;
-                });                       // NEW
+        chart1.draw(data1, options1);
+        chart2.draw(data2, options2);
+    }
 
-    })(window.d3);
+
+
+    $(document).ready(function() {
+        $('#linechart').hide();
+        $('#piechart').show();
+
+        function toggle_visibility(id1, id2) {
+            var e = document.getElementById(id1);
+            var e2 = document.getElementById(id2);
+            if (e.style.display == 'block') {
+                e.style.display = 'block';
+                e2.style.display = 'none';
+            }
+            else {
+                e.style.display = 'none';
+                e2.style.display = 'block';
+            }
+        }
+        $('#history-chart').on('click', function() {
+            toggle_visibility('piechart', 'linechart');
+        });
+
+        $('#expense-chart').on('click', function() {
+            toggle_visibility('piechart', 'linechart');
+        });
+    })
 </script>
 </body>
 </html>

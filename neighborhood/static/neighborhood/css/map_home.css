@@ -44,8 +44,12 @@ very lightgreen #DAF7DC
 
 
 
-.white {background: #F9FBFF}
-.white-text {color:#F9FBFF}
+.white {background: #FFFFFF}
+.white-text {color:#FFFFFF}
+
+.off-white{background: #F2F2F2}
+.off-white-text{color: #F2F2F2}
+
 .green {background: #54E5B0}
 .green-text {color:#54E5B0}
 .gray {background: #8DBCC4}
@@ -56,6 +60,7 @@ very lightgreen #DAF7DC
 .blue-text {color: #2C90F9}
 .orange {background: #DD9454}
 .orange-text {color: #DD9454}
+
 
 body {
     margin: 0;
@@ -73,12 +78,13 @@ body {
     float: left;
     padding-top: 15px;
     padding-left: 50px;
+	font-weight: 500;
     font-size: 50px;
     font-family: "Roboto", sans-serif;
 }
 
 .options a {
-    color: #F9FBFF;
+    color: #FFFFFF;
     font-size: 24px;
     font-weight: bold;
     width:130px;
@@ -91,7 +97,7 @@ body {
 }
 
 .icons a {
-    color: #F9FBFF;
+    color: #FFFFFF;
     width:auto;
     background: #35C2FF;
     float: right;
@@ -108,11 +114,11 @@ body {
 
 .content .holder {
     position: absolute;
-    top:100px;
+    top:30px;
     bottom:100px;
     width:100%;
-    padding: 30px 10% 0 10%;
-    background-color: #F9FBFF;
+    padding: 0 2.5% 0 2.5%;
+    background-color: #f0f0f0;
 }
 
 .content {
@@ -120,7 +126,7 @@ body {
     top:100px;
     bottom:0;
     width:100%;
-    background-color: #F9FBFF;
+    background-color: #f0f0f0;
 }
 
 .content h1 {
@@ -132,7 +138,7 @@ body {
     position: fixed;
     width:25%;
     float:left;
-    background-color: #F9FBFF;
+    background-color: #FFFFFF;
 }
 
 .feed h1 {
@@ -155,7 +161,6 @@ body {
     bottom:0;
     left:25%;
     width:75%;
-    float: right;
 }
 
 .legend h2 {
@@ -177,7 +182,7 @@ body {
     height: 100px;
     width: 100%;
     clear: both;
-    border-top: 10px solid /* g */ #54E5B0;
+    border-top: 10px solid /* g */ #F6F6F6;
 }
 
 .footer .row {
@@ -211,8 +216,66 @@ body {
   border-radius: 35px;
 }
 
+#feed-title {
+}
 
+#show {
+    float:right;
+}
 
+#calendar-frame {
+    padding: 20px 20px 20px 20px;
+    width: 900px;
+    height: 600px;
+}
+
+#piechart {
+    padding: 20px 20px 20px 20px;
+    width: 700px;
+    height: 500px;
+}
+
+#linechart {
+    padding: 20px 20px 20px 20px;
+    width: 700px;
+    height: 500px;
+}
+
+#calendar {
+    float:left;
+    -webkit-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    background:#FFFFFF;
+}
+
+#budget {
+    padding: 20px 20px 20px 20px;
+    -webkit-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    background:#FFFFFF;
+    float:right;
+}
+
+#polls {
+    float:left;
+    padding: 20px 20px 20px 20px;
+    -webkit-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    background:#FFFFFF;
+
+}
+
+#discussions {
+    padding: 20px 20px 20px 20px;
+    -webkit-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    background:#FFFFFF;
+    float:right;
+}
 
 
 
