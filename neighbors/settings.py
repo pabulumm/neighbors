@@ -46,6 +46,7 @@ INSTALLED_APPS = (
 	'accounts',
 	'budget',
 	'polls',
+	'feed',
 )
 
 MIDDLEWARE_CLASSES = (

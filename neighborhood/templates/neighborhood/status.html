@@ -30,10 +30,22 @@
         <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
             <span class='glyphicon glyphicon-list'></span>
         </a>
+        <a id="report" class='btn btn-default btn-circle btn-lg'>
+            <span class='glyphicon glyphicon-alert'></span>
+        </a>
     </div>
 </div>
 
-<div class="content">
+<div id="report-container">
+    <div class='input-pill col12'>
+        <input class="col8" type="text" placeholder="filename">
+        <input class="button col4" type="submit" value="Submit">
+    </div>
+    <button id="close-report" class="btn btn-default">Close</button>
+    <button id="submit-report" class="btn btn-default">Submit</button>
+</div>
+
+<div id="content" class="content">
     <div class="holder">
         <div class="row">
 

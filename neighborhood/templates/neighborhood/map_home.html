@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
+    {# <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' /> #}
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/dialog_box.css' %}"/>
 
@@ -34,22 +35,59 @@
         <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
             <span class='glyphicon glyphicon-list'></span>
         </a>
+        <a id="report" class='btn btn-default btn-circle btn-lg'>
+            <span class='glyphicon glyphicon-alert'></span>
+        </a>
     </div>
 </div>
-<!-- Set the display of this container to none so we can
-     add it programmatically to `legendControl` -->
-<div class="content">
+
+<div id="report-container">
+    <div class='input-pill col12'>
+        <input class="col8" type="text" placeholder="filename">
+        <input class="button col4" type="submit" value="Submit">
+    </div>
+    <button id="close-report" class="btn btn-default">Close</button>
+    <button id="submit-report" class="btn btn-default">Submit</button>
+</div>
+
+<div id="content" class="content">
     <div class="feed">
         <h1 id="feed-title" class="orange-text">Neighborly News Now.</h1>
-        <button id="show" type="button" class="btn btn-default btn-sm">
-          <span class="glyphicon glyphicon-chevron-up"></span>
-        </button>
         <span class="blue"></span>
         <div class="news">
-            <p>Nothing worthy of your time right now, sir.</p>
-            <div class="button-wrap"><button id="dialog-button" data-dialog="somedialog"
-                                             class="trigger">Open Dialog</button></div>
+{#            <p>Nothing worthy of your time right now, sir.</p>#}
+            <div class="feed-item">
+                <h2>New Poll</h2>
+                <p>Should we allocate funds for road repairs?</p>
 
+                <button id="vote-yes" class="">Yes
+{#                    <span class="glyphicon glyphicon-thumbs-up"></span>#}
+                </button>
+                <button id="vote-no" class="">No
+{#                    <span class="glyphicon glyphicon-thumbs-down"></span>#}
+                </button>
+                <br />
+            </div>
+
+            <div class="feed-item">
+                <h2>Announcement</h2>
+                <p>As of October 10th, 2016, residence fees will increase from
+                $175 a month to $200 a month. Please plan accordingly.</p>
+
+                <button id="contact" class="">Contact Administrator</button>
+            </div>
+
+
+            <div class="feed-item">
+                <h2>Yard Sale</h2>
+                <p>Hey everyone! I've got tons of old collectibles and such that I just
+                    can't find room for anymore. It would be greatly appreciated if ya'll
+                came on down for a looksey!</p>
+                <br />
+
+                <small>from <strong>Dave Anderson</strong> on <strong>3/14/2016</strong></small>
+
+            </div>
         </div>
     </div>
 
@@ -66,25 +104,7 @@
     </div>
     <div id='map' class='streets'></div>
 </div>
-
-<div id="somedialog" class="dialog dialog--close">
-    <div class="dialog__overlay"></div>
-    <div class="dialog__content">
-        <div class="morph-shape">
-            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 560 280"
-                 preserveAspectRatio="none">
-                <rect x="3" y="3" fill="none" width="556" height="276"></rect>
-            </svg>
-        </div>
-        <div class="dialog-inner">
-            <h2><strong>Howdy</strong>, I'm a dialog box</h2>
-            <div>
-                <button class="action" data-dialog-close="a">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+<script src="{% static 'neighborhood/js/report.js' %}"></script>
 <!--
 <div class="footer">
     <div class="row">
@@ -119,55 +139,6 @@
             THEFT = 'THF'
             YARD_SALE = 'YAR'
      */
-
-    var houseIcon = L.icon({
-        iconUrl: "{% static 'markers/png/house-32.png' %}",
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -16]
-    });
-
-    var eventIcon = L.icon({
-        iconUrl: "{% static 'markers/png/event-32.png' %}",
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -16]
-    });
-
-    var trashIcon = L.icon({
-        iconUrl: "{% static 'markers/png/trash-32.png' %}",
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -16]
-    });
-
-    var theftIcon = L.icon({
-        iconUrl: "{% static 'markers/png/burglar-32.png' %}",
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -16]
-    });
-
-    var poolIcon = L.icon({
-        iconUrl: "{% static 'markers/png/pool-32.png' %}",
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -16]
-    });
-
-    var yardSaleIcon = L.icon({
-        iconUrl: "{% static 'markers/png/shopping-tag-32.png' %}",
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -16]
-    });
-
-    var constructionIcon = L.icon({
-        iconUrl: "{% static 'markers/png/bulldozer-32.png' %}",
-        iconSize: [32, 32],
-        iconAnchor: [16, 16],
-        popupAnchor: [0, -16]
-    });
 
     /**
      * MARKER TYPE SELECTION POPUP
@@ -258,31 +229,58 @@
             }
         });*/
 
-
-
-
-        $('#map').on('click', '#house', function() {
-            pin.setIcon(houseIcon);
+        $('#map').on('click', '#house', function () {
+            pin.setIcon(L.icon({
+                iconUrl: "{% static 'markers/png/house-32.png' %}",
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
+            }));
             type_of_marker = "HOUSE";
         });
-        $('#map').on('click', '#yard', function() {
-            pin.setIcon(yardSaleIcon);
+        $('#map').on('click', '#yard', function () {
+            pin.setIcon(L.icon({
+                iconUrl: "{% static 'markers/png/shopping-tag-32.png' %}",
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
+            }));
             type_of_marker = "YARD_SALE";
         });
-        $('#map').on('click', '#const', function() {
-            pin.setIcon(constructionIcon);
+        $('#map').on('click', '#const', function () {
+            pin.setIcon(L.icon({
+                iconUrl: "{% static 'markers/png/bulldozer-32.png' %}",
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
+            }));
             type_of_marker = "CONSTRUCTION";
         });
-        $('#map').on('click', '#theft', function() {
-            pin.setIcon(theftIcon);
+        $('#map').on('click', '#theft', function () {
+            pin.setIcon(L.icon({
+                iconUrl: "{% static 'markers/png/burglar-32.png' %}",
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
+            }));
             type_of_marker = "THEFT";
         });
-        $('#map').on('click', '#event', function() {
-            pin.setIcon(eventIcon);
+        $('#map').on('click', '#event', function () {
+            pin.setIcon(L.icon({
+                iconUrl: "{% static 'markers/png/event-32.png' %}",
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
+            }));
             type_of_marker = "EVENT";
         });
-        $('#map').on('click', '#trash', function() {
-            pin.setIcon(trashIcon);
+        $('#map').on('click', '#trash', function () {
+            pin.setIcon(L.icon({
+                iconUrl: "{% static 'markers/png/trash-32.png' %}",
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -16]
+            }));
             type_of_marker = "TRASH";
         });
         $('#map').on('click', '.save', function () {

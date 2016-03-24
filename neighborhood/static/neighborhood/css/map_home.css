@@ -97,6 +97,8 @@ body {
 }
 
 .icons a {
+	outline: none;
+	border: none;
     color: #FFFFFF;
     width:auto;
     background: #35C2FF;
@@ -134,26 +136,7 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
-.feed {
-    position: fixed;
-    width:25%;
-    float:left;
-    background-color: #FFFFFF;
-}
 
-.feed h1 {
-    padding-top: 24px;
-    padding-left: 24px;
-    font-family: "Roboto", sans-serif;
-}
-
-.feed span {
-    display:block;
-    float:none;
-    height:12px;
-    width:90%;
-    margin-left:5%;
-}
 
 #map {
     position: absolute;
@@ -277,5 +260,95 @@ body {
     float:right;
 }
 
+#report-container {
+    position:relative;
+    top:0;
+    height: 200px;
+    width: 100%;
+    background: #F0F0F0;
+
+}
+
+#report-container button {
+    float:right;
+    margin-top: 150px;
+    margin-right: 20px;
+}
+
+#close-report {
+}
+
+#submit-report {
+    background: #54E5B0;
+}
+
+.feed {
+    width:25%;
+    top:100px;
+    bottom:0;
+    float:left;
+    background-color: #FFFFFF;
+}
+
+.feed h1 {
+    padding-top: 24px;
+    padding-left: 24px;
+    font-family: "Roboto", sans-serif;
+}
+
+.feed span {
+    display:block;
+    float:none;
+    height:12px;
+    width:90%;
+    margin-left:5%;
+}
+
+.feed-item {
+    height: auto;
+    overflow: auto;
+    margin-left:5%;
+    margin-top:20px;
+    width:90%;
+    padding: 20px 20px 20px 20px;
+    -webkit-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 19px 1px rgba(0, 0, 0, 0.75);
+    background:#FFFFFF;
+}
+
+.feed-item button {
+    padding: 1em 2em;
+	outline: none;
+	font-weight: 600;
+	border: none;
+	color: #fff;
+    width: 50%;
+}
+
+.feed-item h2 {
+	outline: none;
+	font-weight: 600;
+	border: none;
+	color: #DD9454;
+}
 
 
+#vote-yes {
+    float:left;
+    background: #54E5B0;
+}
+
+#vote-no {
+    float: right;
+	background: #c94e50;
+}
+
+#contact {
+
+    width:100%;
+}
+
+#report {
+	background: #c94e50;
+}
