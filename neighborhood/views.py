@@ -6,6 +6,9 @@ from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 
+from accounts.models import BoardMemberProfile
+from messaging.forms import ReportForm
+from messaging.models import Report
 from polls.models import Question
 from markers.models import Marker
 from .models import Neighborhood
@@ -15,16 +18,24 @@ from .models import Neighborhood
 @ensure_csrf_cookie
 def neighborhood_home(request):
 	# get the user profile from the user object
+	if request.method == 'POST':
+		report_form = ReportForm(request.POST)
+		if report_form.is_valid():
+			report = report_form.save
+			report.sender = request.user
+			report.time = timezone.now()
+			#report.save()
+	report_form = ReportForm()
 	neighborhood = request.user.userprofile.house.neighborhood
 	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
 	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
-														  'markers': markers})
+														  'markers': markers,
+														  'report_form': report_form})
 
 
 @login_required
 def neighborhood_status(request):
 	# get the user profile from the user object
-
 	neighborhood = request.user.userprofile.house.neighborhood
 	try:
 		recent_discussion_dict = [dis for dis in Discussion.objects
@@ -45,6 +56,19 @@ def neighborhood_status(request):
 @login_required
 def get_neighborhood_news(request):
 	pass
+
+
+@login_required
+def neighborhood_details(request):
+	neighborhood = request.user.userprofile.house.neighborhood
+	try:
+		board_members = BoardMemberProfile.objects.all().filter(neighborhood_id=neighborhood.id)
+		poll_list = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+	except NameError:
+		return render(request, 'neighborhood/details.html', {'neighborhood': neighborhood})
+	return render(request, 'neighborhood/details.html', {'neighborhood': neighborhood,
+														'latest_question_list': poll_list,
+														'board_members': board_members})
 
 
 @login_required

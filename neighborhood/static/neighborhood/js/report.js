@@ -4,13 +4,13 @@
 $(document).ready(function() {
     $('#report').click(function () {
         $('#content').animate({
-            'marginTop': "+=200px" //moves Down
+            'marginTop': "200px" //moves Down
         });
     });
 
-    $('#close-report').click(function () {
+    $('#cancel').click(function () {
         $('#content').animate({
-            'marginTop': "-=200px" //moves Up
+            'marginTop': "0" //moves Up
         });
     });
 });

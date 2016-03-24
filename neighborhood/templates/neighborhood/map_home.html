@@ -13,7 +13,6 @@
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
     {# <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' /> #}
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/dialog_box.css' %}"/>
 
 
 </head>
@@ -32,7 +31,7 @@
         <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
             <span class='glyphicon glyphicon-envelope'></span>
         </a>
-        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'neighborhood:details' %}">
             <span class='glyphicon glyphicon-list'></span>
         </a>
         <a id="report" class='btn btn-default btn-circle btn-lg'>
@@ -42,12 +41,14 @@
 </div>
 
 <div id="report-container">
-    <div class='input-pill col12'>
-        <input class="col8" type="text" placeholder="filename">
-        <input class="button col4" type="submit" value="Submit">
+    <a id="cancel" class="btn btn-circle"><span class="glyphicon glyphicon-remove"></span></a>
+    <div class='report'>
+        <form action="{% url 'neighborhood:home' %}" method="POST">
+            {{ report_form.as_p }}
+{#            <button id="close-report" class="btn btn-default">Close</button>#}
+            <button id="submit-report" class="btn btn-default">Submit</button>
+        </form>
     </div>
-    <button id="close-report" class="btn btn-default">Close</button>
-    <button id="submit-report" class="btn btn-default">Submit</button>
 </div>
 
 <div id="content" class="content">
@@ -104,6 +105,9 @@
     </div>
     <div id='map' class='streets'></div>
 </div>
+<script>
+</script>
+
 <script src="{% static 'neighborhood/js/report.js' %}"></script>
 <!--
 <div class="footer">
@@ -191,97 +195,73 @@
 
 
     map.on('click', function (e) {
-        if (pin) { // pin placed already, move it
+        if (pin != null) { // pin placed already, move it
             pin.setLatLng(e.latlng).openPopup();
             mark_latlng = e.latlng;
         }
         else { // no pin yet, make new pin
             mark_latlng = e.latlng;
-            pin = L.marker(mark_latlng).addTo(map)
+            pin = new L.marker(mark_latlng).addTo(map)
                     .bindPopup('<button id=house>House</button><button id=event>Event</button><br />' +
                             '<button id=const>Construction</button><button id=trash>Trash</button><br />' +
                             '<button id=theft>Theft</button><button id=yard>Yard Sale</button><br />' +
-                            '<button class=save>SAVE</button>')
+                            '<button class=default>Default</button><button class=save>SAVE</button>')
                     .openPopup();
         }
     });
 
     $(document).ready(function() {
         // Getting all markers in db and loading to map
-        /*
+
+
+
         $.ajax({
             url: "{% url 'markers:get_all_markers' %}",
             type: 'GET',
             data: {
                 csrfmiddlewaretoken: csrftoken
             },
-            dataType: 'json',
-            success: function (markers) {
-                alert('markers received');
-                $(markers).each(function (name, latt, lont, type_of_marker) {
-                    alert("Loaded marker at:" + latt +", " + lont);
-                    L.marker([lat, lon]).setIcon(getIconType(type_of_marker)).addTo(map);
-                })
-                alert(getJSON(markers));
+            dataType: "json",
+            success: function (data) {
+                //alert('markers received' + data);
+                $.each(data.markers, function (markerIndex, marker) {
+                    //alert(marker.type_of_marker + " marker loaded at:" + marker['lat'] +", " + marker['lon']);
+                    //L.marker([marker['lat'], marker['lon']]).addTo(map);
+                    L.marker([marker['lat'], marker['lon']]).setIcon(getIconType(marker.type_of_marker)).addTo(map);
+                });
             },
             error: function (xhr, errmsg, err) {
                 alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             }
-        });*/
+        });
 
         $('#map').on('click', '#house', function () {
-            pin.setIcon(L.icon({
-                iconUrl: "{% static 'markers/png/house-32.png' %}",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16]
-            }));
             type_of_marker = "HOUSE";
+            pin.setIcon(getIconType(type_of_marker));
         });
         $('#map').on('click', '#yard', function () {
-            pin.setIcon(L.icon({
-                iconUrl: "{% static 'markers/png/shopping-tag-32.png' %}",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16]
-            }));
             type_of_marker = "YARD_SALE";
+            pin.setIcon(getIconType(type_of_marker));
         });
         $('#map').on('click', '#const', function () {
-            pin.setIcon(L.icon({
-                iconUrl: "{% static 'markers/png/bulldozer-32.png' %}",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16]
-            }));
             type_of_marker = "CONSTRUCTION";
+            pin.setIcon(getIconType(type_of_marker));
         });
         $('#map').on('click', '#theft', function () {
-            pin.setIcon(L.icon({
-                iconUrl: "{% static 'markers/png/burglar-32.png' %}",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16]
-            }));
             type_of_marker = "THEFT";
+            pin.setIcon(getIconType(type_of_marker));
         });
         $('#map').on('click', '#event', function () {
-            pin.setIcon(L.icon({
-                iconUrl: "{% static 'markers/png/event-32.png' %}",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16]
-            }));
             type_of_marker = "EVENT";
+            pin.setIcon(getIconType(type_of_marker));
         });
         $('#map').on('click', '#trash', function () {
-            pin.setIcon(L.icon({
-                iconUrl: "{% static 'markers/png/trash-32.png' %}",
-                iconSize: [32, 32],
-                iconAnchor: [16, 16],
-                popupAnchor: [0, -16]
-            }));
             type_of_marker = "TRASH";
+            pin.setIcon(getIconType(type_of_marker));
+        });
+        $('#map').on('click', '#default', function () {
+            type_of_marker = "TRASH";
+            pin.setIcon(getIconType(type_of_marker));
         });
         $('#map').on('click', '.save', function () {
             // AJAX call to save new marker as GeoDjango model
@@ -297,7 +277,11 @@
                 },
                 success: function (json) {
                     console.log(json);
+                    pin.closePopup();
                     alert('Created a ' + type_of_marker + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
+                    L.marker([mark_latlng.lat, mark_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);
+                    pin = null;
+
                 },
                 error: function (xhr, errmsg, err) {
                     alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
@@ -307,21 +291,61 @@
     });
 
     function getIconType(type) {
-        switch(type) {
+        switch (type) {
             case 'HOUSE':
-                return houseIcon;
+                return new L.icon({
+                    iconUrl: "{% static 'markers/png/house-32.png' %}",
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+                break;
             case 'YARD_SALE':
-                return yardSaleIcon;
+                return new L.icon({
+                    iconUrl: "{% static 'markers/png/shopping-tag-32.png' %}",
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+                break;
             case 'CONSTRUCTION':
-                return constructionIcon;
+                return new L.icon({
+                    iconUrl: "{% static 'markers/png/bulldozer-32.png' %}",
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+                break;
             case 'THEFT':
-                return theftIcon;
+                return new L.icon({
+                    iconUrl: "{% static 'markers/png/burglar-32.png' %}",
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+                break;
             case 'EVENT':
-                return eventIcon;
+                return new L.icon({
+                    iconUrl: "{% static 'markers/png/event-32.png' %}",
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+                break;
             case 'TRASH':
-                return trashIcon;
+                return new L.icon({
+                    iconUrl: "{% static 'markers/png/trash-32.png' %}",
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+                break;
+            case 'DEFAULT':
+                return new L.Icon.Default;
+                break;
             default:
-                return L.Icon.default;
+                return new L.Icon.Default;
+                break;
         }
     }
 

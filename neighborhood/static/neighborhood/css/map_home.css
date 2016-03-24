@@ -114,20 +114,20 @@ body {
 
 }
 
+.content {
+    position: absolute;
+    top:100px;
+    bottom:0;
+    width:100%;
+    background-color: #f0f0f0;
+}
+
 .content .holder {
     position: absolute;
     top:30px;
     bottom:100px;
     width:100%;
     padding: 0 2.5% 0 2.5%;
-    background-color: #f0f0f0;
-}
-
-.content {
-    position: absolute;
-    top:100px;
-    bottom:0;
-    width:100%;
     background-color: #f0f0f0;
 }
 
@@ -270,9 +270,6 @@ body {
 }
 
 #report-container button {
-    float:right;
-    margin-top: 150px;
-    margin-right: 20px;
 }
 
 #close-report {
@@ -351,4 +348,16 @@ body {
 
 #report {
 	background: #c94e50;
+}
+
+.report {
+    width:10%;
+    margin-left:45%;
+}
+
+#cancel {
+    border: none;
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
 }

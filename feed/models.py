@@ -20,4 +20,4 @@ class FeedPost(models.Model):
 	user = models.ForeignKey(User)
 	create_date = models.DateTimeField(default=timezone.now)
 	marker = models.ForeignKey(Marker, null=True)
-	poll = models.ForeignKey(Question)
+	poll = models.ForeignKey(Question, null=True)

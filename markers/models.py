@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 
 
 class Marker(models.Model):
+	id = models.AutoField(primary_key=True)
 	type_of_marker = models.CharField(max_length=40, default='DEFAULT')
 	neighborhood_id = models.IntegerField()
 	name = models.CharField(max_length=50)
