@@ -12,12 +12,13 @@ from messaging.models import Report
 from polls.models import Question
 from markers.models import Marker
 from .models import Neighborhood
+from feed.models import Feed, FeedPost
+from feed.views import get_recent_posts
 
 
 @login_required
 @ensure_csrf_cookie
 def neighborhood_home(request):
-	# get the user profile from the user object
 	if request.method == 'POST':
 		report_form = ReportForm(request.POST)
 		if report_form.is_valid():
@@ -27,15 +28,18 @@ def neighborhood_home(request):
 			#report.save()
 	report_form = ReportForm()
 	neighborhood = request.user.userprofile.house.neighborhood
+	request.session['neighborhood_id'] = neighborhood.id
+	feed = Feed.objects.get(neighborhood=neighborhood)
+	feedposts = get_recent_posts(feed.id)
 	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
 	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
 														  'markers': markers,
+														  'feedposts': feedposts,
 														  'report_form': report_form})
 
 
 @login_required
 def neighborhood_status(request):
-	# get the user profile from the user object
 	neighborhood = request.user.userprofile.house.neighborhood
 	try:
 		recent_discussion_dict = [dis for dis in Discussion.objects

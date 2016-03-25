@@ -14,8 +14,9 @@ class Feed(models.Model):
 
 class FeedPost(models.Model):
 	id = models.AutoField(primary_key=True)
+	title = models.CharField(max_length=50, default='Feed Post Title')
 	feed = models.ForeignKey(Feed)
-	type = models.CharField(max_length=50)
+	type = models.CharField(max_length=50, default='ANNOUNCEMENT')
 	description = models.CharField(max_length=300)
 	user = models.ForeignKey(User)
 	create_date = models.DateTimeField(default=timezone.now)

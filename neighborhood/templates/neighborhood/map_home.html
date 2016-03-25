@@ -44,6 +44,7 @@
     <a id="cancel" class="btn btn-circle"><span class="glyphicon glyphicon-remove"></span></a>
     <div class='report'>
         <form action="{% url 'neighborhood:home' %}" method="POST">
+            {% csrf_token %}
             {{ report_form.as_p }}
 {#            <button id="close-report" class="btn btn-default">Close</button>#}
             <button id="submit-report" class="btn btn-default">Submit</button>
@@ -55,41 +56,57 @@
     <div class="feed">
         <h1 id="feed-title" class="orange-text">Neighborly News Now.</h1>
         <span class="blue"></span>
-        <div class="news">
-{#            <p>Nothing worthy of your time right now, sir.</p>#}
-            <div class="feed-item">
-                <h2>New Poll</h2>
-                <p>Should we allocate funds for road repairs?</p>
-
-                <button id="vote-yes" class="">Yes
+            {% for post in feedposts %}
+                <div class="feed-item">
+                    <h2>{{ post.title }}</h2>
+                    {% if post.type == 'MARKER' %}
+                        <p><strong>{{ post.user }}</strong> placed a marker! <br />
+                            <strong>{{ post.marker.type_of_marker }}</strong> - <small>{{ post.create_date }}</small></p>
+                    {% elif post.type == 'ANNOUNCEMENT' %}
+                        <p>{{ post.description }}</p>
+                        <small><strong>{{ post.user }}</strong> {{ post.create_date }}</small>
+                    {% elif post.type == 'POLL' %}
+                        <p>{{ post.description }}</p>
+                        <button id="" class="vote-yes">Yes
+        {#                    <span class="glyphicon glyphicon-thumbs-up"></span>#}
+                        </button>
+                        <button id="" class="vote-no">No
+        {#                    <span class="glyphicon glyphicon-thumbs-down"></span>#}
+                        </button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {#            <p>Nothing worthy of your time right now, sir.</p>#}
+{#            <div class="feed-item">#}
+{#                <h2>New Poll</h2>#}
+{#                <p>Should we allocate funds for road repairs?</p>#}
+{##}
+{#                <button id="vote-yes" class="">Yes#}
 {#                    <span class="glyphicon glyphicon-thumbs-up"></span>#}
-                </button>
-                <button id="vote-no" class="">No
+{#                </button>#}
+{#                <button id="vote-no" class="">No#}
 {#                    <span class="glyphicon glyphicon-thumbs-down"></span>#}
-                </button>
-                <br />
-            </div>
-
-            <div class="feed-item">
-                <h2>Announcement</h2>
-                <p>As of October 10th, 2016, residence fees will increase from
-                $175 a month to $200 a month. Please plan accordingly.</p>
-
-                <button id="contact" class="">Contact Administrator</button>
-            </div>
-
-
-            <div class="feed-item">
-                <h2>Yard Sale</h2>
-                <p>Hey everyone! I've got tons of old collectibles and such that I just
-                    can't find room for anymore. It would be greatly appreciated if ya'll
-                came on down for a looksey!</p>
-                <br />
-
-                <small>from <strong>Dave Anderson</strong> on <strong>3/14/2016</strong></small>
-
-            </div>
-        </div>
+{#                </button>#}
+{#                <br />#}
+{#            </div>#}
+{##}
+{#            <div class="feed-item">#}
+{#                <h2>Announcement</h2>#}
+{#                <p>As of October 10th, 2016, residence fees will increase from#}
+{#                $175 a month to $200 a month. Please plan accordingly.</p>#}
+{##}
+{#                <button id="contact" class="">Contact Administrator</button>#}
+{#            </div>#}
+{##}
+{##}
+{#            <div class="feed-item">#}
+{#                <h2>Yard Sale</h2>#}
+{#                <p>Hey everyone! I've got tons of old collectibles and such that I just#}
+{#                    can't find room for anymore. It would be greatly appreciated if ya'll#}
+{#                came on down for a looksey!</p>#}
+{#                <br />#}
+{#                <small>from <strong>Dave Anderson</strong> on <strong>3/14/2016</strong></small>#}
+{#            </div>#}
     </div>
 
     <div id='legend' style='display:none;'>

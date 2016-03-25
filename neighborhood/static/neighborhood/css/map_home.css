@@ -282,8 +282,9 @@ body {
 .feed {
     width:25%;
     top:100px;
-    bottom:0;
+    height:auto;
     float:left;
+    overflow:auto;
     background-color: #FFFFFF;
 }
 
@@ -330,13 +331,17 @@ body {
 	color: #DD9454;
 }
 
+.news {
+    overflow-scrolling: auto;
+}
 
-#vote-yes {
+
+.vote-yes {
     float:left;
     background: #54E5B0;
 }
 
-#vote-no {
+.vote-no {
     float: right;
 	background: #c94e50;
 }

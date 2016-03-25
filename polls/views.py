@@ -9,6 +9,7 @@ from neighborhood.models import Neighborhood
 
 from .models import Question, Choice, Vote
 from .forms import QuestionForm, ChoiceForm
+from feed.models import Feed, FeedPost
 
 
 class IndexView(generic.ListView):
@@ -49,9 +50,10 @@ def new_poll(request):
 		question_form = QuestionForm(request.POST)
 		choice_formset = ChoiceFormSet(request.POST)
 		if question_form.is_valid() and choice_formset.is_valid():
+			neighborhood = get_object_or_404(Neighborhood, pk=request.session['neighborhood_id'])
 			# Save question_form and create Question object
 			question = question_form.save()
-			question.neighborhood = get_object_or_404(Neighborhood, pk=request.session['neighborhood_id'])
+			question.neighborhood = neighborhood
 			question.creator = request.user
 			question.save()
 			# Save each choice form into Choice object
@@ -59,6 +61,12 @@ def new_poll(request):
 				choice = choice_form.save()
 				choice.question = question
 				choice.save()
+
+			# create feedpost to post this new poll to the neighborhood feed
+			feed = Feed.objects.get(neighborhood=neighborhood)
+			feedpost = FeedPost(title=question.question_text, user=request.user,
+								type='POLL', feed=feed, poll=question)
+			feedpost.save()
 			return HttpResponseRedirect('/neighborhood/home')
 			# choice_form.is_valid() failed
 		# question_form.is_valid() failed
