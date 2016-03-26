@@ -8,13 +8,9 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 	house = models.ForeignKey(House)
 	join_date = models.DateField(default=timezone.now)
+	bio = models.TextField(max_length=1000, default='Default biography')
+	member_status = models.CharField(max_length=100, default='neighbor')
+	neighborhood_id = models.IntegerField(null=True)
 
-
-class BoardMemberProfile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-	house = models.ForeignKey(House)
-	join_date = models.DateTimeField(default=timezone.now)
-	bio = models.CharField(max_length=400)
-	position = models.CharField(max_length=50, verbose_name="Board member position")
-	neighborhood_id = models.ForeignKey(Neighborhood, null=True)
-
+	def is_board_member(self):
+		return self.member_status is not 'neighbor'

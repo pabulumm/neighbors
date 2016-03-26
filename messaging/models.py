@@ -30,5 +30,5 @@ class Report(models.Model):
 	text = models.CharField(max_length=1000)
 	time = models.DateTimeField(auto_now=True)
 	sender = models.ForeignKey(User, related_name='reporter', null=True)
-	recipients = models.ManyToManyField(User, related_name='recipients', null=True)
+	recipients = models.ManyToManyField(User, related_name='recipients')
 

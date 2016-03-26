@@ -26,5 +26,6 @@ urlpatterns = [
 	url(r'^discussions/', include('discussions.urls', namespace="discussions")),
 	url(r'^polls/', include('polls.urls', namespace="polls")),
 	url(r'^markers/', include('markers.urls', namespace="markers")),
+	url(r'^feed/', include('feed.urls', namespace="feed")),
 	url(r'^admin/', include(admin.site.urls)),
 ]

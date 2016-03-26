@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 
-from accounts.models import BoardMemberProfile
+from accounts.models import UserProfile
 from messaging.forms import ReportForm
 from messaging.models import Report
 from polls.models import Question
@@ -31,6 +31,7 @@ def neighborhood_home(request):
 	request.session['neighborhood_id'] = neighborhood.id
 	feed = Feed.objects.get(neighborhood=neighborhood)
 	feedposts = get_recent_posts(feed.id)
+	request.session['feed_id'] = feed.id
 	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
 	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
 														  'markers': markers,
@@ -66,7 +67,7 @@ def get_neighborhood_news(request):
 def neighborhood_details(request):
 	neighborhood = request.user.userprofile.house.neighborhood
 	try:
-		board_members = BoardMemberProfile.objects.all().filter(neighborhood_id=neighborhood.id)
+		board_members = UserProfile.objects.all().filter(neighborhood_id=neighborhood.id)
 		poll_list = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 	except NameError:
 		return render(request, 'neighborhood/details.html', {'neighborhood': neighborhood})

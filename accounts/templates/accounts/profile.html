@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <title>Neighbors</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-info" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-info" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
+    </div>
+    <div class="icons">
+        <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
+        <a id="report" class='btn btn-default btn-circle btn-lg'>
+            <span class='glyphicon glyphicon-alert'></span>
+        </a>
+    </div>
+</div>
+
+
+<div id="content" class="content">
+
+
+    <div class="container">
+        <div id="profile-pic">
+            <p>Profile picture</p>
+        </div>
+        {% if board_permissions == True %}
+            {#            <button id="announcement">Make Announcement</button>#}
+            <button id="announcement" type="button" class="btn btn-info btn-lg"
+                    data-toggle="modal" data-target="#myModal">
+                Make Announcement
+            </button>
+        {% endif %}
+        <h1 class="orange-text">{{ house.family_name }} Account</h1>
+        <p>User: {{ house.user }}</p>
+        <p>Neighborhood: {{ house.user.username }}</p>
+        <p>Family Name: {{ house.family_name }}</p>
+        <p>Join Date: {{ house.join_date }}</p>
+        <p>Address: {{ house.address }}</p>
+        <a href="{% url 'neighborhood:home' %}">Return</a>
+
+        <div id="messages"></div>
+
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <form method="post" action="{% url 'feed:announce' %}">
+                            {% csrf_token %}
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">New Announcement</h4>
+                            </div>
+                            <div class="modal-body">
+                                {{ announcement_form.as_p }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

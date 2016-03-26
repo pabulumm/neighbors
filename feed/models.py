@@ -15,10 +15,10 @@ class Feed(models.Model):
 class FeedPost(models.Model):
 	id = models.AutoField(primary_key=True)
 	title = models.CharField(max_length=50, default='Feed Post Title')
-	feed = models.ForeignKey(Feed)
+	feed = models.ForeignKey(Feed, null=True)
 	type = models.CharField(max_length=50, default='ANNOUNCEMENT')
-	description = models.CharField(max_length=300)
-	user = models.ForeignKey(User)
+	description = models.TextField(max_length=300)
+	user = models.ForeignKey(User, null=True)
 	create_date = models.DateTimeField(default=timezone.now)
 	marker = models.ForeignKey(Marker, null=True)
 	poll = models.ForeignKey(Question, null=True)

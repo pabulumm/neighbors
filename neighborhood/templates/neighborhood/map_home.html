@@ -12,8 +12,49 @@
           crossorigin="anonymous">
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
     {# <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' /> #}
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/style.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
 
+    <script type="text/javascript">
+        function getIconType(type, url_only) {
+            var url = "";
+            switch (type) {
+                case 'HOUSE':
+                    url = "{% static 'markers/png/house-32.png' %}";
+                    break;
+                case 'YARD_SALE':
+                    url = "{% static 'markers/png/shopping-tag-32.png' %}";
+                    break;
+                case 'CONSTRUCTION':
+                    url = "{% static 'markers/png/bulldozer-32.png' %}";
+                    break;
+                case 'THEFT':
+                    url = "{% static 'markers/png/burglar-32.png' %}";
+                    break;
+                case 'EVENT':
+                    url = "{% static 'markers/png/event-32.png' %}";
+                    break;
+                case 'TRASH':
+                    url = "{% static 'markers/png/trash-32.png' %}";
+                    break;
+                case 'DEFAULT':
+                default:
+                    return new L.Icon.Default;
+                    break;
+            }
+            if (url_only == true) {
+                return url;
+            }
+            else {
+                return new L.icon({
+                    iconUrl: url,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                    popupAnchor: [0, -16]
+                });
+            }
+        }
+    </script>
 
 </head>
 <body>
@@ -46,7 +87,7 @@
         <form action="{% url 'neighborhood:home' %}" method="POST">
             {% csrf_token %}
             {{ report_form.as_p }}
-{#            <button id="close-report" class="btn btn-default">Close</button>#}
+            {#            <button id="close-report" class="btn btn-default">Close</button>#}
             <button id="submit-report" class="btn btn-default">Submit</button>
         </form>
     </div>
@@ -56,57 +97,66 @@
     <div class="feed">
         <h1 id="feed-title" class="orange-text">Neighborly News Now.</h1>
         <span class="blue"></span>
-            {% for post in feedposts %}
-                <div class="feed-item">
-                    <h2>{{ post.title }}</h2>
-                    {% if post.type == 'MARKER' %}
-                        <p><strong>{{ post.user }}</strong> placed a marker! <br />
-                            <strong>{{ post.marker.type_of_marker }}</strong> - <small>{{ post.create_date }}</small></p>
-                    {% elif post.type == 'ANNOUNCEMENT' %}
-                        <p>{{ post.description }}</p>
-                        <small><strong>{{ post.user }}</strong> {{ post.create_date }}</small>
-                    {% elif post.type == 'POLL' %}
-                        <p>{{ post.description }}</p>
-                        <button id="" class="vote-yes">Yes
+        {% for post in feedposts %}
+            <div id="feed-post{{ post.id }}" class="feed-item">
+                <small id="time-stamp">{{ post.create_date }}</small>
+                <h2>{{ post.title }}</h2>
+                {% if post.type == 'MARKER' %}
+                    <script>
+{#                        var icon_img = document.createElement("img");#}
+{#                        var src = getIconType({{ post.marker.type_of_marker }}, true);#}
+{#                        var icon_img = $("<img>", {src: "{% static 'markers/png/event-32.png' %}"});#}
+{#                        icon_img.src = getIconType({{ post.marker.type_of_marker }}, true);#}
+{#                        icon_img.setAttribute("class", "feed-post-icon");#}
+{#                        document.getElementById("feed-post").appendChild(icon_img);#}
+{#                        var p = $("<p></p>").text("Text.");#}
+                        $("#feed-post{{ post.id }}").append(icon_img);
+                    </script>
+                    <p><strong>{{ post.user }}</strong> placed <strong>{{ post.marker.type_of_marker }}
+                    </strong> marker! <br/></p>
+
+                {% elif post.type == 'ANNOUNCEMENT' %}
+                    <p>{{ post.description }}</p>
+                    <small><strong>{{ post.user }}</strong></small>
+
+                {% elif post.type == 'POLL' %}
+                    <p>{{ post.description }}</p>
+                    <button id="" class="vote-yes">Yes</button>
+                    <button id="" class="vote-no">No</button>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {#            <p>Nothing worthy of your time right now, sir.</p>#}
+        {#            <div class="feed-item">#}
+        {#                <h2>New Poll</h2>#}
+        {#                <p>Should we allocate funds for road repairs?</p>#}
+        {##}
+        {#                <button id="vote-yes" class="">Yes#}
         {#                    <span class="glyphicon glyphicon-thumbs-up"></span>#}
-                        </button>
-                        <button id="" class="vote-no">No
+        {#                </button>#}
+        {#                <button id="vote-no" class="">No#}
         {#                    <span class="glyphicon glyphicon-thumbs-down"></span>#}
-                        </button>
-                    {% endif %}
-                </div>
-            {% endfor %}
-            {#            <p>Nothing worthy of your time right now, sir.</p>#}
-{#            <div class="feed-item">#}
-{#                <h2>New Poll</h2>#}
-{#                <p>Should we allocate funds for road repairs?</p>#}
-{##}
-{#                <button id="vote-yes" class="">Yes#}
-{#                    <span class="glyphicon glyphicon-thumbs-up"></span>#}
-{#                </button>#}
-{#                <button id="vote-no" class="">No#}
-{#                    <span class="glyphicon glyphicon-thumbs-down"></span>#}
-{#                </button>#}
-{#                <br />#}
-{#            </div>#}
-{##}
-{#            <div class="feed-item">#}
-{#                <h2>Announcement</h2>#}
-{#                <p>As of October 10th, 2016, residence fees will increase from#}
-{#                $175 a month to $200 a month. Please plan accordingly.</p>#}
-{##}
-{#                <button id="contact" class="">Contact Administrator</button>#}
-{#            </div>#}
-{##}
-{##}
-{#            <div class="feed-item">#}
-{#                <h2>Yard Sale</h2>#}
-{#                <p>Hey everyone! I've got tons of old collectibles and such that I just#}
-{#                    can't find room for anymore. It would be greatly appreciated if ya'll#}
-{#                came on down for a looksey!</p>#}
-{#                <br />#}
-{#                <small>from <strong>Dave Anderson</strong> on <strong>3/14/2016</strong></small>#}
-{#            </div>#}
+        {#                </button>#}
+        {#                <br />#}
+        {#            </div>#}
+        {##}
+        {#            <div class="feed-item">#}
+        {#                <h2>Announcement</h2>#}
+        {#                <p>As of October 10th, 2016, residence fees will increase from#}
+        {#                $175 a month to $200 a month. Please plan accordingly.</p>#}
+        {##}
+        {#                <button id="contact" class="">Contact Administrator</button>#}
+        {#            </div>#}
+        {##}
+        {##}
+        {#            <div class="feed-item">#}
+        {#                <h2>Yard Sale</h2>#}
+        {#                <p>Hey everyone! I've got tons of old collectibles and such that I just#}
+        {#                    can't find room for anymore. It would be greatly appreciated if ya'll#}
+        {#                came on down for a looksey!</p>#}
+        {#                <br />#}
+        {#                <small>from <strong>Dave Anderson</strong> on <strong>3/14/2016</strong></small>#}
+        {#            </div>#}
     </div>
 
     <div id='legend' style='display:none;'>
@@ -151,14 +201,14 @@
      *
      * Types of Markers -
      *
-            HOUSE = 'HOU'
-            EVENT = 'EVE'
-            TRASH = 'TRA'
-            CONSTRUCTION = 'CON'
-            POOL = 'POL'
-            SPA = 'SPA'
-            THEFT = 'THF'
-            YARD_SALE = 'YAR'
+     HOUSE = 'HOU'
+     EVENT = 'EVE'
+     TRASH = 'TRA'
+     CONSTRUCTION = 'CON'
+     POOL = 'POL'
+     SPA = 'SPA'
+     THEFT = 'THF'
+     YARD_SALE = 'YAR'
      */
 
     /**
@@ -186,7 +236,6 @@
     var csrftoken = getCookie('csrftoken');
 
 
-
     L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
     var map = L.mapbox.map('map', 'mapbox.streets', {
         legendControl: {
@@ -196,7 +245,7 @@
     }).setView([34.220912, -119.055079], 16);
 
     // move zoom control location to top right corner
-    new L.Control.Zoom({ position: 'topright' }).addTo(map);
+    new L.Control.Zoom({position: 'topright'}).addTo(map);
 
     //map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 
@@ -208,7 +257,6 @@
     var mark_latlng;
 
     // create new custom icon
-
 
 
     map.on('click', function (e) {
@@ -227,9 +275,8 @@
         }
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Getting all markers in db and loading to map
-
 
 
         $.ajax({
@@ -244,7 +291,7 @@
                 $.each(data.markers, function (markerIndex, marker) {
                     //alert(marker.type_of_marker + " marker loaded at:" + marker['lat'] +", " + marker['lon']);
                     //L.marker([marker['lat'], marker['lon']]).addTo(map);
-                    L.marker([marker['lat'], marker['lon']]).setIcon(getIconType(marker.type_of_marker)).addTo(map);
+                    L.marker([marker['lat'], marker['lon']]).setIcon(getIconType(marker.type_of_marker, false)).addTo(map);
                 });
             },
             error: function (xhr, errmsg, err) {
@@ -307,64 +354,6 @@
         });
     });
 
-    function getIconType(type) {
-        switch (type) {
-            case 'HOUSE':
-                return new L.icon({
-                    iconUrl: "{% static 'markers/png/house-32.png' %}",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-                break;
-            case 'YARD_SALE':
-                return new L.icon({
-                    iconUrl: "{% static 'markers/png/shopping-tag-32.png' %}",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-                break;
-            case 'CONSTRUCTION':
-                return new L.icon({
-                    iconUrl: "{% static 'markers/png/bulldozer-32.png' %}",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-                break;
-            case 'THEFT':
-                return new L.icon({
-                    iconUrl: "{% static 'markers/png/burglar-32.png' %}",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-                break;
-            case 'EVENT':
-                return new L.icon({
-                    iconUrl: "{% static 'markers/png/event-32.png' %}",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-                break;
-            case 'TRASH':
-                return new L.icon({
-                    iconUrl: "{% static 'markers/png/trash-32.png' %}",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-                break;
-            case 'DEFAULT':
-                return new L.Icon.Default;
-                break;
-            default:
-                return new L.Icon.Default;
-                break;
-        }
-    }
 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection

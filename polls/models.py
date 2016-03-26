@@ -9,6 +9,7 @@ from accounts.models import User
 class Question(models.Model):
 	id = models.AutoField(primary_key=True)
 	question_text = models.CharField(max_length=200)
+	description = models.TextField(max_length=500, default="Default question description")
 	pub_date = models.DateTimeField('date published', default=timezone.now)
 	neighborhood = models.ForeignKey(Neighborhood, null=True)
 	creator = models.ForeignKey(User, null=True)
@@ -38,6 +39,7 @@ class Vote(models.Model):
 	question = models.ForeignKey(Question, null=True)
 	choice = models.ForeignKey(Choice, null=True)
 	user = models.ForeignKey(User, null=True)
+	time = models.DateTimeField(default=timezone.now)
 
 	class Meta:
 		unique_together = (('user','choice'),)

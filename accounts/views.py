@@ -5,6 +5,7 @@ from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from .models import UserProfile
 from .forms import UserForm
 from neighborhood.models import Neighborhood, House
+from feed.forms import AnnouncementForm
 
 
 def user_login(request):
@@ -92,5 +93,9 @@ def register_user(request):
 @login_required
 def user_profile(request):
 	user_prof = request.user.userprofile
-	return render(request, 'accounts/user_profile.html', {'house': user_prof})
+	board_permissions = user_prof.is_board_member()
+	announcement_form = AnnouncementForm()
+	return render(request, 'accounts/profile.html', {'house': user_prof,
+													 'board_permissions': board_permissions,
+													 'announcement_form': announcement_form})
 

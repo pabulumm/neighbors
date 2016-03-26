@@ -110,6 +110,16 @@ def vote(request, question_id):
 			return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-
-
+def vote_from_feed(request):
+	if request.method == 'POST' and request.is_ajax():
+		question = get_object_or_404(Question, pk=question_id)
+		neighborhood = request.user.userprofile.house.neighborhood
+		try:
+			selected_choice = question.choice_set.get(pk=request.POST['choice'])
+		except (KeyError, Choice.DoesNotExist):
+			# Redisplay the question voting form
+			return render(request, 'polls/detail.html', {
+				'question': question,
+				'error_message': "You didn't select a choice",
+			})
 # end
