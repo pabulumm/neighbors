@@ -1,0 +1,53 @@
+.content .container {
+    position:relative;
+    width: 80%;
+    height:80%;
+    margin-top: 50px;
+    background: #fff;
+    -webkit-box-shadow: 1px 1px 12px 2px rgba(221,148,84,1);
+    -moz-box-shadow: 1px 1px 12px 2px rgba(221,148,84,1);
+    box-shadow: 1px 1px 12px 2px rgba(221,148,84,1);
+}
+
+.poll-menu-item-container {
+    height:80px;
+    position:relative;
+    width:100%;
+    text-decoration: none;
+    margin-top: 20px;
+    border-top: 2px solid #DD9454;
+    border-bottom: 2px solid #DD9454;
+
+}
+.poll-menu-item {
+    text-align: center;
+    position:relative;
+    text-decoration: none;
+    height:80px;
+}
+
+.poll-menu-item a {
+    width: 100%;
+    height:80px;
+    text-decoration: none;
+}
+
+.poll-menu-item h1 {
+    font-size: 15px;
+}
+
+.poll-menu-item strong {
+    float:left;
+}
+
+.poll-menu-item small {
+    float:none;
+}
+
+
+#poll-container {
+}
+
+#poll-container #vote {
+    float:right;
+}

@@ -16,44 +16,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
 
     <script type="text/javascript">
-        function getIconType(type, url_only) {
-            var url = "";
-            switch (type) {
-                case 'HOUSE':
-                    url = "{% static 'markers/png/house-32.png' %}";
-                    break;
-                case 'YARD_SALE':
-                    url = "{% static 'markers/png/shopping-tag-32.png' %}";
-                    break;
-                case 'CONSTRUCTION':
-                    url = "{% static 'markers/png/bulldozer-32.png' %}";
-                    break;
-                case 'THEFT':
-                    url = "{% static 'markers/png/burglar-32.png' %}";
-                    break;
-                case 'EVENT':
-                    url = "{% static 'markers/png/event-32.png' %}";
-                    break;
-                case 'TRASH':
-                    url = "{% static 'markers/png/trash-32.png' %}";
-                    break;
-                case 'DEFAULT':
-                default:
-                    return new L.Icon.Default;
-                    break;
-            }
-            if (url_only == true) {
-                return url;
-            }
-            else {
-                return new L.icon({
-                    iconUrl: url,
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                    popupAnchor: [0, -16]
-                });
-            }
-        }
     </script>
 
 </head>
@@ -94,70 +56,6 @@
 </div>
 
 <div id="content" class="content">
-    <div class="feed">
-        <h1 id="feed-title" class="orange-text">Neighborly News Now.</h1>
-        <span class="blue"></span>
-        {% for post in feedposts %}
-            <div id="feed-post{{ post.id }}" class="feed-item">
-                <small id="time-stamp">{{ post.create_date }}</small>
-                <h2>{{ post.title }}</h2>
-                {% if post.type == 'MARKER' %}
-                    <script>
-{#                        var icon_img = document.createElement("img");#}
-{#                        var src = getIconType({{ post.marker.type_of_marker }}, true);#}
-{#                        var icon_img = $("<img>", {src: "{% static 'markers/png/event-32.png' %}"});#}
-{#                        icon_img.src = getIconType({{ post.marker.type_of_marker }}, true);#}
-{#                        icon_img.setAttribute("class", "feed-post-icon");#}
-{#                        document.getElementById("feed-post").appendChild(icon_img);#}
-{#                        var p = $("<p></p>").text("Text.");#}
-                        $("#feed-post{{ post.id }}").append(icon_img);
-                    </script>
-                    <p><strong>{{ post.user }}</strong> placed <strong>{{ post.marker.type_of_marker }}
-                    </strong> marker! <br/></p>
-
-                {% elif post.type == 'ANNOUNCEMENT' %}
-                    <p>{{ post.description }}</p>
-                    <small><strong>{{ post.user }}</strong></small>
-
-                {% elif post.type == 'POLL' %}
-                    <p>{{ post.description }}</p>
-                    <button id="" class="vote-yes">Yes</button>
-                    <button id="" class="vote-no">No</button>
-                {% endif %}
-            </div>
-        {% endfor %}
-        {#            <p>Nothing worthy of your time right now, sir.</p>#}
-        {#            <div class="feed-item">#}
-        {#                <h2>New Poll</h2>#}
-        {#                <p>Should we allocate funds for road repairs?</p>#}
-        {##}
-        {#                <button id="vote-yes" class="">Yes#}
-        {#                    <span class="glyphicon glyphicon-thumbs-up"></span>#}
-        {#                </button>#}
-        {#                <button id="vote-no" class="">No#}
-        {#                    <span class="glyphicon glyphicon-thumbs-down"></span>#}
-        {#                </button>#}
-        {#                <br />#}
-        {#            </div>#}
-        {##}
-        {#            <div class="feed-item">#}
-        {#                <h2>Announcement</h2>#}
-        {#                <p>As of October 10th, 2016, residence fees will increase from#}
-        {#                $175 a month to $200 a month. Please plan accordingly.</p>#}
-        {##}
-        {#                <button id="contact" class="">Contact Administrator</button>#}
-        {#            </div>#}
-        {##}
-        {##}
-        {#            <div class="feed-item">#}
-        {#                <h2>Yard Sale</h2>#}
-        {#                <p>Hey everyone! I've got tons of old collectibles and such that I just#}
-        {#                    can't find room for anymore. It would be greatly appreciated if ya'll#}
-        {#                came on down for a looksey!</p>#}
-        {#                <br />#}
-        {#                <small>from <strong>Dave Anderson</strong> on <strong>3/14/2016</strong></small>#}
-        {#            </div>#}
-    </div>
 
     <div id='legend' style='display:none;'>
         <h2 class="orange-text"><strong>WHATS HOT IN THE HOOD.</strong></h2>
@@ -171,6 +69,57 @@
         </div>
     </div>
     <div id='map' class='streets'></div>
+    <script src="{% static 'neighborhood/js/mapscript.js' %}"></script>
+    <div class="feed">
+        <h1 id="feed-title" class="orange-text">Neighborly News Now.</h1>
+        <span class="blue"></span>
+        {% for post in feedposts %}
+            <div id="feed-post{{ post.id }}" class="feed-item">
+                <small id="time-stamp">{{ post.create_date }}</small>
+{#                <h2>{{ post.title }}</h2>#}
+                <div class="feed-item-body">
+                    {% if post.type == 'MARKER' %}
+                        <script>
+                            var src = getIconType("{{ post.marker.type_of_marker }}", true);
+                            var icon_img = $("<img>", {class: 'feed-post-icon', src: src});
+                            $("#feed-post{{ post.id }} .feed-item-body").append(icon_img);
+                            $('#feed-post{{ post.id }}').on('click', function() {
+                                centerMarker([{{ post.marker.lat }}, {{ post.marker.lon }}]);
+                                // open popup descriptor
+
+                            });
+                        </script>
+                        <p><strong>{{ post.user }}</strong> placed <strong>{{ post.marker.type_of_marker }}
+                        </strong> marker! <br/></p>
+
+                    {% elif post.type == 'ANNOUNCEMENT' %}
+                        <h1 id="announcement-header">{{ post.title }}</h1>
+                        <p id="description">{{ post.description }}</p>
+                        <small><strong>{{ post.user }}</strong></small>
+
+                    {% elif post.type == 'POLL' %}
+                        <a href="{% url 'polls:detail' post.poll.id %}"><p id="poll-header">{{ post.title }}</p></a>
+                        <p id="description">{{ post.description }}</p>
+                        {% if post.poll.is_yes_no %}
+                            <button id="" class="vote-yes">Yes</button>
+                            <button id="" class="vote-no">No</button>
+                        {% else %}
+                            <form action="{% url 'polls:vote' post.poll.id %}" method="post">
+                                {% csrf_token %}
+                                {% for choice in post.poll.choice_set.all %}
+                                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+                                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+                                {% endfor %}
+                                <input id='poll-vote' type="submit" value="Submit" />
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+
 </div>
 <script>
 </script>
@@ -194,178 +143,5 @@
     </div>
 </div>  end footer-->
 
-<script>
-
-    /**
-     * CUSTOM ICON INSTANTIATION
-     *
-     * Types of Markers -
-     *
-     HOUSE = 'HOU'
-     EVENT = 'EVE'
-     TRASH = 'TRA'
-     CONSTRUCTION = 'CON'
-     POOL = 'POL'
-     SPA = 'SPA'
-     THEFT = 'THF'
-     YARD_SALE = 'YAR'
-     */
-
-    /**
-     * MARKER TYPE SELECTION POPUP
-     */
-
-
-    //For getting CSRF token
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    // Grab csrf token for AJAX calls
-    var csrftoken = getCookie('csrftoken');
-
-
-    L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
-    var map = L.mapbox.map('map', 'mapbox.streets', {
-        legendControl: {
-            position: 'topleft'
-        },
-        zoomControl: false
-    }).setView([34.220912, -119.055079], 16);
-
-    // move zoom control location to top right corner
-    new L.Control.Zoom({position: 'topright'}).addTo(map);
-
-    //map.legendControl.addLegend(document.getElementById('legend').innerHTML);
-
-    // Create holders for new marker info
-    var name = "Sample Marker Name";
-    var lat, lon;
-    var pin;
-    var type_of_marker = "YARD_SALE";
-    var mark_latlng;
-
-    // create new custom icon
-
-
-    map.on('click', function (e) {
-        if (pin != null) { // pin placed already, move it
-            pin.setLatLng(e.latlng).openPopup();
-            mark_latlng = e.latlng;
-        }
-        else { // no pin yet, make new pin
-            mark_latlng = e.latlng;
-            pin = new L.marker(mark_latlng).addTo(map)
-                    .bindPopup('<button id=house>House</button><button id=event>Event</button><br />' +
-                            '<button id=const>Construction</button><button id=trash>Trash</button><br />' +
-                            '<button id=theft>Theft</button><button id=yard>Yard Sale</button><br />' +
-                            '<button class=default>Default</button><button class=save>SAVE</button>')
-                    .openPopup();
-        }
-    });
-
-    $(document).ready(function () {
-        // Getting all markers in db and loading to map
-
-
-        $.ajax({
-            url: "{% url 'markers:get_all_markers' %}",
-            type: 'GET',
-            data: {
-                csrfmiddlewaretoken: csrftoken
-            },
-            dataType: "json",
-            success: function (data) {
-                //alert('markers received' + data);
-                $.each(data.markers, function (markerIndex, marker) {
-                    //alert(marker.type_of_marker + " marker loaded at:" + marker['lat'] +", " + marker['lon']);
-                    //L.marker([marker['lat'], marker['lon']]).addTo(map);
-                    L.marker([marker['lat'], marker['lon']]).setIcon(getIconType(marker.type_of_marker, false)).addTo(map);
-                });
-            },
-            error: function (xhr, errmsg, err) {
-                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            }
-        });
-
-        $('#map').on('click', '#house', function () {
-            type_of_marker = "HOUSE";
-            pin.setIcon(getIconType(type_of_marker));
-        });
-        $('#map').on('click', '#yard', function () {
-            type_of_marker = "YARD_SALE";
-            pin.setIcon(getIconType(type_of_marker));
-        });
-        $('#map').on('click', '#const', function () {
-            type_of_marker = "CONSTRUCTION";
-            pin.setIcon(getIconType(type_of_marker));
-        });
-        $('#map').on('click', '#theft', function () {
-            type_of_marker = "THEFT";
-            pin.setIcon(getIconType(type_of_marker));
-        });
-        $('#map').on('click', '#event', function () {
-            type_of_marker = "EVENT";
-            pin.setIcon(getIconType(type_of_marker));
-        });
-        $('#map').on('click', '#trash', function () {
-            type_of_marker = "TRASH";
-            pin.setIcon(getIconType(type_of_marker));
-        });
-        $('#map').on('click', '#default', function () {
-            type_of_marker = "TRASH";
-            pin.setIcon(getIconType(type_of_marker));
-        });
-        $('#map').on('click', '.save', function () {
-            // AJAX call to save new marker as GeoDjango model
-            $.ajax({
-                url: "{% url 'markers:new_marker' %}",
-                type: "Post",
-                data: {
-                    name: name,
-                    lat: mark_latlng.lat,
-                    lon: mark_latlng.lng,
-                    type_of_marker: type_of_marker,
-                    csrfmiddlewaretoken: csrftoken
-                },
-                success: function (json) {
-                    console.log(json);
-                    pin.closePopup();
-                    alert('Created a ' + type_of_marker + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
-                    L.marker([mark_latlng.lat, mark_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);
-                    pin = null;
-
-                },
-                error: function (xhr, errmsg, err) {
-                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-                }
-            })
-        });
-    });
-
-
-    function csrfSafeMethod(method) {
-        // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    $.ajaxSetup({
-        beforeSend: function (xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-    });
-</script>
 </body>
 </html>

@@ -95,36 +95,7 @@
 
             </div>
         </div>
-        <div class="row">
-            <div class="section">
-                <div id="polls" class="col-md-6">
-                    <h1>Polls</h1>
-                    {% if latest_question_list %}
-                        <ul>
-                            {% for question in latest_question_list %}
-                                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <p>No polls are available.</p>
-                    {% endif %}
-                    <a class="btn btn-default" href="{% url 'polls:new' %}">New Poll</a><br/>
-                </div>
-            </div>
-            <div class="section">
-                <div id="discussions" class="col-md-6">
-                    <h1>Discussions</h1>
-                    {% for discussion in discussions %}
-                        <a href="{% url 'discussions:detail' discussion.id %}">
-                            <h3>{{ discussion.title }}</h3></a>
-                        <p>Creator ID: {{ discussion.create_date }}
-                            Date Created: {{ discussion.create_date }}</p>
-                        <p></p>
-                    {% endfor %}
-                    <a class="btn btn-default" href="{% url 'discussions:new_discussion' %}">New Discussion</a><br/>
-                </div>
-            </div>
-        </div>
+
 
 
     </div>

@@ -1,3 +1,46 @@
+/********************* Colour reference chart****************
+************************* comment ********* colour ********
+
+COLOR SCHEME 1 ------ CURRENT
+white                       w               #F9FBFF
+green                       g               #54E5B0
+dark grayish green          dgg             #8DBCC4
+light blue                  lb              #35C2FF
+deep blue                   b               #2C90F9
+
+COLOR SCHEME 2
+white                       w               #E6FFFF
+blue green                  bg              #98E8CC
+light green                 lg              #98FFCO
+blue                        lb              #2697FF
+deep blue                   b               #2575DE
+
+COLOR SCHEME 3
+white                       w               #F4F4F4
+green                       g               #1BC142
+orange                      o               #DD9454
+light blue                  lb              #41B4F2
+deep blue                   b               #2671F2
+
+COLOR SCHEME 4
+white                       w               #F4F4F4
+green                       g               #1BC142
+blue green                  bg              #35E0Ad
+light blue                  lb              #41B4F2
+deep blue                   b               #2671F2
+
+EXTRA COLORS
+
+brown           #633E32
+beige           #FFE2AA
+avacado green   #87AD93
+greenish gray   #ABC8CO
+navy blue       #1D5099
+very lightgreen #DAF7DC
+
+*/
+
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .white {background: #FFFFFF}
@@ -63,6 +106,11 @@ body {
     margin-right: 15px;
 }
 
+
+#report {
+	background: #c94e50;
+}
+
 .options {
     padding-top: 15px;
     padding-left: 30%;
@@ -85,11 +133,6 @@ body {
     width:100%;
     padding: 0 2.5% 0 2.5%;
     background-color: #f0f0f0;
-}
-
-.content h1 {
-    color: #DD9454;
-    font-family: "Roboto", sans-serif;
 }
 
 .btn-circle {

@@ -13,6 +13,7 @@ class Question(models.Model):
 	pub_date = models.DateTimeField('date published', default=timezone.now)
 	neighborhood = models.ForeignKey(Neighborhood, null=True)
 	creator = models.ForeignKey(User, null=True)
+	is_yes_no = models.BooleanField(default=False)
 
 	def __str__(self):  # __unicode__ on Python 2
 		return self.question_text

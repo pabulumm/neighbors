@@ -1,0 +1,214 @@
+/**
+ * CUSTOM ICON INSTANTIATION
+ *
+ * Types of Markers -
+ *
+ HOUSE = 'HOU'
+ EVENT = 'EVE'
+ TRASH = 'TRA'
+ CONSTRUCTION = 'CON'
+ POOL = 'POL'
+ SPA = 'SPA'
+ THEFT = 'THF'
+ YARD_SALE = 'YAR'
+ */
+
+/**
+ * MARKER TYPE SELECTION POPUP
+ */
+
+
+function getIconType(type, url_only) {
+    var url = "";
+    switch (type) {
+        case 'HOUSE':
+            url = "/static/markers/png/house-32.png";
+            break;
+        case 'YARD_SALE':
+            url = "/static/markers/png/shopping-tag-32.png";
+            break;
+        case 'CONSTRUCTION':
+            url = "/static/markers/png/bulldozer-32.png";
+            break;
+        case 'THEFT':
+            url = "/static/markers/png/burglar-32.png";
+            break;
+        case 'EVENT':
+            url = "/static/markers/png/event-32.png";
+            break;
+        case 'TRASH':
+            url = "/static/markers/png/trash-32.png";
+            break;
+        default:
+            return new L.Icon.Default;
+            break;
+    }
+    if (url_only) {
+        return url;
+    }
+    else {
+        return new L.icon({
+            iconUrl: url,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -16]
+        });
+    }
+}
+
+
+//For getting CSRF token
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+// Grab csrf token for AJAX calls
+var csrftoken = getCookie('csrftoken');
+
+
+L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
+var map = L.mapbox.map('map', 'mapbox.streets', {
+    legendControl: {
+        position: 'topleft'
+    },
+    zoomControl: false
+}).setView([34.220912, -119.055079], 16);
+
+// move zoom control location to top right corner
+new L.Control.Zoom({position: 'topright'}).addTo(map);
+
+//map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
+// Create holders for new marker info
+var name = "Sample Marker Name";
+var lat, lon;
+var pin;
+var type_of_marker = "YARD_SALE";
+var mark_latlng;
+
+// create new custom icon
+
+
+map.on('click', function (e) {
+    if (pin != null) { // pin placed already, move it
+        pin.setLatLng(e.latlng).openPopup();
+        mark_latlng = e.latlng;
+    }
+    else { // no pin yet, make new pin
+        mark_latlng = e.latlng;
+        pin = new L.marker(mark_latlng).addTo(map)
+            .bindPopup(
+                '<button class="popup-button" id=house>House</button><button class="popup-button" id=event>Event</button><br />' +
+                '<button class="popup-button" id=const>Construction</button><button class="popup-button" id=trash>Trash</button><br />' +
+                '<button class="popup-button" id=theft>Theft</button><button class="popup-button" id=yard>Yard Sale</button><br />' +
+                '<button class=save>SAVE</button>')
+            .openPopup();
+    }
+});
+
+$(document).ready(function () {
+    // Getting all markers in db and loading to map
+
+
+    $.ajax({
+        url: "/markers/get_markers/",
+        type: 'GET',
+        data: {
+            csrfmiddlewaretoken: csrftoken
+        },
+        dataType: "json",
+        success: function (data) {
+            $.each(data.markers, function (markerIndex, marker) {
+                //alert(marker.type_of_marker + " marker loaded at:" + marker['lat'] +", " + marker['lon']);
+                //L.marker([marker['lat'], marker['lon']]).addTo(map);
+                L.marker([marker['lat'], marker['lon']]).setIcon(getIconType(marker.type_of_marker, false)).addTo(map);
+            });
+        },
+        error: function (xhr, errmsg, err) {
+            alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+
+
+    $('#map').on('click', '#house', function () {
+        type_of_marker = "HOUSE";
+        pin.setIcon(getIconType(type_of_marker));
+    });
+    $('#map').on('click', '#yard', function () {
+        type_of_marker = "YARD_SALE";
+        pin.setIcon(getIconType(type_of_marker));
+    });
+    $('#map').on('click', '#const', function () {
+        type_of_marker = "CONSTRUCTION";
+        pin.setIcon(getIconType(type_of_marker));
+    });
+    $('#map').on('click', '#theft', function () {
+        type_of_marker = "THEFT";
+        pin.setIcon(getIconType(type_of_marker));
+    });
+    $('#map').on('click', '#event', function () {
+        type_of_marker = "EVENT";
+        pin.setIcon(getIconType(type_of_marker));
+    });
+    $('#map').on('click', '#trash', function () {
+        type_of_marker = "TRASH";
+        pin.setIcon(getIconType(type_of_marker));
+    });
+    $('#map').on('click', '#default', function () {
+        type_of_marker = "TRASH";
+        pin.setIcon(getIconType(type_of_marker));
+    });
+    $('#map').on('click', '.save', function () {
+        // AJAX call to save new marker as GeoDjango model
+        $.ajax({
+            url: "/markers/new_marker/",
+            type: "Post",
+            data: {
+                name: name,
+                lat: mark_latlng.lat,
+                lon: mark_latlng.lng,
+                type_of_marker: type_of_marker,
+                csrfmiddlewaretoken: csrftoken
+            },
+            success: function (json) {
+                console.log(json);
+                pin.closePopup();
+                alert('Created a ' + type_of_marker + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
+                L.marker([mark_latlng.lat, mark_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);
+                pin = null;
+
+            },
+            error: function (xhr, errmsg, err) {
+                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        })
+    });
+});
+
+function centerMarker(latlng) {
+    map.panTo(latlng);
+}
+
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});

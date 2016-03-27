@@ -81,9 +81,17 @@ def new_poll(request):
 												   'choice_formset': choice_formset})
 
 
-#def get_recent_polls(request):
-	#n_id = request.session['neighborhood_id']
-	#recent_polls = [poll for poll in Question.objects.filter(neighborhood_id=n_id).order_by('las')]
+@login_required
+def polls_index_detail(request, pk):
+	question_list = Question.objects.filter(
+		pub_date__lte=timezone.now()
+	).order_by('-pub_date')
+	selected_question = get_object_or_404(Question, pk=pk)
+	return render(request, 'polls/detail.html', {'selected_question': selected_question,
+												   'question_list': question_list})
+
+
+
 @login_required
 def vote(request, question_id):
 	question = get_object_or_404(Question, pk=question_id)

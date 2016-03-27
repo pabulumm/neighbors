@@ -1,44 +1,4 @@
-/********************* Colour reference chart****************
-************************* comment ********* colour ********
-
-COLOR SCHEME 1 ------ CURRENT
-white                       w               #F9FBFF
-green                       g               #54E5B0
-dark grayish green          dgg             #8DBCC4
-light blue                  lb              #35C2FF
-deep blue                   b               #2C90F9
-
-COLOR SCHEME 2
-white                       w               #E6FFFF
-blue green                  bg              #98E8CC
-light green                 lg              #98FFCO
-blue                        lb              #2697FF
-deep blue                   b               #2575DE
-
-COLOR SCHEME 3
-white                       w               #F4F4F4
-green                       g               #1BC142
-orange                      o               #DD9454
-light blue                  lb              #41B4F2
-deep blue                   b               #2671F2
-
-COLOR SCHEME 4
-white                       w               #F4F4F4
-green                       g               #1BC142
-blue green                  bg              #35E0Ad
-light blue                  lb              #41B4F2
-deep blue                   b               #2671F2
-
-EXTRA COLORS
-
-brown           #633E32
-beige           #FFE2AA
-avacado green   #87AD93
-greenish gray   #ABC8CO
-navy blue       #1D5099
-very lightgreen #DAF7DC
-
-*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 #map {
     position: absolute;
@@ -75,14 +35,9 @@ very lightgreen #DAF7DC
 }
 
 
-#feed-title {
-}
-
 #show {
     float:right;
 }
-
-
 
 #discussions {
     padding: 20px 20px 20px 20px;
@@ -129,7 +84,7 @@ very lightgreen #DAF7DC
     background-color: #FFFFFF;
 }
 
-.feed h1 {
+.feed #feed-title {
     padding-top: 24px;
     padding-left: 24px;
     font-family: "Roboto", sans-serif;
@@ -150,14 +105,24 @@ very lightgreen #DAF7DC
     margin-top:10px;
     margin-bottom:10px;
     width:90%;
-    padding: 20px 20px 20px 20px;
-    -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
-    -moz-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
-    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    padding: 5px 5px 5px 5px;
+    -webkit-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
+    -moz-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
+    box-shadow: 0 0 4px 2px rgba(221,148,84,1);
     background:#FFFFFF;
 }
 
-.feed-item button {
+.feed-item-body {
+    padding: 10px 10px 10px 10px;
+
+}
+
+#feed-title {
+    color: #DD9454;
+    font-family: "Roboto", sans-serif;
+}
+
+.feed-item-body button {
     padding: 1em 2em;
 	outline: none;
 	font-weight: 600;
@@ -166,15 +131,9 @@ very lightgreen #DAF7DC
     width: 50%;
 }
 
-.feed-item h2 {
-	outline: none;
-	font-weight: 600;
-	border: none;
-	color: #DD9454;
-}
-
-#feed-post img {
-    float:right;
+.feed-post-icon {
+    float:left;
+    padding-right:20px;
 }
 
 .news {
@@ -182,6 +141,20 @@ very lightgreen #DAF7DC
     float:left;
     background-color: #f0f0f0;
     overflow: auto;
+}
+
+#poll-header {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Roboto", sans-serif;
+    color: #35C2FF;
+}
+
+#announcement-header {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Roboto", sans-serif;
+    color: #35C2FF;
 }
 
 #time-stamp {
@@ -199,14 +172,21 @@ very lightgreen #DAF7DC
 	background: #c94e50;
 }
 
+#poll-vote {
+    padding: 1em 2em;
+	outline: none;
+	font-weight: 600;
+	border: none;
+	background: #54E5B0;
+    color:#fff;
+    width: 100%;
+}
+
 #contact {
 
     width:100%;
 }
 
-#report {
-	background: #c94e50;
-}
 
 .report {
     width:10%;
@@ -220,7 +200,25 @@ very lightgreen #DAF7DC
     float: right;
 }
 
+.popup-button {
+    margin: 5px 5px 5px 5px;
+    padding:5px 5px 5px 5px;
+	font-weight: 600;
+	border: none;
+    width: 100px;
+	background: #DD9454;
+    color:#fff;
+}
 
+.save {
+    margin: 5px 5px 5px 5px;
+    padding:5px 5px 5px 5px;
+	font-weight: 600;
+	border: none;
+    width: 210px;
+	background: #54E5B0;
+    color:#fff;
+}
 
 
 

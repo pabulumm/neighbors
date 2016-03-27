@@ -1,13 +1,82 @@
-<h1>{{ question.question_text }}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <title>Neighbors</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/detail.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{%  endif %}
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-    {% endfor %}
-    <input type="submit" value="vote" />
-</form>
+</head>
+<body>
 
-<a href="{% url 'polls:index' %}">Back to Polls</a>
+
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a class="btn btn-info" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>
+        <a class="btn btn-info" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>
+    </div>
+    <div class="icons">
+        <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'neighborhood:details' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
+        <a id="report" class='btn btn-default btn-circle btn-lg'>
+            <span class='glyphicon glyphicon-alert'></span>
+        </a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="col-md-3">
+            {% if question_list %}
+                {% for question in question_list %}
+                    <div class="poll-menu-item-container">
+                        <a href="{% url 'polls:detail' question.id %}">
+                            <div class="poll-menu-item">
+
+                                    <h1>{{ question.question_text }}</h1>
+                                <small>{{ question.pub_date }}</small>
+                            </div>
+                        </a>
+                    </div>
+
+                {% endfor %}
+            {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+            </div>
+            <div id="poll-container" class="col-md-9">
+                <div class="poll-detail">
+                    <h1>{{ selected_question.question_text }}</h1>
+                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{%  endif %}
+                    <form action="{% url 'polls:vote' selected_question.id %}" method="post">
+                        {% csrf_token %}
+                        {% for choice in selected_question.choice_set.all %}
+                            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>
+                            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+                        {% endfor %}
+                        <input id='vote' type="submit" value="vote" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
