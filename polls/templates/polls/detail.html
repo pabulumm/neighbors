@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'polls/detail.css' %}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'polls/slide.js' %}"></script>
 
 </head>
 <body>
@@ -38,7 +39,7 @@
 </div>
 
 <div class="content">
-    <div class="container">
+    <div class="holder">
         <div class="row col-md-12">
             <div class="col-md-3">
             {% if question_list %}

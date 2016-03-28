@@ -123,16 +123,7 @@ body {
     top:100px;
     bottom:0;
     width:100%;
-    background-color: #f0f0f0;
-}
-
-.content .holder {
-    position: absolute;
-    top:30px;
-    bottom:100px;
-    width:100%;
-    padding: 0 2.5% 0 2.5%;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
 }
 
 .btn-circle {

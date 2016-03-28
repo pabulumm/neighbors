@@ -94,8 +94,10 @@ new L.Control.Zoom({position: 'topright'}).addTo(map);
 var name = "Sample Marker Name";
 var lat, lon;
 var pin;
-var type_of_marker = "YARD_SALE";
+var type_of_marker = "DEFAULT";
 var mark_latlng;
+
+var marker_list = [];
 
 // create new custom icon
 
@@ -130,9 +132,28 @@ $(document).ready(function () {
         dataType: "json",
         success: function (data) {
             $.each(data.markers, function (markerIndex, marker) {
-                //alert(marker.type_of_marker + " marker loaded at:" + marker['lat'] +", " + marker['lon']);
-                //L.marker([marker['lat'], marker['lon']]).addTo(map);
-                L.marker([marker['lat'], marker['lon']]).setIcon(getIconType(marker.type_of_marker, false)).addTo(map);
+
+                // create a new L.marker for each retrieved model instance
+                var mark = L.marker([marker.lat, marker.lon])
+                    .setIcon(getIconType(
+                        marker.type_of_marker, false))
+                    // creating the popup for our marker
+                    .bindPopup(
+                        '<h3>' + marker.title + '</h3><p>' + marker.description +
+                        '<br/><strong>' + marker.type_of_marker +
+                        '</strong><br/><small>' + marker.create_date + '</small>'
+                    ).addTo(map);
+                // create a marker variable reference
+                var marker_reference = {
+                    'id': marker.id,
+                    'lat':marker.lat,
+                    'lon':marker.lon,
+                    'type':marker.type_of_marker,
+                    'title':marker.title,
+                    'marker': mark
+                };
+                // add the loaded marker to the reference list
+                marker_list.push(marker_reference);
             });
         },
         error: function (xhr, errmsg, err) {
@@ -175,7 +196,7 @@ $(document).ready(function () {
             url: "/markers/new_marker/",
             type: "Post",
             data: {
-                name: name,
+                title: title,
                 lat: mark_latlng.lat,
                 lon: mark_latlng.lng,
                 type_of_marker: type_of_marker,
@@ -195,6 +216,14 @@ $(document).ready(function () {
         })
     });
 });
+
+function openPop(marker_id) {
+    $.each(marker_list, function(markerIndex, marker) {
+        if (marker_id == marker.id) {
+            marker.marker.openPopup();
+        }
+    })
+}
 
 function centerMarker(latlng) {
     map.panTo(latlng);

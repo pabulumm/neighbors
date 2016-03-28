@@ -1,8 +1,11 @@
-.content .container {
-    position:relative;
+
+.content .holder {
+    position:absolute;
+    margin-left:10%;
     width: 80%;
     height:80%;
     margin-top: 50px;
+    bottom:-100%;
     background: #fff;
     -webkit-box-shadow: 1px 1px 12px 2px rgba(221,148,84,1);
     -moz-box-shadow: 1px 1px 12px 2px rgba(221,148,84,1);

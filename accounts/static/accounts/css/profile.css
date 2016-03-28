@@ -11,11 +11,6 @@
     background: #DD9454;
 }
 
-.content .container {
-    position:relative;
-    height:100%;
-    background:#fff;
-}
 
 #profile-pic {
     position: relative;
@@ -48,7 +43,6 @@
    box-shadow:0px 0px 10px 0px #424242;
    padding:10px;
    box-sizing:border-box;
-   font-family:helvetica;
    visibility:hidden;
    display:none;
 }
@@ -104,5 +98,4 @@
 }
 
 /* irrelevant styling */
-body { text-align: center; }
 #tallModal .modal-body p { margin-bottom: 900px }
