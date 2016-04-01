@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8/>
+    {% load staticfiles %}
+    <title>Neighbors</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="{% static 'budget/chart.js' %}"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/index.css' %}"/>
+</head>
+<body>
+
+<div class="nav">
+    <h1 class="white-text">Neighbors</h1>
+    <div class="options">
+        <a id="map-button" class="btn btn-info"><strong>map</strong></a>
+        <a id="status-button" class="btn btn-info"><strong>status</strong></a>
+    </div>
+    <div class="icons">
+        <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">
+            <span class='glyphicon glyphicon-user'></span>
+        </a>
+        <a id="messages-button" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+            <span class='glyphicon glyphicon-envelope'></span>
+        </a>
+        <a id="list-button" class='btn btn-default btn-circle btn-lg' href="{% url 'neighborhood:details' %}">
+            <span class='glyphicon glyphicon-list'></span>
+        </a>
+        <a id="report" class='btn btn-default btn-circle btn-lg'>
+            <span class='glyphicon glyphicon-alert'></span>
+        </a>
+    </div>
+</div>
+
+<div id="report-container">
+    <a id="cancel" class="btn btn-circle"><span class="glyphicon glyphicon-remove"></span></a>
+    <div class='report'>
+        <form action="{% url 'neighborhood:home' %}" method="POST">
+            {% csrf_token %}
+            {{ report_form.as_p }}
+            {#            <button id="close-report" class="btn btn-default">Close</button>#}
+            <button id="submit-report" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div class="content">
+    <div class="holder">
+        <div class="row col-md-12">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#polls">Polls</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#announcements">Announcements</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="polls" class="tab-pane fade in active">
+                    <div class="col-md-3">
+                        {% if polls %}
+                            {% for question in polls %}
+                                <div class="poll-menu-item-container">
+                                    <a href="{% url 'polls:detail' question.id %}">
+                                        <div class="poll-menu-item">
+                                            <h1>{{ question.question_text }}</h1>
+                                            <small>{{ question.pub_date }}</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No polls are available.</p>
+                        {% endif %}
+                    </div>
+                    <div id="poll-container" class="col-md-9">
+                        <div class="poll-detail">
+                            <h1>{{ selected_question.question_text }}</h1>
+                            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                            <form action="{% url 'polls:vote' selected_question.id %}" method="post">
+                                {% csrf_token %}
+                                {% for choice in selected_question.choice_set.all %}
+                                    <input type="radio" name="choice" id="choice{{ forloop.counter }}"
+                                           value="{{ choice.id }}"/>
+                                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br/>
+                                {% endfor %}
+                                <input id='vote' type="submit" value="vote"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="events" class="tab-pane fade">
+
+                </div>
+
+                <div id="announcements" class="tab-pane fade">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

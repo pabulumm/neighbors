@@ -16,6 +16,8 @@ class House(models.Model):
 	address = models.CharField(max_length=200)
 	neighborhood = models.ForeignKey(Neighborhood)
 	permission_code = models.CharField(max_length=25)
+	lon = models.FloatField(default=34.220912)
+	lat = models.FloatField(default=-119.055079)
 
 	def __str__(self):
 		return self.address

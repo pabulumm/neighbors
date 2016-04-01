@@ -13,6 +13,7 @@ from polls.models import Question
 from markers.models import Marker
 from .models import Neighborhood
 from feed.models import Feed, FeedPost
+from feed.forms import AnnouncementForm
 from feed.views import get_recent_posts
 
 
@@ -27,16 +28,21 @@ def neighborhood_home(request):
 			report.time = timezone.now()
 			#report.save()
 	report_form = ReportForm()
+	announcement_form = AnnouncementForm()
 	neighborhood = request.user.userprofile.house.neighborhood
 	request.session['neighborhood_id'] = neighborhood.id
 	feed = Feed.objects.get(neighborhood=neighborhood)
 	feedposts = get_recent_posts(feed.id)
 	request.session['feed_id'] = feed.id
+	user_prof = request.user.userprofile
+
 	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
 	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
+														  'user': user_prof,
 														  'markers': markers,
 														  'feedposts': feedposts,
-														  'report_form': report_form})
+														  'report_form': report_form,
+														  'announcement_form':announcement_form})
 
 
 @login_required
@@ -59,8 +65,16 @@ def neighborhood_status(request):
 
 
 @login_required
-def get_neighborhood_news(request):
-	pass
+def index(request):
+	neighborhood = request.user.userprofile.house.neighborhood
+	polls = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
+	announcements = FeedPost.objects.filter(type='ANNOUNCEMENT')
+	budget = Budget.objects.filter(neighborhood=neighborhood)
+	selected_question = polls[0]
+	return render(request, 'neighborhood/index.html', {'polls': polls,
+														'announcements':announcements,
+														'budget':budget,
+													    'selected_question':selected_question})
 
 
 @login_required

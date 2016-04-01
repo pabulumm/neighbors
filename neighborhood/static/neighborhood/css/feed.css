@@ -1,0 +1,159 @@
+#feed {
+    position: absolute;
+    width:25%;
+    bottom: -100%;
+    height:100%;
+    float:left;
+    overflow-y:auto;
+    background-color: #FFFFFF;
+}
+
+#feed #feed-title {
+    padding-top: 24px;
+    padding-left: 16px;
+    font-size: 32px;
+    font-weight:500;
+    float:left;
+    font-family: "Roboto", sans-serif;
+}
+
+
+#list-menu-button {
+    border:none;
+    font-size:32px;
+    margin-top:10px;
+    margin-left:10px;
+    width:60px;
+    padding: 10px 10px 10px 10px;
+    float:left;
+}
+
+#list-menu {
+    position: absolute;
+    width:20%;
+    left: -20%;
+    height:100%;
+    float:left;
+    background-color: #ffffff;
+}
+
+#list-menu button {
+    margin-top:10px;
+    margin-left:10%;
+    margin-bottom:10px;
+    height:50px;
+    display:block;
+    border:none;
+    background-color: #ffffff;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    width:80%;
+    color: #707070;
+}
+
+#list-menu .menu-option{
+    border-bottom:1px solid #707070;
+}
+
+#list-menu .divider {
+    margin-left:5%;
+    margin-top:50px;
+    margin-bottom:50px;
+    display:block;
+    height:2px;
+    width:90%;
+    background: #404040;
+}
+
+#feed .blue {
+    display:block;
+    height:12px;
+    width:90%;
+    margin-top:70px;
+    margin-left:5%;
+}
+
+.feed-item {
+    position: relative;
+    height: auto;
+    overflow: auto;
+    left:-100%;
+    margin-top:10px;
+    margin-bottom:10px;
+    width:90%;
+    padding: 5px 5px 5px 5px;
+    -webkit-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
+    -moz-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
+    box-shadow: 0 0 4px 2px rgba(221,148,84,1);
+    background:#FFFFFF;
+}
+
+.feed-item-body {
+    padding: 10px 10px 10px 10px;
+
+}
+
+#feed-title {
+    color: #DD9454;
+    font-family: "Roboto", sans-serif;
+}
+
+.feed-item-body button {
+    padding: 1em 2em;
+	outline: none;
+	font-weight: 600;
+	border: none;
+	color: #fff;
+    width: 50%;
+}
+
+.feed-post-icon {
+    float:left;
+    padding-right:20px;
+}
+
+.news {
+    max-height:100%;
+    float:left;
+    background-color: #f0f0f0;
+    overflow: auto;
+}
+
+#poll-header {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Roboto", sans-serif;
+    color: #35C2FF;
+}
+
+#announcement-header {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Roboto", sans-serif;
+    color: #35C2FF;
+}
+
+#time-stamp {
+    float:right;
+    opacity: 0.7;
+}
+
+.vote-yes {
+    float:left;
+    background: #54E5B0;
+}
+
+.vote-no {
+    float: right;
+	background: #c94e50;
+}
+
+#poll-vote {
+    padding: 1em 2em;
+	outline: none;
+	font-weight: 600;
+	border: none;
+	background: #54E5B0;
+    color:#fff;
+    width: 100%;
+}

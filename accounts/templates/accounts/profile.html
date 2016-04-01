@@ -24,7 +24,7 @@
         <a id="account" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
             <span class='glyphicon glyphicon-user'></span>
         </a>
-        <a id="messages" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
+        <a id="account-menu" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
             <span class='glyphicon glyphicon-envelope'></span>
         </a>
         <a id="list" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
@@ -59,7 +59,7 @@
         <p>Address: {{ house.address }}</p>
         <a href="{% url 'neighborhood:home' %}">Return</a>
 
-        <div id="messages"></div>
+        <div id="account-menu"></div>
 
         <div class="container">
             <!-- Modal -->

@@ -15,6 +15,21 @@
     height:100%;
     width:100%;
 }
+
+#map2 {
+    position:relative;
+    height:100%;
+    width:100%;
+}
+
+#map-account-container {
+    position: relative;
+    margin-top:5%;
+    margin-left:5%;
+    height:400px;
+    width:90%;
+    background: #0a68f5;
+}
 #status {
     position: absolute;
     width:75%;
@@ -55,24 +70,6 @@
     width: 300px;
 }
 
-.footer {
-    position: absolute;
-    bottom:0;
-    height: 100px;
-    width: 100%;
-    clear: both;
-    border-top: 10px solid /* g */ #F6F6F6;
-}
-
-.footer .row {
-    padding-left: 20%;
-}
-
-
-#show {
-    float:right;
-}
-
 #discussions {
     padding: 20px 20px 20px 20px;
     -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
@@ -82,28 +79,15 @@
     float:right;
 }
 
-#report-container {
+#test-button {
     position:relative;
-    top:0;
-    height: 200px;
-    width: 100%;
-    background: #F0F0F0;
-
+    margin-top:20px;
+    margin-right:20px;
+    float:right;
+    color:#fff;
+    background: #000;
+    z-index:100;
 }
-
-#report-container button {
-}
-
-#close-report {
-}
-
-
-
-#submit-report {
-    background: #54E5B0;
-}
-
-
 
 
 /*********************************************************************
@@ -139,136 +123,12 @@
 }
 
 #account-options .holder a {
-    width:175px;
+    width: 175px;
     margin-top: 40px;
 }
 
-#feed {
-    position: absolute;
-    width:25%;
-    bottom: -100%;
-    height:100%;
-    float:left;
-    overflow-y:auto;
-    background-color: #FFFFFF;
-}
-
-#feed #feed-title {
-    padding-top: 24px;
-    padding-left: 24px;
-    font-family: "Roboto", sans-serif;
-}
-
-#feed span {
-    display:block;
-    float:none;
-    height:12px;
-    width:90%;
-    margin-left:5%;
-}
-
-.feed-item {
-    height: auto;
-    overflow: auto;
-    margin-left:5%;
-    margin-top:10px;
-    margin-bottom:10px;
-    width:90%;
-    padding: 5px 5px 5px 5px;
-    -webkit-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    -moz-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    background:#FFFFFF;
-}
-
-.feed-item-body {
-    padding: 10px 10px 10px 10px;
-
-}
-
-#feed-title {
-    color: #DD9454;
-    font-family: "Roboto", sans-serif;
-}
-
-.feed-item-body button {
-    padding: 1em 2em;
-	outline: none;
-	font-weight: 600;
-	border: none;
-	color: #fff;
-    width: 50%;
-}
-
-.feed-post-icon {
-    float:left;
-    padding-right:20px;
-}
-
-.news {
-    max-height:100%;
-    float:left;
-    background-color: #f0f0f0;
-    overflow: auto;
-}
-
-#poll-header {
-    font-size: 24px;
-    font-weight: 600;
-    font-family: "Roboto", sans-serif;
-    color: #35C2FF;
-}
-
-#announcement-header {
-    font-size: 24px;
-    font-weight: 600;
-    font-family: "Roboto", sans-serif;
-    color: #35C2FF;
-}
-
-#time-stamp {
-    float:right;
-    opacity: 0.7;
-}
-
-.vote-yes {
-    float:left;
-    background: #54E5B0;
-}
-
-.vote-no {
-    float: right;
-	background: #c94e50;
-}
-
-#poll-vote {
-    padding: 1em 2em;
-	outline: none;
-	font-weight: 600;
-	border: none;
-	background: #54E5B0;
-    color:#fff;
-    width: 100%;
-}
-
-#contact {
-
-    width:100%;
-}
 
 
-
-.report {
-    width:10%;
-    margin-left:45%;
-}
-
-#cancel {
-    border: none;
-    margin-top: 10px;
-    margin-right: 10px;
-    float: right;
-}
 
 .popup-button {
     margin: 5px 5px 5px 5px;

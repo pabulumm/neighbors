@@ -15,32 +15,30 @@
           crossorigin="anonymous">
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
     {# <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' /> #}
-    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/style.css' %}"/>
+    <link rel="stylesheet" type="t  ext/css" href="{% static 'neighborhood/css/style.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/status.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/report.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/feed.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}"/>
-    <script type="text/javascript">
-    </script>
-
+    <script type="text/javascript" src="{% static 'neighborhood/js/get_icon.js' %}"></script>
 </head>
 <body>
 
 <div class="nav">
+    <a id="list-menu-button" class='' href="#">
+        <span id="menu-icon" class='glyphicon glyphicon-list'></span>
+    </a>
     <h1 class="white-text">Neighbors</h1>
     <div class="options">
-        {#        <a class="btn btn-info" href="{% url 'neighborhood:home' %}"><strong>map</strong></a>#}
         <a id="map-button" class="btn btn-info"><strong>map</strong></a>
-        {#        <a id="status" class="btn btn-info" href="{% url 'neighborhood:status' %}"><strong>status</strong></a>#}
         <a id="status-button" class="btn btn-info"><strong>status</strong></a>
     </div>
     <div class="icons">
         <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">
             <span class='glyphicon glyphicon-user'></span>
         </a>
-        <a id="messages-button" class='btn btn-default btn-circle btn-lg' href="{% url 'accounts:user_profile' %}">
-            <span class='glyphicon glyphicon-envelope'></span>
-        </a>
-        <a id="list-button" class='btn btn-default btn-circle btn-lg' href="{% url 'neighborhood:details' %}">
+        <a id="list-button" class='btn btn-default btn-circle btn-lg' href="{% url 'neighborhood:index' %}">
             <span class='glyphicon glyphicon-list'></span>
         </a>
         <a id="report" class='btn btn-default btn-circle btn-lg'>
@@ -62,6 +60,9 @@
 </div>
 
 <div id="content" class="content">
+
+
+{#-----------------------MAP MAIN WINDOW---------------------------#}
     <div id="map-container">
         <div id='map' class='streets'></div>
     </div>
@@ -114,64 +115,25 @@
 
     </div>
 
-    <div id="account">
-        <div class="container">
-            <div id="profile-pic">
-                <p>Profile picture</p>
-            </div>
-{#            {% if board_permissions == True %}#}
-                {#            <button id="announcement">Make Announcement</button>#}
-                <button id="announcement" type="button" class="btn btn-info btn-lg"
-                        data-toggle="modal" data-target="#myModal">
-                    Make Announcement
-                </button>
-{#            {% endif %}#}
-            <h1 class="orange-text">{{ house.family_name }} Account</h1>
-            <p>User: {{ house.user }}</p>
-            <p>Neighborhood: {{ house.user.username }}</p>
-            <p>Family Name: {{ house.family_name }}</p>
-            <p>Join Date: {{ house.join_date }}</p>
-            <p>Address: {{ house.address }}</p>
-            <a href="{% url 'neighborhood:home' %}">Return</a>
-
-            <div id="messages"></div>
-
-            <div class="container">
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <form method="post" action="{% url 'feed:announce' %}">
-                                {% csrf_token %}
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">New Announcement</h4>
-                                </div>
-                                <div class="modal-body">
-                                    {{ announcement_form.as_p }}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="{% static 'neighborhood/js/mapscript.js' %}"></script>
 
 
+<script>
+    var post_ids = [];
+
+    function newPostId(id) {
+        post_ids.push(id);
+        return id;
+    }
+</script>
+
+
+{#-----------------------FEED SIDE BAR (WITH MAP) ---------------------------#}
     <div id="feed">
-        <h1 id="feed-title" class="orange-text">Neighborly News Now.</h1>
+        <p id="feed-title" class="orange-text">Neighborly News Now.</p>
         <span class="blue"></span>
         {% for post in feedposts %}
             <div id="feed-post{{ post.id }}" class="feed-item">
+                <script>newPostId("#feed-post{{ post.id }}");</script>
                 <small id="time-stamp">{{ post.create_date }}</small>
                 {#                <h2>{{ post.title }}</h2>#}
                 <div class="feed-item-body">
@@ -218,7 +180,99 @@
         {% endfor %}
     </div>
 
+{#-----------------------POLLS MAIN WINDOW ---------------------------#}
+    <div id="polls-main-window">
+
+    </div>
+
+
+{#----------------------- POLLS MENU SIDE BAR ---------------------------#}
+    <div id="polls-list">
+
+    </div>
+
+
+
+{#-----------------------ACCOUNT MAIN WINDOW---------------------------#}
+    <div id="account">
+        <div class="container">
+            <div id="profile-pic">
+                <p>Profile picture</p>
+            </div>
+{#            {% if board_permissions == True %}#}
+                {#            <button id="announcement">Make Announcement</button>#}
+                <button id="announcement" type="button" class="btn btn-info btn-lg"
+                        data-toggle="modal" data-target="#myModal">
+                    Make Announcement
+                </button>
+{#            {% endif %}#}
+            <h1 class="orange-text">{{ user.family_name }} Account</h1>
+            <p>User: {{ user.user }}</p>
+            <p>Neighborhood: {{ user.user.username }}</p>
+            <p>Family Name: {{ user.family_name }}</p>
+            <p>Join Date: {{ user.join_date }}</p>
+            <p>Address: {{ user.address }}</p>
+            <a href="{% url 'neighborhood:home' %}">Return</a>
+
+            <div id="account-menu">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#profile">Profile</a></li>
+                    <li><a href="#activity">Activity</a></li>
+                    <li><a href="#neighbors">Neighbors</a></li>
+                    <li><a href="#settings">Settings</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="profile" class="tab-pane fade in active">
+
+                    </div>
+                    <div id="activity" class="tab-pane fade">
+
+                    </div>
+                    <div id="neighbors" class="tab-pane fade">
+
+                    </div>
+                    <div id="settings" class="tab-pane fade">
+
+                    </div>
+                </div> <!-- end tab-content -->
+            </div>
+
+            <div class="container">
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <form method="post" action="{% url 'feed:announce' %}">
+                                {% csrf_token %}
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">New Announcement</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{ announcement_form.as_p }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{#-----------------------ACCOUNT SIDE BAR---------------------------#}
     <div id="account-options">
+        <div id="map-account-container">
+            <div id='map2'></div>
+        </div>
         <div class="holder">
             <a class="btn btn-primary" href="#">Edit Profile</a><br/>
             <a class="btn btn-primary" href="#">Make Announcement</a><br/>
@@ -226,14 +280,34 @@
             <a class="btn btn-primary" href="#">Neighbors List</a><br/>
         </div>
     </div>
+    <div id="list-menu">
+        <button class="menu-option">Polls</button>
+        <button class="menu-option">Announcements</button>
+        <button class="menu-option">Budget</button>
+        <button>Calendar</button>
 
+        <span class="divider"></span>
+
+        <button class="menu-option">Regulations</button>
+        <button>Management Board</button>
+
+{#        <small class="menu-section-title"></small>#}
+        <span class="divider"></span>
+
+        <button class="menu-option">Neighbors</button>
+        <button id="account-button" class="menu-option">Profile</button>
+        <button>Logout</button>
+    </div>
 
 </div>
 <script>
 </script>
 
+<script src="{% static 'neighborhood/js/mapscript.js' %}"></script>
 <script src="{% static 'neighborhood/js/report.js' %}"></script>
 <script src="{% static 'neighborhood/js/page_swap.js' %}"></script>
+{#<script>centerUserMap([{{ user.house.lat }},{{ user.house.lon }}])</script>#}
+<script>centerUserMap([34.220912, -119.055079])</script>
 <!--
 <div class="footer">
     <div class="row">

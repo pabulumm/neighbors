@@ -87,8 +87,10 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
 
 // move zoom control location to top right corner
 new L.Control.Zoom({position: 'topright'}).addTo(map);
-
 //map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
+// create profile map
+var map2 = L.mapbox.map('map2', 'mapbox.streets').setView([34.220912, -119.055079], 16);
 
 // Create holders for new marker info
 var name = "Sample Marker Name";
@@ -121,6 +123,7 @@ map.on('click', function (e) {
 
 $(document).ready(function () {
     // Getting all markers in db and loading to map
+
 
 
     $.ajax({
@@ -216,6 +219,11 @@ $(document).ready(function () {
         })
     });
 });
+
+function centerUserMap(latlng) {
+    new L.marker(latlng).setIcon(getIconType("HOUSE",false)).addTo(map2);
+    map2.setView(latlng, 18);
+}
 
 function openPop(marker_id) {
     $.each(marker_list, function(markerIndex, marker) {
