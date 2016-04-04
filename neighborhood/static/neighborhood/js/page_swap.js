@@ -1,10 +1,8 @@
 
-
+var nav_visible;
 
 function showMap() {
-
-    $('.visible').animate({'right': "-100%"}).removeClass('visible');
-    $('#map-container').animate({'right': "0"}).addClass('visible');
+    swapMainWindow($('#map-container'));
     if (!($('#feed').hasClass('side-visible'))) {
         loadFeed();
     }
@@ -14,9 +12,7 @@ function loadFeed() {
     $.each(post_ids, function (index, post_id) {
         $(post_id).css('left', "-100%");
     });
-    $('.side-visible').animate({'bottom': "-100%"}).removeClass('side-visible');
-    $('#feed').animate({'bottom': "0"}).addClass('side-visible');
-
+    swapSideBar($('#feed'));
     $.each(post_ids, function (index, post_id) {
         $(post_id).delay(200 * index + 500).animate({
             'left': "5%"
@@ -28,71 +24,68 @@ function showListMenu() {
     $('.visible').animate({'right': "-20%"});
     $('.side-visible').animate({'left': "20%"});
     $('#list-menu').animate({'left':"0"});
+    nav_visible = true;
 }
 
 function hideListMenu() {
     $('.visible').animate({'right': "0"});
     $('.side-visible').animate({'left': "0"});
     $('#list-menu').animate({'left':"-20%"});
+    nav_visible = false;
+}
+
+function swapMainWindow(id) {
+    if (!(id.hasClass('visible'))) {
+        $('.visible').animate({'right': "-100%"}).removeClass('visible');
+        if (nav_visible) {
+            id.animate({'right': "-20%"}).addClass('visible');
+        }
+        else {
+            id.animate({'right': "0"}).addClass('visible');
+        }
+    }
+}
+
+function swapSideBar(id) {
+    if (!(id.hasClass('side-visible'))) {
+        $('.side-visible').animate({'bottom': "-100%"}).removeClass('side-visible');
+        if (nav_visible) {
+            id.css('left', "20%");
+        }
+        else {
+            id.css('left', "0");
+        }
+        id.animate({'bottom': "0"}).addClass('side-visible');
+    }
 }
 
 
 $(document).ready(function () {
+    nav_visible = false;
     showMap();
     $('.nav-tabs a').click(function () {
         $(this).tab('show');
     });
 
     $('#status-button').click(function () {
-        //$('.feed').animate({
-        //    'marginLeft':"-100%"
-        //});
-        $('.visible').animate({
-            'right': "-100%"
-        }).removeClass('visible');
-
-        $('#status').animate({
-            'right': "0"
-        }, "slow").addClass('visible');
+        swapMainWindow($('#status'));
+        if (!($('#feed').hasClass('side-visible'))) {
+            loadFeed();
+        }
     });
     $('#map-button').click(function () {
         showMap();
     });
 
     $('#account-button').click(function () {
-        $('.visible').animate({
-            'right': "-100%"
-        }).removeClass('visible');
-
-        $('.side-visible').animate({
-            'bottom': "-100%"
-        }).removeClass('side-visible');
-
-        $('#account').animate({
-            'right': "0"
-        }).addClass('visible');
-
-        $('#account-options').animate({
-            'bottom': "0"
-        }).addClass('side-visible');
+        swapMainWindow($('#account'));
+        swapSideBar($('#account-options'));
     });
 
     $('#poll-select').click(function () {
-        $('.visible').animate({
-            'right': "-100%"
-        }).removeClass('visible');
 
-        $('.side-visible').animate({
-            'bottom': "-100%"
-        }).removeClass('side-visible');
-
-        $('#poll-detail').animate({
-            'right': "0"
-        }).addClass('visible');
-
-        $('#poll-menu').animate({
-            'bottom': "0"
-        }).addClass('side-visible');
+        swapMainWindow($('#poll-detail'));
+        swapSideBar($('#poll-menu'));
     });
 
     $('#poll-header').click(function (e) {

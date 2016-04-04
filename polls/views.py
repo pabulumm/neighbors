@@ -4,6 +4,7 @@ from django.views import generic
 from django.utils import timezone
 from django.forms import formset_factory
 from django.contrib.auth.decorators import login_required
+import json
 
 from neighborhood.models import Neighborhood
 
@@ -90,6 +91,13 @@ def polls_index_detail(request, pk):
 	return render(request, 'polls/detail.html', {'selected_question': selected_question,
 												   'question_list': question_list})
 
+
+@login_required()
+def get_poll(request):
+	if request.method == 'POST' and request.is_ajax():
+		poll = get_object_or_404(Question, pk=request.POST['id'])
+		poll_dict = poll.as_dict()
+		return HttpResponse(json.dumps({'poll': poll_dict}), content_type='application/json')
 
 
 @login_required

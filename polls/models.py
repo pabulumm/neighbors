@@ -26,6 +26,13 @@ class Question(models.Model):
 	was_published_recently.boolean = True
 	was_published_recently.short_description = 'Published Recently?'
 
+	def as_dict(self):
+		return {
+			'question_text': self.question_text,
+			'description': self.description,
+			'pub_date': self.pub_date,
+		}
+
 
 class Choice(models.Model):
 	question = models.ForeignKey(Question, null=True)

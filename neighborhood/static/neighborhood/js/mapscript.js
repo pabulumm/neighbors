@@ -206,7 +206,6 @@ $(document).ready(function () {
                 csrfmiddlewaretoken: csrftoken
             },
             success: function (json) {
-                console.log(json);
                 pin.closePopup();
                 alert('Created a ' + type_of_marker + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
                 L.marker([mark_latlng.lat, mark_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);

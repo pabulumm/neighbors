@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/feed.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}"/>
     <script type="text/javascript" src="{% static 'neighborhood/js/get_icon.js' %}"></script>
+    <script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
 </head>
 <body>
 
@@ -119,9 +120,15 @@
 
 <script>
     var post_ids = [];
+    var poll_ids = [];
 
     function newPostId(id) {
         post_ids.push(id);
+        return id;
+    }
+
+    function newPollId(id) {
+        poll_ids.push(id);
         return id;
     }
 </script>
@@ -181,14 +188,41 @@
     </div>
 
 {#-----------------------POLLS MAIN WINDOW ---------------------------#}
-    <div id="polls-main-window">
+    <div id="poll-detail">
+        <div class="poll-detail">
+{#            <h1>{{ selected_question.question_text }}</h1>#}
+{#            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{%  endif %}#}
+{#            <form action="{% url 'polls:vote' selected_question.id %}" method="post">#}
+{#                {% csrf_token %}#}
+{#                {% for choice in selected_question.choice_set.all %}#}
+{#                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>#}
+{#                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />#}
+{#                {% endfor %}#}
+{#                <input id='vote' type="submit" value="vote" />#}
+{#            </form>#}
+        </div>
 
     </div>
 
 
 {#----------------------- POLLS MENU SIDE BAR ---------------------------#}
-    <div id="polls-list">
+    <div id="poll-menu">
+        {% if polls %}
+            {% for poll in polls %}
+                <div class="poll-menu-item-container">
+                    <script>newPollId("#poll{{ poll.id }}")</script>
+                    <button id="poll{{ poll.id }}">
+                        <div class="poll-menu-item">
+                            <h1>{{ poll.question_text }}</h1>
+                            <small>{{ poll.pub_date }}</small>
+                        </div>
+                    </button>
+                </div>
 
+            {% endfor %}
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
     </div>
 
 
@@ -281,7 +315,7 @@
         </div>
     </div>
     <div id="list-menu">
-        <button class="menu-option">Polls</button>
+        <button id="poll-select" class="menu-option">Polls</button>
         <button class="menu-option">Announcements</button>
         <button class="menu-option">Budget</button>
         <button>Calendar</button>
@@ -298,6 +332,18 @@
         <button id="account-button" class="menu-option">Profile</button>
         <button>Logout</button>
     </div>
+
+
+{#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
+    <div id="event-detail">
+
+    </div>
+
+{#----------------------- EVENT CALENDAR MAIN WINDOW ---------------------------#}
+    <div id="calendar">
+        
+    </div>
+
 
 </div>
 <script>

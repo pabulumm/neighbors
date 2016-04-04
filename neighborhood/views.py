@@ -35,6 +35,7 @@ def neighborhood_home(request):
 	feedposts = get_recent_posts(feed.id)
 	request.session['feed_id'] = feed.id
 	user_prof = request.user.userprofile
+	polls = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
 
 	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
 	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
@@ -42,7 +43,8 @@ def neighborhood_home(request):
 														  'markers': markers,
 														  'feedposts': feedposts,
 														  'report_form': report_form,
-														  'announcement_form':announcement_form})
+														  'announcement_form':announcement_form,
+														  'polls': polls})
 
 
 @login_required
