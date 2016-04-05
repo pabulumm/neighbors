@@ -15,7 +15,7 @@
           crossorigin="anonymous">
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
     {# <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' /> #}
-    <link rel="stylesheet" type="t  ext/css" href="{% static 'neighborhood/css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/style.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/status.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/report.css' %}"/>
@@ -68,12 +68,35 @@
         <div id='map' class='streets'></div>
     </div>
 
+
+
+{#-------------------- MAIN NAV SLIDE OUT WINDOW ----------------------------#}
+    <div id="list-menu">
+        <button id="home-select" class="menu-option">Home</button>
+        <button id="event-select" class="menu-option">Events</button>
+        <button id="poll-select" class="menu-option">Decisions</button>
+        <button class="menu-option">Announcements</button>
+        <button class="menu-option">Budget</button>
+        <button>Calendar</button>
+
+        <span class="divider"></span>
+
+        <button class="menu-option">Regulations</button>
+        <button>Management Board</button>
+
+{#        <small class="menu-section-title"></small>#}
+        <span class="divider"></span>
+
+        <button class="menu-option">Neighbors</button>
+        <button id="account-button" class="menu-option">Profile</button>
+        <button>Logout</button>
+    </div>
+
+
     <div id="status">
         <div class="section">
             <div id="calendar" class="">
-                <iframe id="calendar-frame"
-                        src="https://calendar.google.com/calendar/embed?src=9fk7an49aqsp2r825scmp9tj50%40group.calendar.google.com&ctz=America/Los_Angeles"
-                        style="border:0 solid" frameborder="0" scrolling="no"></iframe>
+
             </div>
         </div>
         <div class="section">
@@ -120,17 +143,12 @@
 
 <script>
     var post_ids = [];
-    var poll_ids = [];
 
     function newPostId(id) {
         post_ids.push(id);
         return id;
     }
 
-    function newPollId(id) {
-        poll_ids.push(id);
-        return id;
-    }
 </script>
 
 
@@ -210,7 +228,7 @@
         {% if polls %}
             {% for poll in polls %}
                 <div class="poll-menu-item-container">
-                    <script>newPollId("#poll{{ poll.id }}")</script>
+                    <script>newPollId({{ poll.id }})</script>
                     <button id="poll{{ poll.id }}">
                         <div class="poll-menu-item">
                             <h1>{{ poll.question_text }}</h1>
@@ -314,34 +332,29 @@
             <a class="btn btn-primary" href="#">Neighbors List</a><br/>
         </div>
     </div>
-    <div id="list-menu">
-        <button id="poll-select" class="menu-option">Polls</button>
-        <button class="menu-option">Announcements</button>
-        <button class="menu-option">Budget</button>
-        <button>Calendar</button>
-
-        <span class="divider"></span>
-
-        <button class="menu-option">Regulations</button>
-        <button>Management Board</button>
-
-{#        <small class="menu-section-title"></small>#}
-        <span class="divider"></span>
-
-        <button class="menu-option">Neighbors</button>
-        <button id="account-button" class="menu-option">Profile</button>
-        <button>Logout</button>
-    </div>
-
 
 {#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
     <div id="event-detail">
+        <div id="event-map-container">
+            <div id='map3'></div>
+        </div>
+        <div id="event-list-day">
 
+        </div>
     </div>
 
 {#----------------------- EVENT CALENDAR MAIN WINDOW ---------------------------#}
-    <div id="calendar">
-        
+    <div id="event-calendar">
+{#        <iframe id="calendar-frame"#}
+{#            src="https://calendar.google.com/calendar/embed?src=9fk7an49aqsp2r825scmp9tj50%40group.calendar.google.com&ctz=America/Los_Angeles"#}
+{#            style="border:0 solid" frameborder="0" scrolling="no">#}
+{#        </iframe>#}
+
+        {% for i in 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' %}
+            <div id="day{{ forloop.counter }}" class="day">
+                <p>{{ forloop.counter }}</p>
+            </div>
+        {% endfor %}
     </div>
 
 

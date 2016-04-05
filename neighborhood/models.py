@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 
+from markers.models import Marker
+from accounts.models import User
+
 
 class Neighborhood(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -23,3 +26,20 @@ class House(models.Model):
 		return self.address
 
 
+class Event(models.Model):
+	id = models.AutoField(primary_key=True)
+	start = models.DateTimeField(null=True)
+	end = models.DateTimeField(null=True)
+	created = models.DateTimeField(auto_now=True)
+	marker = models.ForeignKey(Marker, null=True)
+	location = models.CharField(max_length=100, default="Event Location")
+	title = models.CharField(default="Event Title", max_length=200)
+	type = models.CharField(default="Community", max_length=50)
+	description = models.TextField(max_length=1000, default="Event Description.")
+	neighborhood = models.ForeignKey(Neighborhood)
+	creator = models.ForeignKey(User)
+
+	# TODO - add a field for recurring events eg. weekly, monthly, annually, etc.
+
+	def __str__(self):
+		return self.title

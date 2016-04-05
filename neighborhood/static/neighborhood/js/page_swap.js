@@ -59,6 +59,16 @@ function swapSideBar(id) {
     }
 }
 
+function toggleListMenu() {
+    var menu_icon = $('#menu-icon');
+    if (menu_icon.hasClass('glyphicon-remove')) {
+        hideListMenu();
+    }
+    else {
+        showListMenu();
+    }
+   menu_icon.toggleClass("glyphicon-list glyphicon-remove");
+}
 
 $(document).ready(function () {
     nav_visible = false;
@@ -76,6 +86,9 @@ $(document).ready(function () {
     $('#map-button').click(function () {
         showMap();
     });
+    $('#home-select').click(function () {
+        showMap();
+    });
 
     $('#account-button').click(function () {
         swapMainWindow($('#account'));
@@ -83,9 +96,15 @@ $(document).ready(function () {
     });
 
     $('#poll-select').click(function () {
-
         swapMainWindow($('#poll-detail'));
         swapSideBar($('#poll-menu'));
+        loadFirstPoll();
+    });
+
+    $('#event-select').click(function () {
+        swapMainWindow($('#event-calendar'));
+        swapSideBar($('#event-detail'));
+        toggleListMenu();
     });
 
     $('#poll-header').click(function (e) {

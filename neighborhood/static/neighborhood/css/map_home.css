@@ -1,59 +1,38 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-
 #map-container {
     position: absolute;
-    width:75%;
-    right:-100%;
-    height:100%;
-    float:right;
+    width: 75%;
+    right: -100%;
+    height: 100%;
+    float: right;
     background-color: #FFFFFF;
 }
 
 #map {
     position: relative;
-    height:100%;
-    width:100%;
+    height: 100%;
+    width: 100%;
 }
 
 #map2 {
-    position:relative;
-    height:100%;
-    width:100%;
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
-#map-account-container {
+#map3 {
     position: relative;
-    margin-top:5%;
-    margin-left:5%;
-    height:400px;
-    width:90%;
-    background: #0a68f5;
+    height: 100%;
+    width: 100%;
 }
+
 #status {
     position: absolute;
-    width:75%;
-    right:-100%;
-    height:100%;
-    overflow-y:auto;
-    background-color: #FFFFFF;
-}
-
-#account {
-    position: absolute;
-    width:75%;
-    right:-100%;
-    height:100%;
-    overflow-y:auto;
-    background-color: #FFFFFF;
-}
-
-#poll-detail {
-    position: absolute;
-    width:75%;
-    right:-100%;
-    height:100%;
-    overflow-y:auto;
+    width: 75%;
+    right: -100%;
+    height: 100%;
+    overflow-y: auto;
     background-color: #FFFFFF;
 }
 
@@ -70,41 +49,96 @@
     width: 300px;
 }
 
-#discussions {
-    padding: 20px 20px 20px 20px;
-    -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
-    -moz-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
-    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
-    background:#FFFFFF;
-    float:right;
-}
-
 #test-button {
-    position:relative;
-    margin-top:20px;
-    margin-right:20px;
-    float:right;
-    color:#fff;
+    position: relative;
+    margin-top: 20px;
+    margin-right: 20px;
+    float: right;
+    color: #fff;
     background: #000;
-    z-index:100;
+    z-index: 100;
 }
 
-
-/*********************************************************************
------------------  HOME PAGE NEWS FEED  ------------------------------
-**********************************************************************/
-#poll-menu {
+#event-detail {
     position: absolute;
-    left:0;
+    left: 0;
     width: 25%;
     height: 100%;
     bottom: -100%;
     background-color: #FFFFFF;
 }
 
+#event-calendar {
+    padding: 20px 20px 20px 20px;
+    position: absolute;
+    float:right;
+    width: 75%;
+    right: -100%;
+    height: 100%;
+    background-color: #FFFFFF;
+}
+
+#event-map-container {
+    position: relative;
+    margin-top: 5%;
+    margin-left: 5%;
+    height: 400px;
+    width: 90%;
+    background: #0a68f5;
+}
+
+#event-calendar .day {
+    position:relative;
+    width: 14.28%;
+    height: 16.66%;
+    float: left;
+    border: 1px solid #707070;
+}
+
+.day p {
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size:16px;
+    color: #0a68f5;
+    font-family: "Roboto", sans-serif;
+}
+
+#poll-menu {
+    position: absolute;
+    left: 0;
+    width: 25%;
+    height: 100%;
+    bottom: -100%;
+    background-color: #FFFFFF;
+}
+
+#poll-detail {
+    position: absolute;
+    width: 75%;
+    right: -100%;
+    height: 100%;
+    text-align: center;
+    overflow-y: auto;
+    background-color: #FFFFFF;
+}
+
+#poll-detail h1 {
+    color: #DD9454;
+    font-family: "Roboto", sans-serif;
+}
+
+#account {
+    position: absolute;
+    width: 75%;
+    right: -100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #FFFFFF;
+}
+
 #account-options {
     position: absolute;
-    left:0;
+    left: 0;
     width: 25%;
     height: 100%;
     bottom: -100%;
@@ -112,15 +146,24 @@
 }
 
 #account-options .holder {
-    position:relative;
+    position: relative;
     margin: 10% 0 0 10%;
-    width:80%;
-    height:400px;
+    width: 80%;
+    height: 400px;
     text-align: center;
-    -webkit-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    -moz-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    background:#FFFFFF;
+    -webkit-box-shadow: 0 0 4px 2px rgba(221, 148, 84, 1);
+    -moz-box-shadow: 0 0 4px 2px rgba(221, 148, 84, 1);
+    box-shadow: 0 0 4px 2px rgba(221, 148, 84, 1);
+    background: #FFFFFF;
+}
+
+#map-account-container {
+    position: relative;
+    margin-top: 5%;
+    margin-left: 5%;
+    height: 400px;
+    width: 90%;
+    background: #0a68f5;
 }
 
 #account-options .holder a {
@@ -128,29 +171,31 @@
     margin-top: 40px;
 }
 
-
-
-
 .popup-button {
     margin: 5px 5px 5px 5px;
-    padding:5px 5px 5px 5px;
-	font-weight: 600;
-	border: none;
+    padding: 5px 5px 5px 5px;
+    font-weight: 600;
+    border: none;
     width: 100px;
-	background: #DD9454;
-    color:#fff;
+    background: #DD9454;
+    color: #fff;
 }
 
 .save {
     margin: 5px 5px 5px 5px;
-    padding:5px 5px 5px 5px;
-	font-weight: 600;
-	border: none;
+    padding: 5px 5px 5px 5px;
+    font-weight: 600;
+    border: none;
     width: 210px;
-	background: #54E5B0;
-    color:#fff;
+    background: #54E5B0;
+    color: #fff;
 }
 
+#calendar-frame {
+    padding: 20px 20px 20px 20px;
+    width: 100%;
+    height: 100%;
+}
 
 
 

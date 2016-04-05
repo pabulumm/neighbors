@@ -94,8 +94,8 @@ def polls_index_detail(request, pk):
 
 @login_required()
 def get_poll(request):
-	if request.method == 'POST' and request.is_ajax():
-		poll = get_object_or_404(Question, pk=request.POST['id'])
+	if request.method == 'GET' and request.is_ajax():
+		poll = get_object_or_404(Question, pk=request.GET['id'])
 		poll_dict = poll.as_dict()
 		return HttpResponse(json.dumps({'poll': poll_dict}), content_type='application/json')
 

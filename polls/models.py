@@ -30,7 +30,7 @@ class Question(models.Model):
 		return {
 			'question_text': self.question_text,
 			'description': self.description,
-			'pub_date': self.pub_date,
+			'pub_date': str(self.pub_date.date()),
 		}
 
 

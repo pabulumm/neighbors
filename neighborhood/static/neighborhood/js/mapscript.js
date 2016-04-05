@@ -91,6 +91,7 @@ new L.Control.Zoom({position: 'topright'}).addTo(map);
 
 // create profile map
 var map2 = L.mapbox.map('map2', 'mapbox.streets').setView([34.220912, -119.055079], 16);
+var map3 = L.mapbox.map('map3', 'mapbox.streets').setView([34.220912, -119.055079], 16);
 
 // Create holders for new marker info
 var name = "Sample Marker Name";
@@ -222,6 +223,11 @@ $(document).ready(function () {
 function centerUserMap(latlng) {
     new L.marker(latlng).setIcon(getIconType("HOUSE",false)).addTo(map2);
     map2.setView(latlng, 18);
+}
+
+function centerEventMap(latlng) {
+    new L.marker(latlng).setIcon(getIconType("EVENT",false)).addTo(map3);
+    map3.setView(latlng, 17);
 }
 
 function openPop(marker_id) {
