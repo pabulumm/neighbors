@@ -1,17 +1,18 @@
 from budget.models import Budget, Expense
 from discussions.models import Discussion
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
-import json
+import json, datetime
+from calendar import monthrange, monthcalendar, month_name
 
 from accounts.models import UserProfile
 from messaging.forms import ReportForm
 from messaging.models import Report
 from polls.models import Question
 from markers.models import Marker
-from .models import Neighborhood
+from .models import Neighborhood, Event
 from feed.models import Feed, FeedPost
 from feed.forms import AnnouncementForm
 from feed.views import get_recent_posts
@@ -114,5 +115,38 @@ def get_neighborhoods(request):
 	return HttpResponse(data, mimetype)
 
 
-def about(request):
-	return render(request, 'neighborhood/map_home.html', {})
+def get_event_teasers(year, month):
+	all_events = Event.objects.all()
+	event_teasers = []
+	for event in all_events:
+		edate = event.start.date()
+		if edate.year == year and edate.month == month:
+			event_teasers.append(event.as_teaser())
+	return event_teasers
+
+
+@login_required
+def get_current_calendar(request):
+	if request.method == 'GET' and request.is_ajax():
+		now = datetime.datetime.now()
+		month = month_name[now.month]
+		event_teasers = get_event_teasers(now.year, now.month)
+		days = []
+		for week in monthcalendar(now.year, now.month):
+			for day in week:
+				days.append(day)
+		return HttpResponse(json.dumps({'month': month,
+										'event_teasers': event_teasers,
+										'days': days}),
+							content_type='application/json')
+
+
+@login_required
+def get_event(request):
+	if request.method == 'GET' and request.is_ajax():
+		event = get_object_or_404(Event, pk=request.GET['id'])
+		event_dict = event.as_dict()
+		return HttpResponse(json.dumps({'event': event_dict}))
+
+
+

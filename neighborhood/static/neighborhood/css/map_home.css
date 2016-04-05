@@ -71,7 +71,7 @@
 #event-calendar {
     padding: 20px 20px 20px 20px;
     position: absolute;
-    float:right;
+    float: right;
     width: 75%;
     right: -100%;
     height: 100%;
@@ -82,25 +82,105 @@
     position: relative;
     margin-top: 5%;
     margin-left: 5%;
-    height: 400px;
+    height: 250px;
     width: 90%;
-    background: #0a68f5;
+    float:left;
 }
 
-#event-calendar .day {
+#event-box h1 {
+    margin-left: 10px;
+    font-family: "Roboto", sans-serif;
+}
+
+
+.time {
     position:relative;
+    padding-left:20px;
+    padding-right:20px;
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    float: none;
+}
+
+
+#event-detail #description {
+    position:relative;
+    font-family: "Roboto", sans-serif;
+    margin: 10px 10px 10px 10px;
+    font-size: 16px;
+}
+
+#event-box {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 10px;
+    bottom: 20px;
+    -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    -moz-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+}
+
+#calendar-head {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+}
+
+#calendar-head h1 {
+    position:relative;
+    margin-left:40px;
+    font-size: 50px;
+    font-family: "Roboto", sans-serif;
+    font-weight:700;
+    text-transform: uppercase;
+    float:left;
+    color: #c94e50;
+}
+
+#calendar-body {
+    width: 100%;
+}
+#event-calendar .day {
+    position: relative;
     width: 14.28%;
     height: 16.66%;
     float: left;
     border: 1px solid #707070;
 }
 
-.day p {
+#calendar-month-prev {
+    position: relative;
+    margin-top:20px;
+    float: left;
+}
+
+#calendar-month-next {
+    position: relative;
+    margin-top:20px;
+    float: right;
+}
+
+#event-calendar span {
+    color: #c94e50;
+    font-size: 30px;
+
+}
+
+.day-counter {
     padding-top: 10px;
     padding-left: 10px;
-    font-size:16px;
-    color: #0a68f5;
+    border-bottom: 1px solid #707070;
+    font-size: 16px;
+    color: #c94e50;
     font-family: "Roboto", sans-serif;
+}
+
+.event-link {
+    padding-left:10px;
+    padding-top:5px;
+    color: #0a68f5;
 }
 
 #poll-menu {

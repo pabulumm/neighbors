@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^status/$', views.neighborhood_status, name='status'),
 	url(r'^index/$', views.index, name='index'),
 	url(r'^details/$', views.neighborhood_details, name='details'),
-	url(r'^get_neighborhoods/$', views.get_neighborhoods, name='get_neighborhoods'),
-	url(r'^about/$', views.about, name='about'),
+	url(r'^get-neighborhoods/$', views.get_neighborhoods, name='get_neighborhoods'),
+	url(r'^get-event/$', views.get_event, name='get_event'),
+	url(r'^current-calendar/$', views.get_current_calendar, name='current_calendar'),
 ]

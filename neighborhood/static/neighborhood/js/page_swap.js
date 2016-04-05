@@ -1,6 +1,8 @@
 
 var nav_visible;
 
+
+
 function showMap() {
     swapMainWindow($('#map-container'));
     if (!($('#feed').hasClass('side-visible'))) {

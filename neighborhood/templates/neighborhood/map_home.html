@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}"/>
     <script type="text/javascript" src="{% static 'neighborhood/js/get_icon.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
+    <script type="text/javascript" src="{% static 'neighborhood/js/style.js' %}"></script>
 </head>
 <body>
 
@@ -32,8 +33,8 @@
     </a>
     <h1 class="white-text">Neighbors</h1>
     <div class="options">
-        <a id="map-button" class="btn btn-info"><strong>map</strong></a>
-        <a id="status-button" class="btn btn-info"><strong>status</strong></a>
+{#        <a id="map-button" class="btn btn-info"><strong>map</strong></a>#}
+{#        <a id="status-button" class="btn btn-info"><strong>status</strong></a>#}
     </div>
     <div class="icons">
         <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">
@@ -63,14 +64,13 @@
 <div id="content" class="content">
 
 
-{#-----------------------MAP MAIN WINDOW---------------------------#}
+    {#-----------------------MAP MAIN WINDOW---------------------------#}
     <div id="map-container">
         <div id='map' class='streets'></div>
     </div>
 
 
-
-{#-------------------- MAIN NAV SLIDE OUT WINDOW ----------------------------#}
+    {#-------------------- MAIN NAV SLIDE OUT WINDOW ----------------------------#}
     <div id="list-menu">
         <button id="home-select" class="menu-option">Home</button>
         <button id="event-select" class="menu-option">Events</button>
@@ -84,7 +84,7 @@
         <button class="menu-option">Regulations</button>
         <button>Management Board</button>
 
-{#        <small class="menu-section-title"></small>#}
+        {#        <small class="menu-section-title"></small>#}
         <span class="divider"></span>
 
         <button class="menu-option">Neighbors</button>
@@ -101,14 +101,14 @@
         </div>
         <div class="section">
 
-                <div id="budget" class="">
-                    <div class="chart-menu">
-                        <button id="expense-chart" class="btn btn-default">Expenses</button>
-                        <button id="history-chart" class="btn btn-default">Performance History</button>
-                    </div>
-                    <div id="piechart"></div>
-                    <div id="linechart"></div>
-            <!--
+            <div id="budget" class="">
+                <div class="chart-menu">
+                    <button id="expense-chart" class="btn btn-default">Expenses</button>
+                    <button id="history-chart" class="btn btn-default">Performance History</button>
+                </div>
+                <div id="piechart"></div>
+                <div id="linechart"></div>
+                <!--
                     <div class="row">
                         {% if budget %}
                             <p>Budget instance accessible.</p>
@@ -133,26 +133,25 @@
                         {% endif %}
                         <a class="btn btn-default" href="{% url 'budget:new_expense' %}">New Expense</a><br/>
                     </div>-->
-                </div>
-
             </div>
+
+        </div>
 
     </div>
 
 
+    <script>
+        var post_ids = [];
 
-<script>
-    var post_ids = [];
+        function newPostId(id) {
+            post_ids.push(id);
+            return id;
+        }
 
-    function newPostId(id) {
-        post_ids.push(id);
-        return id;
-    }
-
-</script>
+    </script>
 
 
-{#-----------------------FEED SIDE BAR (WITH MAP) ---------------------------#}
+    {#-----------------------FEED SIDE BAR (WITH MAP) ---------------------------#}
     <div id="feed">
         <p id="feed-title" class="orange-text">Neighborly News Now.</p>
         <span class="blue"></span>
@@ -164,6 +163,7 @@
                 <div class="feed-item-body">
                     {% if post.type == 'MARKER' %}
                         <script>
+                            changeElemBorderColor("#feed-post{{ post.id }}", 'GREEN');
                             var src = getIconType("{{ post.marker.type_of_marker }}", true);
                             var icon_img = $("<img>", {class: 'feed-post-icon', src: src});
                             $("#feed-post{{ post.id }} .feed-item-body").append(icon_img);
@@ -177,11 +177,13 @@
                         </strong> marker! <br/></p>
 
                     {% elif post.type == 'ANNOUNCEMENT' %}
+                        <script>changeElemBorderColor("#feed-post{{ post.id }}", 'BLUE')</script>
                         <h1 id="announcement-header">{{ post.title }}</h1>
                         <p id="description">{{ post.description }}</p>
                         <small><strong>{{ post.user }}</strong></small>
 
                     {% elif post.type == 'POLL' %}
+                        <script>changeElemBorderColor("#feed-post{{ post.id }}", 'RED')</script>
                         <a href="{% url 'polls:detail' post.poll.id %}"><p id="poll-header">{{ post.title }}</p></a>
                         <p id="description">{{ post.description }}</p>
                         {% if post.poll.is_yes_no %}
@@ -205,25 +207,25 @@
         {% endfor %}
     </div>
 
-{#-----------------------POLLS MAIN WINDOW ---------------------------#}
+    {#-----------------------POLLS MAIN WINDOW ---------------------------#}
     <div id="poll-detail">
         <div class="poll-detail">
-{#            <h1>{{ selected_question.question_text }}</h1>#}
-{#            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{%  endif %}#}
-{#            <form action="{% url 'polls:vote' selected_question.id %}" method="post">#}
-{#                {% csrf_token %}#}
-{#                {% for choice in selected_question.choice_set.all %}#}
-{#                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>#}
-{#                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />#}
-{#                {% endfor %}#}
-{#                <input id='vote' type="submit" value="vote" />#}
-{#            </form>#}
+            {#            <h1>{{ selected_question.question_text }}</h1>#}
+            {#            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{%  endif %}#}
+            {#            <form action="{% url 'polls:vote' selected_question.id %}" method="post">#}
+            {#                {% csrf_token %}#}
+            {#                {% for choice in selected_question.choice_set.all %}#}
+            {#                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/>#}
+            {#                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />#}
+            {#                {% endfor %}#}
+            {#                <input id='vote' type="submit" value="vote" />#}
+            {#            </form>#}
         </div>
 
     </div>
 
 
-{#----------------------- POLLS MENU SIDE BAR ---------------------------#}
+    {#----------------------- POLLS MENU SIDE BAR ---------------------------#}
     <div id="poll-menu">
         {% if polls %}
             {% for poll in polls %}
@@ -244,20 +246,19 @@
     </div>
 
 
-
-{#-----------------------ACCOUNT MAIN WINDOW---------------------------#}
+    {#-----------------------ACCOUNT MAIN WINDOW---------------------------#}
     <div id="account">
         <div class="container">
             <div id="profile-pic">
                 <p>Profile picture</p>
             </div>
-{#            {% if board_permissions == True %}#}
-                {#            <button id="announcement">Make Announcement</button>#}
-                <button id="announcement" type="button" class="btn btn-info btn-lg"
-                        data-toggle="modal" data-target="#myModal">
-                    Make Announcement
-                </button>
-{#            {% endif %}#}
+            {#            {% if board_permissions == True %}#}
+            {#            <button id="announcement">Make Announcement</button>#}
+            <button id="announcement" type="button" class="btn btn-info btn-lg"
+                    data-toggle="modal" data-target="#myModal">
+                Make Announcement
+            </button>
+            {#            {% endif %}#}
             <h1 class="orange-text">{{ user.family_name }} Account</h1>
             <p>User: {{ user.user }}</p>
             <p>Neighborhood: {{ user.user.username }}</p>
@@ -320,7 +321,7 @@
     </div>
 
 
-{#-----------------------ACCOUNT SIDE BAR---------------------------#}
+    {#-----------------------ACCOUNT SIDE BAR---------------------------#}
     <div id="account-options">
         <div id="map-account-container">
             <div id='map2'></div>
@@ -333,28 +334,38 @@
         </div>
     </div>
 
-{#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
+    {#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
     <div id="event-detail">
-        <div id="event-map-container">
-            <div id='map3'></div>
-        </div>
-        <div id="event-list-day">
+        <div id="event-box">
+            <div id="event-map-container">
+                <div id='map3'></div>
+            </div>
+            <h1 id="event-title">Event Title</h1>
+            <small id="time" class="time"></small>
+            <small id="location" class="time">Location: </small>
+            <p id="description"></p>
+            <div id="event-list-day">
 
+            </div>
         </div>
     </div>
 
-{#----------------------- EVENT CALENDAR MAIN WINDOW ---------------------------#}
+    {#----------------------- EVENT CALENDAR MAIN WINDOW ---------------------------#}
     <div id="event-calendar">
-{#        <iframe id="calendar-frame"#}
-{#            src="https://calendar.google.com/calendar/embed?src=9fk7an49aqsp2r825scmp9tj50%40group.calendar.google.com&ctz=America/Los_Angeles"#}
-{#            style="border:0 solid" frameborder="0" scrolling="no">#}
-{#        </iframe>#}
-
-        {% for i in 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' %}
-            <div id="day{{ forloop.counter }}" class="day">
-                <p>{{ forloop.counter }}</p>
-            </div>
-        {% endfor %}
+        <div id="calendar-head">
+{#            <button id="calendar-month-prev" class="btn btn-default">#}
+{#                <span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span>#}
+{#            </button>#}
+{#            <button id="calendar-month-next" class="btn btn-default">#}
+{#                <span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span>#}
+{#            </button>#}
+        </div>
+        <div id="calendar-body"></div>
+        {#        {% for i in 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' %}#}
+        {#            <div id="day{{ forloop.counter }}" class="day">#}
+        {#                <p>{{ forloop.counter }}</p>#}
+        {#            </div>#}
+        {#        {% endfor %}#}
     </div>
 
 
@@ -362,11 +373,12 @@
 <script>
 </script>
 
-<script src="{% static 'neighborhood/js/mapscript.js' %}"></script>
-<script src="{% static 'neighborhood/js/report.js' %}"></script>
-<script src="{% static 'neighborhood/js/page_swap.js' %}"></script>
+<script type="text/javascript" src="{% static 'neighborhood/js/mapscript.js' %}"></script>
+<script type="text/javascript" src="{% static 'neighborhood/js/report.js' %}"></script>
+<script type="text/javascript" src="{% static 'neighborhood/js/page_swap.js' %}"></script>
 {#<script>centerUserMap([{{ user.house.lat }},{{ user.house.lon }}])</script>#}
 <script>centerUserMap([34.220912, -119.055079])</script>
+<script type="text/javascript" src="{% static 'neighborhood/js/events.js' %}"></script>
 <!--
 <div class="footer">
     <div class="row">

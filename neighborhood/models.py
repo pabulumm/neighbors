@@ -43,3 +43,24 @@ class Event(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	def as_dict(self):
+		return {
+			'id': self.id,
+			'start': str(self.start.date()),
+			'end': str(self.end.date()),
+			'created': str(self.created.date()),
+			'title': self.title,
+			'description': self.description,
+			'location': self.location,
+			'marker_id': self.marker.id,
+		}
+
+	def as_teaser(self):
+		return {
+			'title': self.title,
+			'id': self.id,
+			'day': self.start.date().day,
+		}
+
+
