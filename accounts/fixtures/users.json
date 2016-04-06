@@ -1,0 +1,22 @@
+[
+  {
+    "model": "auth.user",
+    "pk":4,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Lennon",
+      "username": "jlemons",
+      "password": "password",
+      "email": "jlennon@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 4,
+      "member_status": "neighbor",
+      "bio": "I'm just a John Doe lookin' for his lennon lemons.",
+      "neighborhood_id": 1
+    }
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "model": "feed.feedpost",
+    "fields": {
+      "title": "Board Election to be held this coming Spring!",
+      "feed": 1,
+      "type": "ANNOUNCEMENT",
+      "description": "We are going to be holding an election for a new Division Secretary. Please come out to vote and show your support!"
+      "user": 4,
+      "create_date": "2016-01-12 08:45:00"
+    }
+  },
+  {
+    "model": "myapp.person",
+    "pk": 2,
+    "fields": {
+      "first_name": "Paul",
+      "last_name": "McCartney"
+    }
+  }
+]

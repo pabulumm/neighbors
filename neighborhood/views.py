@@ -130,12 +130,34 @@ def get_current_calendar(request):
 	if request.method == 'GET' and request.is_ajax():
 		now = datetime.datetime.now()
 		month = month_name[now.month]
+
 		event_teasers = get_event_teasers(now.year, now.month)
 		days = []
 		for week in monthcalendar(now.year, now.month):
 			for day in week:
 				days.append(day)
 		return HttpResponse(json.dumps({'month': month,
+										'month_int': now.month,
+										'year': now.year,
+										'event_teasers': event_teasers,
+										'days': days}),
+							content_type='application/json')
+
+
+@login_required
+def get_specific_calendar(request):
+	if request.method == 'GET' and request.is_ajax():
+		month_int = request.GET['month']
+		year_int = request.GET['year']
+		month = month_name[month_int]
+		event_teasers = get_event_teasers(year_int, month_int)
+		days = []
+		for week in monthcalendar(year_int, month_int):
+			for day in week:
+				days.append(day)
+		return HttpResponse(json.dumps({'month': month,
+										'month_int': month_int,
+										'year': year_int,
 										'event_teasers': event_teasers,
 										'days': days}),
 							content_type='application/json')

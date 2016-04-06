@@ -36,3 +36,4 @@ function changeElemBorderColor(elem_id, color) {
 
     }
 }
+
