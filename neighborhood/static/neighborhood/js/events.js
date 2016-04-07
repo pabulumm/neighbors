@@ -7,46 +7,49 @@ var event_teasers;
 var curr_month;
 var curr_year;
 
-$(document).ready(function () {
-
-
-    $.ajax({
-        url: "/neighborhood/current-calendar/",
-        type: 'GET',
-        data: {
-            csrfmiddlewaretoken: csrftoken
-        },
-        dataType: "json",
-        success: function (data) {
-            //alert("Successfully retrieved event calendar for month "+data.month);
-            event_teasers = data.event_teasers;
-            var days = data.days;
-            curr_month = data.month_int;
-            curr_year = data.year;
-            get_event(event_teasers[0].id);
-            $('#calendar-head').append('<button id="calendar-month-prev" class="btn btn-default">'
-                + '<span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span></button>'
-                + '<h1>' + data.month + ' ~ ' + data.year + '</h1><button id="calendar-month-next" class="btn btn-default">'
-                + '<span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span></button>');
-            $.each(days, function (index, value) {
-                $('#event-calendar').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
-                    + value + '</p></div>');
-                $.each(event_teasers, function (index, event) {
-                    if (event.day == value) {
-                        $('#' + value).append('<p id="' + value + '" class="event-link">' + event.title + '</p><br />');
-                    }
-                })
-            });
-        },
-        error: function (xhr, errmsg, err) {
-            alert('ID requested was: ' + id + 'ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
-    });
+    }
+});
 
-    loadDayListeners();
+$.ajax({
+    url: "/neighborhood/current-calendar/",
+    type: 'GET',
+    data: {
+        csrfmiddlewaretoken: csrftoken
+    },
+    dataType: "json",
+    success: function (data) {
+        //alert("Successfully retrieved event calendar for month "+data.month);
+        event_teasers = data.event_teasers;
+        var days = data.days;
+        curr_month = data.month_int;
+        curr_year = data.year;
+        get_event(event_teasers[0].id);
+        $('#calendar-head').append('<button id="calendar-month-prev" class="btn btn-default">'
+            + '<span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span></button>'
+            + '<h1>' + data.month + ' ~ ' + data.year + '</h1><button id="calendar-month-next" class="btn btn-default">'
+            + '<span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span></button>');
+        $.each(days, function (index, value) {
+            $('#event-calendar').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
+                + value + '</p></div>');
+            $.each(event_teasers, function (index, event) {
+                if (event.day == value) {
+                    $('#' + value).append('<p id="' + value + '" class="event-link">' + event.title + '</p><br />');
+                }
+            })
+        });
+    },
+    error: function (xhr, errmsg, err) {
+        alert('ID requested was: ' + id + 'ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+});
 
-    $('#left-arrow').click(function () {
-        alert('left-arrow click');
+function reloadCalendar(direction) {
+    if (direction == 'LEFT') {
         if (curr_month == 1) {
             curr_month = 12;
             curr_year--;
@@ -54,13 +57,8 @@ $(document).ready(function () {
         else {
             curr_month--;
         }
-        reloadCalendar(curr_month, curr_year);
-        loadDayListeners();
-    });
-
-    $('#right-arrow').click(function () {
-        alert('right-arrow click');
-
+    }
+    else if (direction == 'RIGHT') {
         if (curr_month == 12) {
             curr_month = 1;
             curr_year++;
@@ -68,26 +66,22 @@ $(document).ready(function () {
         else {
             curr_month++;
         }
-        reloadCalendar(curr_month, curr_year);
-        loadDayListeners();
-    });
-});
+    }
+    alert('reloading calendar for month: ' + curr_month + ' year: ' + curr_year);
 
-function reloadCalendar(month, year) {
-    alert('reloading calendar');
     $.ajax({
         url: "/neighborhood/specific-calendar/",
         type: 'GET',
         data: {
-            month: month,
-            year: year,
+            month: curr_month,
+            year: curr_year,
             csrfmiddlewaretoken: csrftoken
         },
         dataType: "json",
         success: function (data) {
+            alert("Retrieval Success!");
             // clear last calendar html
-            $('#calendar-head').html('');
-            $('#calendar-body').html('');
+            $('#event-calendar').html('<div id=calendar-head"></div><div id="calendar-body"></div>');
             //alert("Successfully retrieved event calendar for month "+data.month);
             event_teasers = data.event_teasers;
             var days = data.days;
@@ -110,30 +104,7 @@ function reloadCalendar(month, year) {
             alert('ID requested was: ' + id + 'ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
-}
-
-
-function loadDayListeners() {
-    $('#event-calendar').click(function (event) {
-        alert(event.target.id);
-        var id_as_num = isValidCalendarBox(event.target.id);
-        var id = '#' + id_as_num;
-        if (id_as_num > 0
-            && (!($(id).hasClass('highlight')))) {
-
-            // highlight the selected calendar day div
-            $('.highlight').removeClass('highlight');
-            $(id).addClass('highlight');
-
-            // load the event teasers for the side panel list - clear it first
-            $('#event-list-day').html('');
-            $.each(event_teasers, function (index, event) {
-                if (event.day == id_as_num) {
-                    $('#event-list-day').append('<p>' + event.title + '</p>');
-                }
-            });
-        }
-    });
+    alert('finished reloading');
 }
 
 function isValidCalendarBox(id) {
@@ -175,3 +146,40 @@ function get_event(id) {
         }
     });
 }
+
+function loadDayListeners() {
+    $('#event-calendar').click(function (event) {
+        var id = event.target.id;
+        if (id == "calendar-month-prev" || id == "left-arrow") {
+            return reloadCalendar('LEFT');
+        }
+        else if (id == "calendar-month-next" || id == "right-arrow") {
+            return reloadCalendar('RIGHT');
+        }
+        else {
+            var id_as_num = isValidCalendarBox(event.target.id);
+            var id = '#' + id_as_num;
+            if (id_as_num > 0
+                && (!($(id).hasClass('highlight')))) {
+
+                // highlight the selected calendar day div
+                $('.highlight').removeClass('highlight');
+                $(id).addClass('highlight');
+
+                // load the event teasers for the side panel list - clear it first
+                $('#event-list-day').html('');
+                $.each(event_teasers, function (index, event) {
+                    if (event.day == id_as_num) {
+                        $('#event-list-day').append('<p>' + event.title + '</p>');
+                    }
+                });
+            }
+        }
+    });
+}
+
+
+loadDayListeners();
+
+
+

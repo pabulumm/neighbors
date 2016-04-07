@@ -161,6 +161,7 @@ def get_specific_calendar(request):
 										'event_teasers': event_teasers,
 										'days': days}),
 							content_type='application/json')
+	return HttpResponse('Ya dun fucked up')
 
 
 @login_required

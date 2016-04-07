@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Holtwood+One+SC);
+
 #feed {
     position: absolute;
     width:25%;
@@ -6,15 +8,6 @@
     float:left;
     overflow-y:auto;
     background-color: #FFFFFF;
-}
-
-#feed #feed-title {
-    padding-top: 24px;
-    padding-left: 16px;
-    font-size: 32px;
-    font-weight:500;
-    float:left;
-    font-family: "Roboto", sans-serif;
 }
 
 
@@ -65,13 +58,7 @@
     background: #404040;
 }
 
-#feed .blue {
-    display:block;
-    height:12px;
-    width:90%;
-    margin-top:70px;
-    margin-left:5%;
-}
+
 
 .feed-item {
     position: relative;
@@ -93,10 +80,6 @@
 
 }
 
-#feed-title {
-    color: #DD9454;
-    font-family: "Roboto", sans-serif;
-}
 
 .feed-item-body button {
     padding: 1em 2em;

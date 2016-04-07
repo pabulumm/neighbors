@@ -67,19 +67,6 @@ body {
     background: #2C90F9;
 }
 
-.nav {
-    height:100px;
-    border-bottom: 10px solid #54E5B0;
-}
-
-.nav h1 {
-    float: left;
-    padding-top: 15px;
-    padding-left: 50px;
-	font-weight: 500;
-    font-size: 50px;
-    font-family: "Roboto", sans-serif;
-}
 
 .options a {
     color: #FFFFFF;

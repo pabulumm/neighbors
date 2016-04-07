@@ -1,5 +1,42 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+/*FONT COMBINATIONS*/
+
+/* "Holtwood One SC" - sub-heading || "Rock Salt" - title */
+@import url(https://fonts.googleapis.com/css?family=Holtwood+One+SC);
+@import url(https://fonts.googleapis.com/css?family=Rock+Salt);
+
+
+/* "Lemon" */
+@import url(https://fonts.googleapis.com/css?family=Lemon);
+
+
+@import url(https://fonts.googleapis.com/css?family=Ultra);
+
+
+
+.nav {
+    height:100px;
+    border-bottom: 10px solid #54E5B0;
+}
+
+.nav h1 {
+    float: left;
+    padding-top: 15px;
+    padding-left: 50px;
+	font-weight: 500;
+    font-size: 50px;
+    font-family: "Ultra";
+}
+
+.side-window-title {
+    font-family: "Rock Salt";
+    padding-top: 24px;
+    padding-left: 16px;
+    font-size: 32px;
+    color: #DD9454;
+}
+
 #map-container {
     position: absolute;
     width: 75%;
@@ -49,6 +86,15 @@
     width: 300px;
 }
 
+.side-title-span {
+    display:block;
+    height:12px;
+    width:90%;
+    margin-top:10px;
+    margin-left:5%;
+    background-color: #0a68f5;
+}
+
 #test-button {
     position: relative;
     margin-top: 20px;
@@ -84,7 +130,6 @@
     margin-left: 5%;
     height: 250px;
     width: 90%;
-    float:left;
 }
 
 #event-box h1 {
@@ -92,19 +137,17 @@
     font-family: "Roboto", sans-serif;
 }
 
-
 .time {
-    position:relative;
-    padding-left:20px;
-    padding-right:20px;
+    position: relative;
+    padding-left: 20px;
+    padding-right: 20px;
     font-family: "Roboto", sans-serif;
     font-size: 20px;
     float: none;
 }
 
-
 #event-detail #description {
-    position:relative;
+    position: relative;
     font-family: "Roboto", sans-serif;
     margin: 10px 10px 10px 10px;
     font-size: 16px;
@@ -116,9 +159,9 @@
     left: 20px;
     right: 10px;
     bottom: 20px;
-    -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
-    -moz-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
-    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    -webkit-box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.42);
+    -moz-box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.42);
+    box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.42);
 }
 
 #event-list-day {
@@ -139,19 +182,20 @@
 }
 
 #calendar-head h1 {
-    position:relative;
-    margin-left:40px;
+    position: relative;
+    margin-left: 40px;
     font-size: 50px;
     font-family: "Roboto", sans-serif;
-    font-weight:700;
+    font-weight: 700;
     text-transform: uppercase;
-    float:left;
+    float: left;
     color: #c94e50;
 }
 
 #calendar-body {
     width: 100%;
 }
+
 #event-calendar .day {
     position: relative;
     width: 14.28%;
@@ -160,22 +204,40 @@
     border: 1px solid #707070;
 }
 
+#announcement-index  {
+    position: absolute;
+    left: 0;
+    width: 25%;
+    height: 100%;
+    bottom: -100%;
+    background-color: #FFFFFF;
+}
+
+#announcement-detail {
+    padding: 20px 20px 20px 20px;
+    position: absolute;
+    float: right;
+    width: 75%;
+    right: -100%;
+    height: 100%;
+    background-color: #FFFFFF;
+}
+
 .highlight {
-    border: 4px solid #0a68f5;
-    -webkit-box-shadow: 0px 0px 13px 6px rgba(75,133,250,1);
-    -moz-box-shadow: 0px 0px 13px 6px rgba(75,133,250,1);
-    box-shadow: 0px 0px 13px 6px rgba(75,133,250,1);
+    -webkit-box-shadow: 0px 0px 13px 6px rgba(75, 133, 250, 1);
+    -moz-box-shadow: 0px 0px 13px 6px rgba(75, 133, 250, 1);
+    box-shadow: 0px 0px 13px 6px rgba(75, 133, 250, 1);
 }
 
 #calendar-month-prev {
     position: relative;
-    margin-top:20px;
+    margin-top: 20px;
     float: left;
 }
 
 #calendar-month-next {
     position: relative;
-    margin-top:20px;
+    margin-top: 20px;
     float: right;
 }
 
@@ -195,8 +257,8 @@
 }
 
 .event-link {
-    padding-left:10px;
-    padding-top:5px;
+    padding-left: 10px;
+    padding-top: 5px;
     color: #0a68f5;
 }
 
@@ -209,19 +271,55 @@
     background-color: #FFFFFF;
 }
 
+.poll-menu-item-container {
+    height: 80px;
+    position: relative;
+    width: 100%;
+    text-decoration: none;
+    margin-top: 20px;
+    border-top: 2px solid #DD9454;
+    border-bottom: 2px solid #DD9454;
+
+}
+
+.poll-menu-item {
+    text-align: center;
+    position: relative;
+    text-decoration: none;
+    height: 80px;
+}
+
 #poll-detail {
     position: absolute;
     width: 75%;
     right: -100%;
     height: 100%;
-    text-align: center;
+    padding-left: 7%;
     overflow-y: auto;
     background-color: #FFFFFF;
 }
 
+.poll-menu-item h1 {
+    position: relative;
+    font-size: 15px;
+}
+
+.poll-detail small {
+    position: relative;
+    float: left;
+    padding-left: 50px;
+}
+
 #poll-detail h1 {
+    position: relative;
+    float: left;
     color: #DD9454;
     font-family: "Roboto", sans-serif;
+}
+
+#poll-detail p {
+    position:relative;
+    padding-left: 20px;
 }
 
 #account {
@@ -246,11 +344,11 @@
     position: relative;
     margin: 10% 0 0 10%;
     width: 80%;
-    height: 400px;
+    height: 250px;
     text-align: center;
-    -webkit-box-shadow: 0 0 4px 2px rgba(221, 148, 84, 1);
-    -moz-box-shadow: 0 0 4px 2px rgba(221, 148, 84, 1);
-    box-shadow: 0 0 4px 2px rgba(221, 148, 84, 1);
+    -webkit-box-shadow: 0px 0px 13px 6px rgba(75, 133, 250, 1);
+    -moz-box-shadow: 0px 0px 13px 6px rgba(75, 133, 250, 1);
+    box-shadow: 0px 0px 13px 6px rgba(75, 133, 250, 1);
     background: #FFFFFF;
 }
 
@@ -265,7 +363,7 @@
 
 #account-options .holder a {
     width: 175px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .popup-button {

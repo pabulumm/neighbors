@@ -11,6 +11,9 @@ class Feed(models.Model):
 	neighborhood = models.ForeignKey(Neighborhood)
 	create_date = models.DateTimeField(default=timezone.now)
 
+	def __str__(self):
+		return self.id
+
 
 class FeedPost(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -22,3 +25,7 @@ class FeedPost(models.Model):
 	create_date = models.DateTimeField(default=timezone.now)
 	marker = models.ForeignKey(Marker, null=True)
 	poll = models.ForeignKey(Question, null=True)
+
+	def __str__(self):
+		return self.title
+

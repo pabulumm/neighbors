@@ -122,116 +122,113 @@ map.on('click', function (e) {
     }
 });
 
-$(document).ready(function () {
-    // Getting all markers in db and loading to map
+// Getting all markers in db and loading to map
 
 
+$.ajax({
+    url: "/markers/get_markers/",
+    type: 'GET',
+    data: {
+        csrfmiddlewaretoken: csrftoken
+    },
+    dataType: "json",
+    success: function (data) {
+        $.each(data.markers, function (markerIndex, marker) {
 
+            // create a new L.marker for each retrieved model instance
+            var mark = L.marker([marker.lat, marker.lon])
+                .setIcon(getIconType(
+                    marker.type_of_marker, false))
+                // creating the popup for our marker
+                .bindPopup(
+                    '<h3>' + marker.title + '</h3><p>' + marker.description +
+                    '<br/><strong>' + marker.type_of_marker +
+                    '</strong><br/><small>' + marker.create_date + '</small>'
+                ).addTo(map);
+            // create a marker variable reference
+            var marker_reference = {
+                'id': marker.id,
+                'lat': marker.lat,
+                'lon': marker.lon,
+                'type': marker.type_of_marker,
+                'title': marker.title,
+                'marker': mark
+            };
+            // add the loaded marker to the reference list
+            marker_list.push(marker_reference);
+        });
+    },
+    error: function (xhr, errmsg, err) {
+        alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    }
+});
+
+
+$('#map').on('click', '#house', function () {
+    type_of_marker = "HOUSE";
+    pin.setIcon(getIconType(type_of_marker));
+});
+$('#map').on('click', '#yard', function () {
+    type_of_marker = "YARD_SALE";
+    pin.setIcon(getIconType(type_of_marker));
+});
+$('#map').on('click', '#const', function () {
+    type_of_marker = "CONSTRUCTION";
+    pin.setIcon(getIconType(type_of_marker));
+});
+$('#map').on('click', '#theft', function () {
+    type_of_marker = "THEFT";
+    pin.setIcon(getIconType(type_of_marker));
+});
+$('#map').on('click', '#event', function () {
+    type_of_marker = "EVENT";
+    pin.setIcon(getIconType(type_of_marker));
+});
+$('#map').on('click', '#trash', function () {
+    type_of_marker = "TRASH";
+    pin.setIcon(getIconType(type_of_marker));
+});
+$('#map').on('click', '#default', function () {
+    type_of_marker = "TRASH";
+    pin.setIcon(getIconType(type_of_marker));
+});
+$('#map').on('click', '.save', function () {
+    // AJAX call to save new marker as GeoDjango model
     $.ajax({
-        url: "/markers/get_markers/",
-        type: 'GET',
+        url: "/markers/new_marker/",
+        type: "Post",
         data: {
+            title: title,
+            lat: mark_latlng.lat,
+            lon: mark_latlng.lng,
+            type_of_marker: type_of_marker,
             csrfmiddlewaretoken: csrftoken
         },
-        dataType: "json",
-        success: function (data) {
-            $.each(data.markers, function (markerIndex, marker) {
+        success: function (json) {
+            pin.closePopup();
+            alert('Created a ' + type_of_marker + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
+            L.marker([mark_latlng.lat, mark_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);
+            pin = null;
 
-                // create a new L.marker for each retrieved model instance
-                var mark = L.marker([marker.lat, marker.lon])
-                    .setIcon(getIconType(
-                        marker.type_of_marker, false))
-                    // creating the popup for our marker
-                    .bindPopup(
-                        '<h3>' + marker.title + '</h3><p>' + marker.description +
-                        '<br/><strong>' + marker.type_of_marker +
-                        '</strong><br/><small>' + marker.create_date + '</small>'
-                    ).addTo(map);
-                // create a marker variable reference
-                var marker_reference = {
-                    'id': marker.id,
-                    'lat':marker.lat,
-                    'lon':marker.lon,
-                    'type':marker.type_of_marker,
-                    'title':marker.title,
-                    'marker': mark
-                };
-                // add the loaded marker to the reference list
-                marker_list.push(marker_reference);
-            });
         },
         error: function (xhr, errmsg, err) {
             alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
-    });
-
-
-    $('#map').on('click', '#house', function () {
-        type_of_marker = "HOUSE";
-        pin.setIcon(getIconType(type_of_marker));
-    });
-    $('#map').on('click', '#yard', function () {
-        type_of_marker = "YARD_SALE";
-        pin.setIcon(getIconType(type_of_marker));
-    });
-    $('#map').on('click', '#const', function () {
-        type_of_marker = "CONSTRUCTION";
-        pin.setIcon(getIconType(type_of_marker));
-    });
-    $('#map').on('click', '#theft', function () {
-        type_of_marker = "THEFT";
-        pin.setIcon(getIconType(type_of_marker));
-    });
-    $('#map').on('click', '#event', function () {
-        type_of_marker = "EVENT";
-        pin.setIcon(getIconType(type_of_marker));
-    });
-    $('#map').on('click', '#trash', function () {
-        type_of_marker = "TRASH";
-        pin.setIcon(getIconType(type_of_marker));
-    });
-    $('#map').on('click', '#default', function () {
-        type_of_marker = "TRASH";
-        pin.setIcon(getIconType(type_of_marker));
-    });
-    $('#map').on('click', '.save', function () {
-        // AJAX call to save new marker as GeoDjango model
-        $.ajax({
-            url: "/markers/new_marker/",
-            type: "Post",
-            data: {
-                title: title,
-                lat: mark_latlng.lat,
-                lon: mark_latlng.lng,
-                type_of_marker: type_of_marker,
-                csrfmiddlewaretoken: csrftoken
-            },
-            success: function (json) {
-                pin.closePopup();
-                alert('Created a ' + type_of_marker + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
-                L.marker([mark_latlng.lat, mark_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);
-                pin = null;
-
-            },
-            error: function (xhr, errmsg, err) {
-                alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            }
-        })
-    });
+    })
 });
 
 function centerUserMap(latlng) {
-    new L.marker(latlng).setIcon(getIconType("HOUSE",false)).addTo(map2);
+    new L.marker(latlng).setIcon(getIconType("HOUSE", false)).addTo(map2);
     map2.setView(latlng, 18);
 }
 
 function centerEventMap(latlng) {
-    new L.marker(latlng).setIcon(getIconType("EVENT",false)).addTo(map3);
+    new L.marker(latlng).setIcon(getIconType("EVENT", false)).addTo(map3);
     map3.setView(latlng, 17);
 }
 
 function openPop(marker_id) {
-    $.each(marker_list, function(markerIndex, marker) {
+    $.each(marker_list, function (markerIndex, marker) {
         if (marker_id == marker.id) {
             marker.marker.openPopup();
         }

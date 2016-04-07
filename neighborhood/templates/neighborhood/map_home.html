@@ -22,7 +22,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/feed.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}"/>
     <script type="text/javascript" src="{% static 'neighborhood/js/get_icon.js' %}"></script>
-    <script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/style.js' %}"></script>
 </head>
 <body>
@@ -33,8 +32,8 @@
     </a>
     <h1 class="white-text">Neighbors</h1>
     <div class="options">
-{#        <a id="map-button" class="btn btn-info"><strong>map</strong></a>#}
-{#        <a id="status-button" class="btn btn-info"><strong>status</strong></a>#}
+        {#        <a id="map-button" class="btn btn-info"><strong>map</strong></a>#}
+        {#        <a id="status-button" class="btn btn-info"><strong>status</strong></a>#}
     </div>
     <div class="icons">
         <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">
@@ -75,7 +74,7 @@
         <button id="home-select" class="menu-option">Home</button>
         <button id="event-select" class="menu-option">Events</button>
         <button id="poll-select" class="menu-option">Decisions</button>
-        <button class="menu-option">Announcements</button>
+        <button id="announce-index" class="menu-option">Announcements</button>
         <button class="menu-option">Budget</button>
         <button>Calendar</button>
 
@@ -88,7 +87,7 @@
         <span class="divider"></span>
 
         <button class="menu-option">Neighbors</button>
-        <button id="account-button" class="menu-option">Profile</button>
+        <button id="account-select" class="menu-option">Profile</button>
         <button>Logout</button>
     </div>
 
@@ -148,13 +147,19 @@
             return id;
         }
 
+        var poll_ids = [];
+
+        function newPollId(id) {
+            poll_ids.push(id);
+            return id;
+        }
     </script>
 
 
     {#-----------------------FEED SIDE BAR (WITH MAP) ---------------------------#}
     <div id="feed">
-        <p id="feed-title" class="orange-text">Neighborly News Now.</p>
-        <span class="blue"></span>
+        <p id="feed-title" class="side-window-title">Hood Feed</p>
+        <span class="side-title-span"></span>
         {% for post in feedposts %}
             <div id="feed-post{{ post.id }}" class="feed-item">
                 <script>newPostId("#feed-post{{ post.id }}");</script>
@@ -227,16 +232,18 @@
 
     {#----------------------- POLLS MENU SIDE BAR ---------------------------#}
     <div id="poll-menu">
+        <p id="poll-title" class="side-window-title">Decisions</p>
+        <span class="side-title-span"></span>
         {% if polls %}
             {% for poll in polls %}
                 <div class="poll-menu-item-container">
                     <script>newPollId({{ poll.id }})</script>
-                    <button id="poll{{ poll.id }}">
+                    <a style="text-decoration:none" id="poll{{ poll.id }}">
                         <div class="poll-menu-item">
                             <h1>{{ poll.question_text }}</h1>
                             <small>{{ poll.pub_date }}</small>
                         </div>
-                    </button>
+                    </a>
                 </div>
 
             {% endfor %}
@@ -245,6 +252,31 @@
         {% endif %}
     </div>
 
+
+    {#-----------------------ANNOUNCEMENTS MAIN WINDOW ---------------------------#}
+    <div id="announcement-detail">
+
+
+    </div>
+
+
+    {#----------------------- ANNOUNCEMENTS MENU SIDE BAR ---------------------------#}
+    <div id="announcement-index">
+        <p id="announcement-title" class="side-window-title">Announcements</p>
+        <span class="side-title-span"></span>
+        {% if feedposts %}
+            {% for post in feedposts %}
+                {% if post.type == 'ANNOUNCEMENT' %}
+                    <script>changeElemBorderColor("#feed-post{{ post.id }}", 'BLUE')</script>
+                    <h1 id="announcement-header">{{ post.title }}</h1>
+                    <p id="description">{{ post.description }}</p>
+                    <small><strong>{{ post.user }}</strong></small>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No announcements to show you!</p>
+        {% endif %}
+    </div>
 
     {#-----------------------ACCOUNT MAIN WINDOW---------------------------#}
     <div id="account">
@@ -323,6 +355,8 @@
 
     {#-----------------------ACCOUNT SIDE BAR---------------------------#}
     <div id="account-options">
+        <p id="account-title" class="side-window-title">Profile</p>
+        <span class="side-title-span"></span>
         <div id="map-account-container">
             <div id='map2'></div>
         </div>
@@ -337,12 +371,14 @@
     {#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
     <div id="event-detail">
         <div id="event-box">
+            <p id="event-detail-title" class="side-window-title">Events</p>
+            <span class="side-title-span"></span>
             <div id="event-map-container">
                 <div id='map3'></div>
             </div>
             <h1 id="event-title">Event Title</h1>
             <small id="time" class="time"></small>
-            <small id="location" class="time">Location: </small>
+            <small id="location" class="time">Location:</small>
             <p id="description"></p>
             <div id="event-list-day">
 
@@ -353,12 +389,12 @@
     {#----------------------- EVENT CALENDAR MAIN WINDOW ---------------------------#}
     <div id="event-calendar">
         <div id="calendar-head">
-{#            <button id="calendar-month-prev" class="btn btn-default">#}
-{#                <span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span>#}
-{#            </button>#}
-{#            <button id="calendar-month-next" class="btn btn-default">#}
-{#                <span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span>#}
-{#            </button>#}
+            {#            <button id="calendar-month-prev" class="btn btn-default">#}
+            {#                <span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span>#}
+            {#            </button>#}
+            {#            <button id="calendar-month-next" class="btn btn-default">#}
+            {#                <span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span>#}
+            {#            </button>#}
         </div>
         <div id="calendar-body"></div>
         {#        {% for i in 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' %}#}
@@ -370,14 +406,16 @@
 
 
 </div>
-<script>
-</script>
+
 
 <script type="text/javascript" src="{% static 'neighborhood/js/mapscript.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/report.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/page_swap.js' %}"></script>
+<script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
 {#<script>centerUserMap([{{ user.house.lat }},{{ user.house.lon }}])</script>#}
 <script>centerUserMap([34.220912, -119.055079])</script>
 <script type="text/javascript" src="{% static 'neighborhood/js/events.js' %}"></script>
+
+{#<script>showMap();</script>#}
 </body>
 </html>
