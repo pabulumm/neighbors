@@ -1,0 +1,16 @@
+[
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-01-14 18:00:00",
+      "end": "2016-01-14 22:00:00",
+      "created": "2016-01-12 06:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "CPR Seminar",
+      "description": "Come learn how to save lives!",
+      "neighborhood": 1,
+      "creator": 2
+    }
+  }
+]

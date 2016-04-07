@@ -1,0 +1,13 @@
+[
+  {
+    "model": "polls.question",
+    "fields": {
+      "question_text": "Should we decrease the monthly residence fee?",
+      "description": "Voting to determine whether the collective neighborhood would like a decrease in the monthly payment for living in our lovely neighborhood.",
+      "pub_date": "2016-01-17 10:00:00",
+      "neighborhood": 1,
+      "creator": 2,
+      "is_yes_no": "True"
+    }
+  }
+]

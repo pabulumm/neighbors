@@ -9,13 +9,5 @@
       "user": 4,
       "create_date": "2016-01-12 08:45:00"
     }
-  },
-  {
-    "model": "myapp.person",
-    "pk": 2,
-    "fields": {
-      "first_name": "Paul",
-      "last_name": "McCartney"
-    }
   }
 ]

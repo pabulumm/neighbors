@@ -34,7 +34,7 @@ class Event(models.Model):
 	marker = models.ForeignKey(Marker, null=True)
 	location = models.CharField(max_length=100, default="Event Location")
 	title = models.CharField(default="Event Title", max_length=200)
-	type = models.CharField(default="Community", max_length=50)
+	type = models.CharField(default="COMMUNITY", max_length=50)
 	description = models.TextField(max_length=1000, default="Event Description.")
 	neighborhood = models.ForeignKey(Neighborhood)
 	creator = models.ForeignKey(User)
