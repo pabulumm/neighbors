@@ -40,3 +40,5 @@ function getIconType(type, url_only) {
     }
 }
 
+
+

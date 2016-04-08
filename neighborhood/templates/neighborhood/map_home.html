@@ -36,15 +36,15 @@
         {#        <a id="status-button" class="btn btn-info"><strong>status</strong></a>#}
     </div>
     <div class="icons">
-        <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">
-            <span class='glyphicon glyphicon-user'></span>
-        </a>
+{#        <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">#}
+{#            <span class='glyphicon glyphicon-user'></span>#}
+{#        </a>#}
         <a id="list-button" class='btn btn-default btn-circle btn-lg' href="{% url 'neighborhood:index' %}">
-            <span class='glyphicon glyphicon-list'></span>
+            <span id="help-button" class='glyphicon glyphicon-question-sign'></span>
         </a>
-        <a id="report" class='btn btn-default btn-circle btn-lg'>
-            <span class='glyphicon glyphicon-alert'></span>
-        </a>
+{#        <a id="report" class='btn btn-default btn-circle btn-lg'>#}
+{#            <span class='glyphicon glyphicon-alert'></span>#}
+{#        </a>#}
     </div>
 </div>
 
@@ -158,7 +158,7 @@
 
     {#-----------------------FEED SIDE BAR (WITH MAP) ---------------------------#}
     <div id="feed">
-        <p id="feed-title" class="side-window-title">Hood Feed</p>
+        <p id="feed-title" class="side-window-title">The Feed</p>
         <span class="side-title-span"></span>
         {% for post in feedposts %}
             <div id="feed-post{{ post.id }}" class="feed-item">
@@ -168,27 +168,30 @@
                 <div class="feed-item-body">
                     {% if post.type == 'MARKER' %}
                         <script>
-                            changeElemBorderColor("#feed-post{{ post.id }}", 'GREEN');
+                            var marker_type = "{{ post.marker.type_of_marker }}";
+                            var post_statement = getMarkerPostStatement("{{ post.user }}", marker_type);
+                            changeElemBorderColor("#feed-post{{ post.id }}", getPostColor(marker_type));
                             var src = getIconType("{{ post.marker.type_of_marker }}", true);
                             var icon_img = $("<img>", {class: 'feed-post-icon', src: src});
                             $("#feed-post{{ post.id }} .feed-item-body").append(icon_img);
+                            $("#feed-post{{ post.id }} .feed-item-body").append('<p>' + post_statement + '</p>');
                             $('#feed-post{{ post.id }}').on('click', function () {
+                                // center map on clicked post designated marker
                                 centerMarker([{{ post.marker.lat }}, {{ post.marker.lon }}]);
                                 // open popup descriptor
                                 openPop({{ post.marker.id }});
                             });
                         </script>
-                        <p><strong>{{ post.user }}</strong> placed <strong>{{ post.marker.type_of_marker }}
-                        </strong> marker! <br/></p>
-
                     {% elif post.type == 'ANNOUNCEMENT' %}
-                        <script>changeElemBorderColor("#feed-post{{ post.id }}", 'BLUE')</script>
+                        <script>
+{#                          colorPost("#feed-post{{ post.id }}");
+                            changeElemBorderColor("#feed-post{{ post.id }}", 'BLUE')</script>
                         <h1 id="announcement-header">{{ post.title }}</h1>
                         <p id="description">{{ post.description }}</p>
                         <small><strong>{{ post.user }}</strong></small>
 
                     {% elif post.type == 'POLL' %}
-                        <script>changeElemBorderColor("#feed-post{{ post.id }}", 'RED')</script>
+                        <script>changeElemBorderColor("#feed-post{{ post.id }}", 'GREEN')</script>
                         <a href="{% url 'polls:detail' post.poll.id %}"><p id="poll-header">{{ post.title }}</p></a>
                         <p id="description">{{ post.description }}</p>
                         {% if post.poll.is_yes_no %}

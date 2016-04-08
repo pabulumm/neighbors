@@ -64,3 +64,38 @@ class Event(models.Model):
 		}
 
 
+class EventGuest(models.Model):
+	id = models.AutoField(primary_key=True)
+	date_invited = models.DateTimeField(auto_now=True)
+	date_response = models.DateTimeField()
+	guest = models.ForeignKey(User, null=True, related_name="guest")
+	invited_by = models.ForeignKey(User, null=True, related_name="invited_by")
+
+	def __str__(self):
+		return self.user
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

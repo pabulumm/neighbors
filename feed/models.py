@@ -29,3 +29,10 @@ class FeedPost(models.Model):
 	def __str__(self):
 		return self.title
 
+
+class View(models.Model):
+	id = models.AutoField(primary_key=True)
+	date = models.DateTimeField(auto_now=True)
+	post = models.ForeignKey(FeedPost)
+	user = models.ForeignKey(User)
+
