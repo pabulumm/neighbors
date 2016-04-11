@@ -1,0 +1,123 @@
+[
+  {
+    "model": "neighborhood.house",
+    "pk": 3,
+    "fields": {
+      "address": "530 Lantana St",
+      "neighborhood": 1,
+      "permission_code": "ASDJKFIDS",
+      "lat": "34.221879",
+      "lon": "119.055522"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 4,
+    "fields": {
+      "address": "458 Lantana St",
+      "neighborhood": 1,
+      "permission_code": "FSDFJIMEM",
+      "lat": "34.221741",
+      "lon": "119.054882"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 5,
+    "fields": {
+      "address": "515 Lantana St",
+      "neighborhood": 1,
+      "permission_code": "FHISOIMEM",
+      "lat": "34.222474",
+      "lon": "119.055344"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 6,
+    "fields": {
+      "address": "410 Lantana St",
+      "neighborhood": 1,
+      "permission_code": "FHISOIMEM",
+      "lat": "34.222726",
+      "lon": "119.054706"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 7,
+    "fields": {
+      "address": "128 Comanche Ct",
+      "neighborhood": 1,
+      "permission_code": "FHISOIMEM",
+      "lat": "34.223725",
+      "lon": "119.057742"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 8,
+    "fields": {
+      "address": "260 Comanche Ct",
+      "neighborhood": 1,
+      "permission_code": "SADHUSEV",
+      "lat": "34.224178",
+      "lon": "119.058231"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 9,
+    "fields": {
+      "address": "434 Comanche Ct",
+      "neighborhood": 1,
+      "permission_code": "SADHUSEV",
+      "lat": "34.225153",
+      "lon": "119.057773"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 10,
+    "fields": {
+      "address": "434 Comanche Ct",
+      "neighborhood": 1,
+      "permission_code": "SADHUSEV",
+      "lat": "34.221259",
+      "lon": "119.057050"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 11,
+    "fields": {
+      "address": "761 E Daily Ct",
+      "neighborhood": 1,
+      "permission_code": "HSNCHDSI",
+      "lat": "34.229010",
+      "lon": "119.0680000"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 12,
+    "fields": {
+      "address": "701 Paseo Camarillo",
+      "neighborhood": 1,
+      "permission_code": "HSNCHDSI",
+      "lat": "34.221272",
+      "lon": "119.060539"
+    }
+  },
+  {
+    "model": "neighborhood.house",
+    "pk": 13,
+    "fields": {
+      "address": "717 Big Horn Ct",
+      "neighborhood": 1,
+      "permission_code": "HSNCHDSI",
+      "lat": "34.224208",
+      "lon": "119.059842"
+    }
+  }
+]

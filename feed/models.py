@@ -30,9 +30,18 @@ class FeedPost(models.Model):
 		return self.title
 
 
-class View(models.Model):
+class PostView(models.Model):
 	id = models.AutoField(primary_key=True)
 	date = models.DateTimeField(auto_now=True)
 	post = models.ForeignKey(FeedPost)
 	user = models.ForeignKey(User)
 
+	def __str__(self):
+		return "Post " + str(self.post.id) + " viewed by " + self.user.username
+
+	def as_dict(self):
+		return {
+			'user': self.user.username,
+			'date': str(self.date.date()),
+			'post': self.post.id
+		}

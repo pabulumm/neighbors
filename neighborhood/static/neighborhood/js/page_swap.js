@@ -7,6 +7,7 @@ var sw_bot_hid = "-100%";
 
 var sw_nav_vis = "20%";
 
+$('#neigh-info').hide();
 
 function showMap() {
     swapMainWindow($('#map-container'));
@@ -21,15 +22,15 @@ function loadFeed() {
     });
     swapSideBar($('#feed'));
     $.each(post_ids, function (index, post_id) {
-        $(post_id).delay(200 * index + 500).animate({
+        $('#feed-post'+post_id).delay(200 * index + 500).animate({
             'left': "5%"
         })
     });
 }
 
 function showListMenu() {
-    $('.visible').animate({'right': "0", 'width': "60%"});
-    $('.side-visible').animate({'left': "20%", 'width': "20%"});
+    $('.visible').animate({'right': "0", 'width': "55%"});
+    $('.side-visible').animate({'left': "20%", 'width': "25%"});
     $('#list-menu').animate({'left': "0"});
     nav_visible = true;
 }
@@ -45,12 +46,12 @@ function swapMainWindow(id) {
     if (!(id.hasClass('visible'))) {
         $('.visible').animate({'right': "-100%"}).removeClass('visible');
         if (nav_visible) {
-            id.animate({'margin-right': "0", 'width': "60%"}).addClass('visible');
+            id.animate({'margin-right': "0", 'width': "55%"});
         }
         else {
-            id.animate({'margin-right': "0", 'width': "75%"}).addClass('visible');
+            id.animate({'margin-right': "0", 'width': "75%"});
         }
-        id.animate({'right': "0"});
+        id.animate({'right': "0"}).addClass('visible');
     }
 }
 
@@ -58,7 +59,7 @@ function swapSideBar(id) {
     if (!(id.hasClass('side-visible'))) {
         $('.side-visible').animate({'bottom': "-100%"}).removeClass('side-visible');
         if (nav_visible) {
-            id.css({'left': "20%", 'width': "20%"});
+            id.css({'left': "20%", 'width': "25%"});
         }
         else {
             id.css({'left': "0", 'width': "25%"});
@@ -68,6 +69,7 @@ function swapSideBar(id) {
 }
 
 function toggleListMenu() {
+
     var menu_icon = $('#menu-icon');
     if (menu_icon.hasClass('glyphicon-remove')) {
         hideListMenu();
@@ -77,6 +79,20 @@ function toggleListMenu() {
     }
     menu_icon.toggleClass("glyphicon-list glyphicon-remove");
 }
+
+$('#toggle-user-post').click(function() {
+    var toggle = $('#toggle-post-icon');
+    if (toggle.hasClass('glyphicon-menu-up')) {
+        $('#feed-header').animate({height:60});
+        $('#user-post').hide();
+    }
+    else {
+        $('#feed-header').animate({'height':"260px"}, 'slow');
+        $('#user-post').show();
+    }
+
+    toggle.toggleClass("glyphicon-menu-up glyphicon-menu-down");
+});
 
 
 nav_visible = false;
@@ -124,6 +140,8 @@ $('#announce-index').click(function () {
     swapSideBar($('#announcement-index'));
     toggleListMenu();
 });
+
+
 
 $('#poll-header').click(function (e) {
     e.preventDefault();

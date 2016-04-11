@@ -4,5 +4,8 @@ from . import views
 
 urlpatterns = [
 	url(r'^announce/$', views.make_announcement, name='announce'),
+	url(r'^get-viewed/$', views.get_viewed, name='get-viewed'),
+	url(r'^view-post/$', views.view_post, name='view-post'),
+	url(r'^submit-post/$', views.submit_post, name='submit-post'),
 ]
 

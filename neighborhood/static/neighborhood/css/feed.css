@@ -1,86 +1,214 @@
 @import url(https://fonts.googleapis.com/css?family=Holtwood+One+SC);
 
+.flag {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 10px;
+    top: 10px;
+    text-align: center;
+    background: #000000;
+    font-size: 30px;
+    line-height: 1.33;
+    border-radius: 40px;
+}
+
+.flag p {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+#refresh-feed {
+    border:none;
+    background: none;
+    color: #4c87cf;
+    font-size:30px;
+    float:right;
+    margin-right:25px;
+    margin-top:20px;
+}
+
 #feed {
     position: absolute;
-    width:25%;
+    width: 25%;
     bottom: -100%;
-    height:100%;
-    float:left;
-    overflow-y:auto;
+    height: 100%;
+    float: left;
+    overflow: hidden;
     background-color: #FFFFFF;
 }
 
+#feed-header {
+    position:relative;
+    width: 100%;
+    height:240px;
+    background: rgba(245, 245, 245, 1);
+    background: -moz-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245, 245, 245, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
+    background: -webkit-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -o-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ffffff', GradientType=1);
+}
+
+#feed-header-toggle {
+    width: 100%;
+    height:40px;
+    background:#ffffff;
+    text-align: center;
+    -webkit-box-shadow: 0px 3px 6px 0px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 0px 3px 6px 0px rgba(158, 158, 158, 1);
+    box-shadow: 0px 3px 6px 0px rgba(158, 158, 158, 1);
+    background: rgba(245, 245, 245, 1);
+    background: -moz-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245, 245, 245, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
+    background: -webkit-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -o-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ffffff', GradientType=1);
+}
+
+#user-post {
+    height: 175px;
+    width: 100%;
+    padding-left: 3%;
+    padding-top: 3%;
+    background: rgba(245, 245, 245, 1);
+    background: -moz-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245, 245, 245, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
+    background: -webkit-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -o-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ffffff', GradientType=1);
+
+}
+
+#post-text {
+    position:relative;
+    height: 96%;
+    width: 80%;
+    float: left;
+    background: #ffffff;
+    -webkit-box-shadow: inset 0px 0px 3px 1px rgba(74, 74, 74, 1);
+    -moz-box-shadow: inset 0px 0px 3px 1px rgba(74, 74, 74, 1);
+    box-shadow: inset 0px 0px 3px 1px rgba(74, 74, 74, 1);
+}
+
+.post-button {
+    position:relative;
+    width:16%;
+    margin-left:2%;
+    float:left;
+    text-align:center;
+	display: inline-block;
+	color: #fff;
+	background-color: #4c87cf;
+	font-size: 16px;
+    height: 40px;
+    border:none;
+}
+
+#submit-post {
+    padding:5px 5px;
+    position: relative;
+    margin-top:76px;
+    color:#fff;
+    background:#54E5B0;
+}
+
+#toggle-user-post {
+    border: none;
+    background: #ffffff;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#toggle-user-post span {
+    color: #0d0d0d;
+}
 
 #list-menu-button {
-    border:none;
-    font-size:32px;
-    margin-top:10px;
-    margin-left:10px;
-    width:60px;
+    border: none;
+    font-size: 32px;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 60px;
     padding: 10px 10px 10px 10px;
-    float:left;
+    float: left;
+}
+
+#menu-icon {
+    color:#ffffff;
 }
 
 #list-menu {
     position: absolute;
-    width:20%;
+    width: 20%;
     left: -20%;
-    height:100%;
-    float:left;
+    height: 100%;
+    float: left;
     background-color: #ffffff;
 }
 
 #list-menu button {
-    margin-top:10px;
-    margin-left:10%;
-    margin-bottom:10px;
-    height:50px;
-    display:block;
-    border:none;
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-bottom: 10px;
+    height: 50px;
+    display: block;
+    border: none;
     background-color: #ffffff;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
-    width:80%;
-    color: #707070;
+    width: 80%;
+    color: rgba(158, 158, 158, 1);
 }
 
-#list-menu .menu-option{
-    border-bottom:1px solid #707070;
+#list-menu .menu-option {
+    border-bottom: 1px solid #707070;
 }
 
 #list-menu .divider {
-    margin-left:5%;
-    margin-top:50px;
-    margin-bottom:50px;
-    display:block;
-    height:2px;
-    width:90%;
+    margin-left: 5%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: block;
+    height: 2px;
+    width: 90%;
     background: #404040;
 }
 
-
+#feed-post-container {
+    position: absolute;
+    width:103.25%;
+    height: 100%;
+    overflow-y:auto;
+}
 
 .feed-item {
     position: relative;
+    overflow: hidden;
     height: auto;
-    overflow: auto;
-    left:-100%;
-    margin-top:10px;
-    margin-bottom:10px;
-    width:90%;
+    left: -100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
     padding: 5px 5px 5px 5px;
-    -webkit-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    -moz-box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    box-shadow: 0 0 4px 2px rgba(221,148,84,1);
-    background: rgba(240,240,240,1);
-    background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(240, 240, 240, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
-    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1);
-
+    -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    background: rgba(245, 245, 245, 1);
+    background: -moz-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245, 245, 245, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
+    background: -webkit-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -o-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ffffff', GradientType=1);
 }
 
 .feed-item-body {
@@ -88,24 +216,24 @@
 
 }
 
-
 .feed-item-body button {
     padding: 1em 2em;
-	outline: none;
-	font-weight: 600;
-	border: none;
-	color: #fff;
+    outline: none;
+    font-weight: 600;
+    border: none;
+    color: #fff;
     width: 50%;
 }
 
 .feed-post-icon {
-    float:left;
-    padding-right:20px;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
 }
 
 .news {
-    max-height:100%;
-    float:left;
+    max-height: 100%;
+    float: left;
     background-color: #f0f0f0;
     overflow: auto;
 }
@@ -125,28 +253,29 @@
 }
 
 #time-stamp {
-    height:20px;
+    position: absolute;
+    height: 20px;
     margin-left: 50%;
-    margin-top:10px;
+    margin-top: 10px;
     opacity: 0.7;
 }
 
 .vote-yes {
-    float:left;
+    float: left;
     background: #54E5B0;
 }
 
 .vote-no {
     float: right;
-	background: #c94e50;
+    background: #c94e50;
 }
 
 #poll-vote {
     padding: 1em 2em;
-	outline: none;
-	font-weight: 600;
-	border: none;
-	background: #54E5B0;
-    color:#fff;
+    outline: none;
+    font-weight: 600;
+    border: none;
+    background: #54E5B0;
+    color: #fff;
     width: 100%;
 }

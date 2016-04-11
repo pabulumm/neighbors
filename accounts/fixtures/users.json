@@ -14,8 +14,177 @@
     "model": "accounts.userprofile",
     "fields": {
       "user": 4,
+      "house": 3,
       "member_status": "neighbor",
       "bio": "I'm just a John Doe lookin' for his lennon lemons.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":5,
+    "fields": {
+      "first_name": "Ron",
+      "last_name": "Allen",
+      "username": "rallen",
+      "password": "rallen",
+      "email": "rallen@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 5,
+      "house": 4,
+      "member_status": "neighbor",
+      "bio": "I don't believe in fairy tales. But the government is full of reptiles wearing human skin suits. Jus Sayin'.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":6,
+    "fields": {
+      "first_name": "Lisa",
+      "last_name": "Green",
+      "username": "lgreen",
+      "password": "lgreen",
+      "email": "lgreen@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 6,
+      "house": 7,
+      "member_status": "neighbor",
+      "bio": "I like green things such as kayle, tennis balls, and boogers.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":7,
+    "fields": {
+      "first_name": "Tracy",
+      "last_name": "Walters",
+      "username": "twalters",
+      "password": "twalters",
+      "email": "twalters@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 7,
+      "house": 8,
+      "member_status": "neighbor",
+      "bio": "I will die before I let anyone near my precious art collection.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":8,
+    "fields": {
+      "first_name": "Albert",
+      "last_name": "Jacobs",
+      "username": "ajacobs",
+      "password": "ajacobs",
+      "email": "ajacobs@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 8,
+      "house": 9,
+      "member_status": "neighbor",
+      "bio": "The wind blows when it blows, in the direction that is. Nothing will change that.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":9,
+    "fields": {
+      "first_name": "Thomas",
+      "last_name": "Corn",
+      "username": "tcorn",
+      "password": "tcorn",
+      "email": "tcorn@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 9,
+      "house": 10,
+      "member_status": "neighbor",
+      "bio": "Take great care with your words. You never know who's world your lighting up, or ripping apart.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":10,
+    "fields": {
+      "first_name": "Alice",
+      "last_name": "Chains",
+      "username": "achains",
+      "password": "achains",
+      "email": "achains@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 10,
+      "house": 11,
+      "member_status": "neighbor",
+      "bio": "I like chains and everything they're used for. EVERYTHING.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":11,
+    "fields": {
+      "first_name": "James",
+      "last_name": "Brown",
+      "username": "jbrown",
+      "password": "jbrown",
+      "email": "jbrown@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 11,
+      "house": 12,
+      "member_status": "neighbor",
+      "bio": "I got that soul baby. I'm your International trade center of boogey baby.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk":12,
+    "fields": {
+      "first_name": "Ellen",
+      "last_name": "Doorn",
+      "username": "edoorn",
+      "password": "edoorn",
+      "email": "edoorn@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 12,
+      "house": 13,
+      "member_status": "neighbor",
+      "bio": "Have you ever just stopped randomly and started shuffling? Because I don't. I think it would be kind of weird. Hi?",
       "neighborhood_id": 1
     }
   }

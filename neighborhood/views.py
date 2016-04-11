@@ -1,21 +1,21 @@
+import datetime
+import json
+from calendar import monthcalendar, month_name
+
+from accounts.models import UserProfile
 from budget.models import Budget, Expense
 from discussions.models import Discussion
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
-import json, datetime
-from calendar import monthrange, monthcalendar, month_name
-
-from accounts.models import UserProfile
-from messaging.forms import ReportForm
-from messaging.models import Report
-from polls.models import Question
-from markers.models import Marker
-from .models import Neighborhood, Event
+from feed.forms import AnnouncementForm, FeedPostForm
 from feed.models import Feed, FeedPost
-from feed.forms import AnnouncementForm
 from feed.views import get_recent_posts
+from markers.models import Marker
+from messaging.forms import ReportForm
+from polls.models import Question
+from .models import Neighborhood, Event
 
 
 @login_required
@@ -30,6 +30,7 @@ def neighborhood_home(request):
 			#report.save()
 	report_form = ReportForm()
 	announcement_form = AnnouncementForm()
+	post_form = FeedPostForm()
 	neighborhood = request.user.userprofile.house.neighborhood
 	request.session['neighborhood_id'] = neighborhood.id
 	feed = Feed.objects.get(neighborhood=neighborhood)
@@ -45,6 +46,7 @@ def neighborhood_home(request):
 														  'feedposts': feedposts,
 														  'report_form': report_form,
 														  'announcement_form':announcement_form,
+														  'post_form':post_form,
 														  'polls': polls})
 
 

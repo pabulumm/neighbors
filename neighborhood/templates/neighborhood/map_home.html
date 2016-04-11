@@ -22,7 +22,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/feed.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}"/>
     <script type="text/javascript" src="{% static 'neighborhood/js/get_icon.js' %}"></script>
-    <script type="text/javascript" src="{% static 'neighborhood/js/style.js' %}"></script>
+{#    <script type="text/javascript" src="{% static 'neighborhood/js/style.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'neighborhood/js/feed.js' %}"></script>
+    <script type="text/javascript" src="{% static 'neighborhood/js/csrf.js' %}"></script>
+    <script type="text/javascript" src="{% static 'neighborhood/js/colors.js' %}"></script>
 </head>
 <body>
 
@@ -31,10 +34,6 @@
         <span id="menu-icon" class='glyphicon glyphicon-list'></span>
     </a>
     <h1 class="white-text">Neighbors</h1>
-    <div class="options">
-        {#        <a id="map-button" class="btn btn-info"><strong>map</strong></a>#}
-        {#        <a id="status-button" class="btn btn-info"><strong>status</strong></a>#}
-    </div>
     <div class="icons">
 {#        <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">#}
 {#            <span class='glyphicon glyphicon-user'></span>#}
@@ -140,14 +139,13 @@
 
 
     <script>
+        var poll_ids = [];
         var post_ids = [];
 
         function newPostId(id) {
             post_ids.push(id);
             return id;
         }
-
-        var poll_ids = [];
 
         function newPollId(id) {
             poll_ids.push(id);
@@ -158,61 +156,82 @@
 
     {#-----------------------FEED SIDE BAR (WITH MAP) ---------------------------#}
     <div id="feed">
-        <p id="feed-title" class="side-window-title">The Feed</p>
-        <span class="side-title-span"></span>
-        {% for post in feedposts %}
-            <div id="feed-post{{ post.id }}" class="feed-item">
-                <script>newPostId("#feed-post{{ post.id }}");</script>
-                <small id="time-stamp">{{ post.create_date }}</small>
-                {#                <h2>{{ post.title }}</h2>#}
-                <div class="feed-item-body">
-                    {% if post.type == 'MARKER' %}
-                        <script>
-                            var marker_type = "{{ post.marker.type_of_marker }}";
-                            var post_statement = getMarkerPostStatement("{{ post.user }}", marker_type);
-                            changeElemBorderColor("#feed-post{{ post.id }}", getPostColor(marker_type));
-                            var src = getIconType("{{ post.marker.type_of_marker }}", true);
-                            var icon_img = $("<img>", {class: 'feed-post-icon', src: src});
-                            $("#feed-post{{ post.id }} .feed-item-body").append(icon_img);
-                            $("#feed-post{{ post.id }} .feed-item-body").append('<p>' + post_statement + '</p>');
-                            $('#feed-post{{ post.id }}').on('click', function () {
-                                // center map on clicked post designated marker
-                                centerMarker([{{ post.marker.lat }}, {{ post.marker.lon }}]);
-                                // open popup descriptor
-                                openPop({{ post.marker.id }});
-                            });
-                        </script>
-                    {% elif post.type == 'ANNOUNCEMENT' %}
-                        <script>
-{#                          colorPost("#feed-post{{ post.id }}");
-                            changeElemBorderColor("#feed-post{{ post.id }}", 'BLUE')</script>
-                        <h1 id="announcement-header">{{ post.title }}</h1>
-                        <p id="description">{{ post.description }}</p>
-                        <small><strong>{{ post.user }}</strong></small>
+{#        <span class="side-title-span"></span>#}
+        <div id="feed-header">
+            <p id="feed-title" class="side-window-title">The Feed</p>
+            <button id="refresh-feed" title="Refresh Feed">
+                <span class="glyphicon glyphicon-refresh"></span>
+            </button>
+            <div id="user-post">
+                <form action="{% url 'feed:submit-post' %}" method="POST"></form>
+    {#            need a feed post form so user can submit post from home-page #}
+                <div id="post-text"></div>
+                <button id="marker-post-button" class="post-button" title="Add Marker">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                </button>
+                <button id="submit-post" class="post-button" title="Submit Post">
+                    SUBMIT
+                </button>
+            </div>
+        </div>
+        <div id="feed-header-toggle">
+            <button id="toggle-user-post">
+                <span id="toggle-post-icon" class="glyphicon glyphicon-menu-up"></span>
+            </button>
+        </div>
+        <div id="feed-post-container">
+            {% for post in feedposts %}
+                <div id="feed-post{{ post.id }}" class="feed-item">
+    {#                <div class="flag"><p>!</p></div>#}
+                    <script>
+                        newPostId({{ post.id }});
+                        checkPostViewed({{ post.id }})
+                    </script>
+                    <small id="time-stamp">{{ post.create_date }}</small>
+                    <div class="feed-item-body">
+                        <script>getUserImage('#feed-post{{ post.id }}');</script>
+                        <small><strong>{{ post.user.username }}</strong></small>
+                        {% if post.type == 'MARKER' %}
+                            <script>
+                                createMarkerFeedPost("{{ post.marker.type_of_marker }}",
+                                        "{{ post.user }}", {{ post.id }}, {{ post.marker.id }}, {{ post.marker.lat }}, {{ post.marker.lon }});
+                            </script>
+                        {% elif post.type == 'ANNOUNCEMENT' %}
+                            <script>
+                                $('#feed-post{{ post.id }}').click(viewPost({{ post.id}}));
+                            </script>
+                            <h1 id="announcement-header">{{ post.title }}</h1>
+                            <p id="description">{{ post.description }}</p>
 
-                    {% elif post.type == 'POLL' %}
-                        <script>changeElemBorderColor("#feed-post{{ post.id }}", 'GREEN')</script>
-                        <a href="{% url 'polls:detail' post.poll.id %}"><p id="poll-header">{{ post.title }}</p></a>
-                        <p id="description">{{ post.description }}</p>
-                        {% if post.poll.is_yes_no %}
-                            <button id="" class="vote-yes">Yes</button>
-                            <button id="" class="vote-no">No</button>
-                        {% else %}
-                            <form action="{% url 'polls:vote' post.poll.id %}" method="post">
-                                {% csrf_token %}
-                                {% for choice in post.poll.choice_set.all %}
-                                    <input type="radio" name="choice" id="choice{{ forloop.counter }}"
-                                           value="{{ choice.id }}"/>
-                                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br/>
-                                {% endfor %}
-                                <input id='poll-vote' type="submit" value="Submit"/>
-                            </form>
+                        {% elif post.type == 'POLL' %}
+                            <script>
+                                $('#feed-post{{ post.id }}').click(viewPost({{ post.id}}));
+    {#                            changeElemBorderColor("#feed-post{{ post.id }}", 'GREEN')#}
+                            </script>
+                            <a href="{% url 'polls:detail' post.poll.id %}"><p id="poll-header">{{ post.title }}</p></a>
+                            <p id="description">{{ post.description }}</p>
+                            {% if post.poll.is_yes_no %}
+                                <button id="" class="vote-yes">Yes</button>
+                                <button id="" class="vote-no">No</button>
+                            {% else %}
+                                <form action="{% url 'polls:vote' post.poll.id %}" method="post">
+                                    {% csrf_token %}
+                                    {% for choice in post.poll.choice_set.all %}
+                                        <input type="radio" name="choice" id="choice{{ forloop.counter }}"
+                                               value="{{ choice.id }}"/>
+                                        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br/>
+                                    {% endfor %}
+                                    <input id='poll-vote' type="submit" value="Submit"/>
+                                </form>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
+                    </div>
+
                 </div>
 
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+
     </div>
 
     {#-----------------------POLLS MAIN WINDOW ---------------------------#}
@@ -270,7 +289,7 @@
         {% if feedposts %}
             {% for post in feedposts %}
                 {% if post.type == 'ANNOUNCEMENT' %}
-                    <script>changeElemBorderColor("#feed-post{{ post.id }}", 'BLUE')</script>
+{#                    <script>changeElemBorderColor("#feed-post{{ post.id }}", 'BLUE')</script>#}
                     <h1 id="announcement-header">{{ post.title }}</h1>
                     <p id="description">{{ post.description }}</p>
                     <small><strong>{{ post.user }}</strong></small>
@@ -407,6 +426,289 @@
         {#        {% endfor %}#}
     </div>
 
+    <div id="neigh-info-options">
+
+    </div>
+
+    <div id="neigh-info">
+        <p id="ccr-info">
+            ARTICLE I
+            DEFINITIONS
+            As used in this Declaration, unless the context otherwise specifies or requires, the following words and phrases shall be defined as follows:
+            Section 1.
+            “Articles” shall mean the Articles of Incorporation of the Association or other organizational or charter documents of the Association.
+            Section 2.
+            “Assessments” shall mean those payments required of Owners and Association Members.
+            Section 3.
+            “Association” shall mean and refer to BALDWIN PARK NEIGHBORHOOD ASSOCIATION, INC., its successors and assigns.
+            Section 4.
+            “Board” shall mean the Board of Directors or other governing board or individual, if applicable, of the Association.
+            Section 5.
+            “Building” shall mean a structure constructed on a Lot on a temporary or permanent basis and unless specified to the contrary, shall include all appurtenances and improvements thereto or used in connection therewith.
+            Section 6.
+            “Bylaws” shall mean the Bylaws of Association, including any amendments thereto duly adopted.
+            Section 7.
+            “Common Area” shall mean all real property (including the improvements thereto) owned by the Association for the common use and enjoyment of the Owners.
+            Section 8.
+            “Declarant” shall mean and refer to J. RAMON YORGASON and MARILYN YORGASON, husband and wife, their successors and assigns if such successors or assigns should acquire more than in the whole of the Property.
+            Section 9.
+            “Declaration” shall mean this Declaration as it may be amended from time to time. Declaration is from time to time also referred to as “CC&Rs” or “covenants.”
+            Section 10.
+            “Improvement” shall mean any structure, facility or system, or other improvement or object, whether permanent or temporary, which is erected, constructed or placed upon, under or in any portion of the Property, including but not limited to buildings, fences, streets, drives, driveway, sidewalks, curbs, landscaping, signs, street signs, lighting, street lights, mail boxes, electrical lines, pipes, pumps, ditches, walkways, poles, swimming pools and other recreational facilities, stormwater and/or drainage facilities, and fixtures of any kind whatsoever.
+            Section 11.
+            “Limited Assessment” shall mean a charge against a particular Owner and such Owner’s Lot, directly attributable to the Owner, equal to the cost incurred by the Association for corrective action performed pursuant to the provisions of this Declaration including interest thereon as provided in the Declaration.
+            Section 12.
+            “Lot” shall mean and refer to any plot of land shown upon any recorded subdivision map of the Properties upon which Improvements may be constructed with the exception of any Common Area.
+            Section 13.
+            “Member” shall mean each person or entity holding a membership in the Association.
+            Section 14.
+            “Owner” shall mean the person or other legal entity, including Declarant, holding fee simple interest of record to a lot which is a part of the Property, and sellers under executory contracts of sale, but excluding those having such interest merely as security for the performance of an obligation, but including any Mortgage (of any priority) or other security holder provided said mortgage or other security holder is in actual possession of a Lot as a result offoreclosure or otherwise and any person taking title through such Mortgage or other security holder by purchase at foreclosure sale or otherwise.
+            Section 15.
+            “Person” shall mean any individual, partnership, corporation or other legal entity.
+            Section 16.
+            “Phase” – Each parcel of land subdivided using the same name will be identified by a consecutive number beginning with No. 1 and will be known as a “Phase.”
+            Section 17.
+            “Plat” shall mean any subdivision plat covering any portion of the Property as recorded at the office of the County Recorder, Ada County, Idaho, as the same may be amended by duly recorded amendments thereof.
+            Section 18.
+            “Property” shall mean and refer to that certain real property hereinbefore described and such additions thereto as may hereafter be brought within the jurisdiction of the Association.
+            Section 19.
+            “Regular Assessment” shall mean the portion of the cost of maintaining, improving, repairing, managing and operating the Common Areas and all Improvements located thereon, and the other costs of the Association which is to be levied against the Property for and paid by each Owner to the Association, pursuant to the terms hereof or the terms of this Declaration.
+            Section 20.
+            “Special Assessment” shall mean the portion of the costs of the capital improvements or replacements, equipment purchases and replacements or shortages in Regular assessments that are authorized and to be paid by each Owner to Association, pursuant to the provisions of this Declaration.
+            Section 21.
+            “Subdivision” shall mean the Baldwin Park Subdivision No. 1.
+            ARTICLE II
+            GENERAL COVENANTS, CONDITIONS, AND RESTRICTIONS
+            Section 1.
+            “Approval of Plans” – No building, fence, wall, structure, improvement, or obstruction shall be placed or permitted to remain upon any part of said properties unless a written request for approval thereof containing the plans and specifications, including exterior color scheme, has been approved in writing by the Architectural Control Committee as provided herein. The decision to approve or disapprove proposed plans rests entirely with the Architectural Control Committee (ACC).
+            Section 2.
+            “Floor Area” – The floor area of a one-story house in this Subdivision shall not be less than 1301 square feet on the ground floor. For the purpose of the Covenants, eaves, steps, and open porches shall not be considered as part of a building, provided, however, that this shall not be construed to permit any portion of a building on a Lot to encroach upon another Lot.Two-story and tri-level homes shall not have less than 900 square feet on the main level and 1600 total square feet exclusive of covered porches, entrances, or patios. No split entry homes, mobile homes, or pre-built homes will be allowed. No residence shall be in excess of two stories above ground. No shack, tent, trailer house, or basement only house shall be used within the Subdivision for living quarters, permanent or temporary.
+            Section 3.
+            “Garages” – All houses shall have an enclosed garage, which holds no less than two cars and no more than three. All floor area requirements in Section 2 above shall be exclusive of the required garage area. All garages shall be attached and match the construction standards of the house as well as be constructed of good quality material and workmanship.
+            Section 4.
+            “Off-street Parking” – All Lots shall have a driveway that allows a minimum of two off-street automobile parking spaces within the boundaries of each Lot.
+            Section 5.
+            “Value” – The appraised value of any residence shall exceed a minimum of $130,000.00 based on January 2003 values.
+            Section 6.
+            “Exterior Appearance” – Each house in this Subdivision shall have brick, stone, or stucco on the front exposure. As a minimum, brick, stone or stucco shall be used either on full-height columns on the sides of the garage or full wainscot on the front of house including on both sides of the garage with front corners wrapped a minimum of two feet (2′). It is encouraged that at least one of the following be included on the front elevation: decorative wood applications such as columns, corbels, crown and dentil molding and porches, boxed or returned soffets. Other features might include windows with rounded tops, bay windows, or pop-out box windows if they are incorporated into the roofline. The plans for each home will be reviewed individually for overall appearance of the elevation when the plans are submitted to the Architectural Control Committee. No vinyl or metal siding will be allowed. Use of different sidings is highly recommended as well as a brass kickplate or upgraded front door.
+            Section 7.
+            “Roofs” – Broken rooflines, gables, hip roofs, etc., are strongly encouraged. Roofs must be of at least 6 in 12 pitch. Shingles must be an architectural relief shingle with a P-25 year minimum warranty in Antique Black only. No gravel roofs will be allowed. Roofs must be approved by the Architectural Control Committee along with the colors of the exterior of the house.
+            Section 8.
+            “Colors” – Exterior colors of earth tones or grays shall be required for the body of the house. Bright or bold colors or very dark body colors shall not be allowed. Approval of exterior colors must be obtained from the Architectural Control Committee.
+            Section 9.
+            “Light Pole” – All homes will have front yard lighting on a photocell with one or more of the following: decorative post lighting with a photocell, soffitt lighting with photocell, upgraded landscape lighting on photocell, or upgraded garage light fixture on photocell (no switch) all with a minimum bulb power of 40 watts. Completion is the specific responsibility of the Builder.
+            Section 10.
+            “Landscaping” – Landscaping of front yard and side lots adjacent to the street must be completed within thirty (30) days of occupancy of home and is to include sod in the front yard and both sides of the driveway. The front yard is to include a berm or sculptured planting area and at least 50% of the front yard landscaping to be sodded. Concrete slab, rock or gravel may not be used as landscaping to provide parking adjacent to driveways. If access to the back yard for vehicle storage is desired, requests should be made to the Architectural Control Committee. Plants and materials used for such access must be approved prior to installation. A concrete slab next to the driveway will not be approved.(a) The landscaping of each lot shall include two (2) large trees (deciduous, a combination of at least 2.5″ caliper or pine trees of at least eight feet (8′) in height) or three (3) medium size trees (a combination of deciduous trees of at least 2″ caliper trees or six foot evergreens) and five (5) five-gallon plants and five (5) two-gallon shrubs or bushes in the front yard. Grass or hydroseed shall be planted in the back yard within twelve months of occupancy. In the event of undue hardship due to weather conditions, this provision may be extended for a reasonable length of time upon written approval of the Architectural Committee.
+            (b) Each lot owner shall be responsible for keeping his or her yard and landscaping in good condition. Owner shall provide adequate irrigation and maintenance of trees and landscaping, shall control weeds, and maintain the owner’s lot in a clean and safe condition free of debris or any hazardous condition. Weeds shall be cut to less than four(4) inches. The Association will have the right to maintain the yard and landscaping if it is not maintained. Costs incurred by the Association in connection with such maintenance will become a Limited Assessment. (See Art. 1, Section 11).
+
+            Section 11.
+            “Fences” – Fences are not required. If a fence is desired, the Architectural Control Committee shall approve the plans prior to construction. Fences shall be of good quality and workmanship and properly maintained. Fences may be six-foot (6′) cedar, vinyl or wrought iron. The color of all cedar fencing shall be approved by the Architectural Control Committee. All fence setbacks must meet Meridian City Code and ACHD vision triangle.(a) Fences shall not be built closer to the front of the lot than five feet (5′) behind the front corner of the house on either side. Fences shall not extend closer than twenty feet (20′) to the front street right of way. On corner lots, fences shall not be built closer than twenty feet (20′) to any side street right of way without the express approval of the Architectural Control Committee. No fences shall be higher than six feet (6′). Six-foot (6′) vinyl privacy fences are allowed on lots on lot lines not adjacent to common areas.
+            (b) For back yard fences along park area, which is Lot 1 Block 5, they must be wrought iron only.
+
+            (c) On lots which are adjacent to a pathway, if a fence is desired along the borders of the pathway, (excluding entrance or perimeter fencing), the fence must be wrought iron, cedar (picture-frame style), or vinyl and not to exceed four-feet (4′) in height.
+
+            (d) On lot 15 Block 4 there is a fenced walkway leading south for students attending the Middle School. The fence will be a 4′ picture frame cedar.
+
+            (e) If the Declarant should provide any fencing, as may be done along some common areas, where required for safety, or for whatever reason, the Owner on whose lot line the fence is built must assume responsibility to maintain said fencing.
+
+            (f) The location of fences, hedges, high plantings, obstructions, or barriers shall be so situated as not to unreasonably interfere with the enjoyment and use of neighboring properties and streets and shall not be allowed to constitute an undesirable, nuisance, or noxious use. The determination of the Architectural Control Committee shall be binding on all parties as to whether an undesirable, nuisance, or noxious use exists.
+
+            See “Dog Runs” (Section 14) as they pertain to fencing requirements.
+
+            See “Vehicle Storage” (Section 12) as it pertains to fencing and the amount of setback required if the vehicle height extends above the fence.
+
+            Section 12.
+            “Vehicle Storage” – Parking of boats, trailers, motorcycles, trucks, truck-campers, and like equipment, or junk cars or other unsightly vehicles, and like items, shall not be allowed on any part of said properties nor on public ways adjacent thereto excepting only within the confines of an enclosed garage or other approved enclosure, and no portion of same may project beyond the enclosed area. Parking of automobiles or other vehicles on any part of the properties or on public ways adjacent thereto shall be prohibited except within garages, carports, or other approved areas. Garage driveways shall not be extended on either side for additional parking. For the purpose of this Section, an approved area may be beside the house, but not on a street side, and screened with a six-foot (6′) solid vinyl or cedar fence or landscaping enclosure, which screening is approved by the Architectural Control Committee. If the height of the stored item is greater than the height of the front fence, the item must be stored two (2) feet farther from the front fence for each part of a foot the item extends above the fence, and the item must be stored two (2) feet away from any side yard fence for each part of a foot it extends above said fence, but in no case will the item be allowed to be stored if its height is greater than ten feet (10′) or length greater than thirty feet (30′). Any variance to allow a deviation to these vehicle storage requirements must be approved in writing by the ACC and all surrounding neighbors. The Architectural Control Committee shall be the sole and exclusive judges of approved parking areas.
+            Section 13.
+            “Animals” – Keeping or raising of farm animals or poultry is prohibited. No more than two (2) domestic pet animals may be kept at one time, except that a litter of young may be kept until eight (8) weeks old. All dogs and cats or household pets kept on these premises shall be fed and cared for and shall be adequately fenced and controlled so as not to annoy or trespass upon the use of the property of others. Dogs and cats shall not be allowed to run at large.
+            Section 14.
+            “Dog Runs” – Dog runs may be permitted along a side fence, but must be no closer than ten feet (10′) away from the back lot line if that lot line is the boundary of a common area. Dog runs are only permitted outside of the building/home set back area (Article II, Section 16). Dog runs must not be more than six feet (6′) high and they must be screened from neighbors’ view. Dog runs must be approved by the Architectural Control Committee in writing prior to construction.
+            Section 15.
+            “Antennae and Satellite Dishes” – Installation of radio and/or television antennae or satellite dishes is prohibited outside of a building without written consent from the Architectural Control Committee. Regular local antennae must be in the garage attic. A satellite dish is allowed on the back of the home or side of the home under the eves. The Architectural Control Committee may approve a satellite dish to be installed at other locations if screened from street view.
+            Section 16.
+            “Setbacks” – Residence setbacks will meet Meridian City Code for zoning codes and ordinances for R-8 zone.
+            Section 17.
+            “Additional Easements” – There is a five foot (5′) easement shown on the recorded plat on each side of the interior side lot lines for a permanent public utility, irrigation, and drainage easement.Within these easements no structure, planting, or other material shall be placed or permitted to remain which may damage or interfere with the installation and maintenance of the utilities or which may change the direction of the flow of the water through drainage channels in the easements. The easement area of each Lot and all improvements in it shall be maintained continuously by the Owner of the Lot, except for those improvements for which a public authority or utility is responsible.
+            Section 18.
+            “Construction Time” – Construction of any residences in the Subdivision shall be diligently pursued after commencement thereof, to be completed within twelve (12) months. The Owner of a Lot will begin construction within twelve months of the closing date or the Lot will be sold back to the developer at 50% of the original purchased price.
+            Section 19.
+            “Outbuildings” – Only one outbuilding per Lot will be allowed. All outbuildings shall be constructed of quality building material, completely finished with the same shingles, including color, that were applied on the house and painted on the outside to match the body color of the house, and shall be of quality and character that will be in harmony with the house on said Lot. All outbuildings will comply with Meridian City codes and ordinances and are subject to Architectural Control Committee approval prior to construction.
+            Section 20.
+            “Nuisances” – No rubbish or debris of any kind shall be placed or permitted to accumulate anywhere upon the property including Lots, Common Area or vacant lots, and not odor shall be permitted to arise therefrom so as to render the property or any portion thereof unsanitary, unsightly, offensive or detrimental to the property or to its occupants, or to any other property in the vicinity thereof or to its occupants. No noise or other nuisance, as described by city or county ordinances, as amended from time to time, shall be permitted to exist or operate upon any portion of the property. No party or other activity in a Common Area or Lot which makes or causes to make noises which might tend to unreasonably interfere with the peace and quiet of Owners or occupants of Baldwin Park shall be allowed. No Owner shall permit any party or other activity in the Common Area or such Owner’s dwelling unit which makes or causes to make noises which might tend to unreasonably interfere with the peace and quiet of the other Owners or occupants. No radio or other sound system shall be operated on the Property except at a low sound level. No offensive noise, language or behavior is allowed. The use of any type of firearms on the Property is strictly prohibited and is subject to formal complaint to the Police Department.
+            Section 21.
+            “Conducting Business on Properties” – No business shall be conducted on the above properties that cannot be conducted within the residence of the Owner as permitted by law. No signs shall be installed to advertise said business. No oil exploration or development of any nature or kind or mining exploration, development or structure shall be permitted upon the Lots in this Subdivision.
+            Section 22.
+            “Water for Lawn and Yard Sprinkling” – The water source for sprinkling of lawns and other outside areas will be pressurized irrigation water, which will be provided to each Lot. This pressurized water will not be potable, drinkable, and will not meet safe drinking water standards established, from time to time, by the federal, state, and/or local governments. The Subdivision is in the Settlers Irrigation District. Assessment from the Settlers Irrigation District will be made in total to the Association and paid by Association dues.
+            Section 23.
+            “Sewer Locations” – All bathroom, sink, and toilet facilities shall be located inside the dwelling house or other suitable appurtenant building and shall be connected by underground pipe to wet line sewer connection lines which have been provided to each Lot.
+            Section 24.
+            “Signs” – No sign of any kind shall be displayed to public view on any building or building site on said properties except a professional sign of not more than five (5) square feet advertising the property for sale by an owner to advertise the property. If a property is sold, any sign relating thereto shall be removed immediately, except that a “Sold” sign may be posted for a reasonable period following the sale. Notwithstanding any provision to the contrary, signs of any and all sizes and dimensions may be displayed by the Declarant, without limitation thereto, on Lots owned by said Declarant. The Declarant or the Neighborhood Association, if there is one, may display a sign of any size and dimension, without limitation thereto, for subdivision identification.No real estate signs, or signs of any kind, except for subdivision identification, may be displayed on any Common Area except for the Developer’s designated marketing agent for that Subdivision, if there is one.
+            Section 25.
+            “Waste Disposal” – No Lot or building site included within this Subdivision shall be used or maintained as a dumping ground for waste material. Incinerators are not permitted. Receptacles for storage of trash, garbage, etc. shall be maintained in a sanitary and clean condition.
+            Section 26.
+            “Construction Equipment” – No machinery, building equipment, or material shall be stored upon site until the builder is ready and able to immediately commence construction. Such building materials must be kept within the property line of such building site upon which the structure is to be erected.
+            Section 27.
+            “Damage to Improvements” – It shall be the responsibility of the builder of any residence in this Subdivision to leave street, curbs, sidewalks, fences, tiled irrigation lines, if any, and utility facilities free of damage and in good and sound condition at the conclusion of the construction period. It shall be conclusively presumed that all such improvements are in good sound condition at the time building is begun on each Lot unless the contrary is shown in writing at the date of conveyance or by date of possession, whichever date shall first occur, which notice is addressed to a member of the Architectural Committee.
+            Section 28.
+            “No Hazardous Activities” – No activities shall be conducted on the Property and no improvements constructed on any property, which is or might be unsafe or hazardous to any person or property.
+            Section 29.
+            “Unsightly Articles” – No unsightly articles shall be permitted to remain on any Lot so as to be visible from any other portion of the Property. Without limiting the generality of the foregoing, refuse, garbage and trash shall be kept at all times in such containers and in areas approved by the Board of Directors. No clothing or fabrics shall be hung, dried or aired in such a way as to be visible to other property, and no equipment, compressors, containers, lumber, firewood, grass, shrub or tree clippings, plant waste, metals, bulk material, scrap, refuse or trash shall be kept, stored or allowed to accumulate on any Lot except within an enclosed structure or as appropriately screened from view. No vacant residential structures shall be used for storage of building materials.
+            Section 30.
+            “Exemption of Declarant” – Nothing contained herein shall limit the right of Declarant to subdivide or resubdivide any portion of the Property to grant licenses to reserve rights-of-way and easements with respect to Common Area to utility companies, public agencies or others, or to complete excavation, grading and construction of Improvements to and on any portion of the Property owned by Declarant, or to alter the foregoing and its construction plans and designs, or to construct such additional Improvements as Declarant deems advisable in the course of development of the Property so long as any Lot in the Property remains unsold. Such right shall include, but shall not be limited to, erecting, constructing and maintaining on the Property such structures and displays as may be reasonably necessary for the conduct of Declarant’s business of completing the work and disposing of the same by sales, lease or otherwise. Declarant shall have the right at any time prior to acquisition of title to a Lot by a purchaser from Declarant to grant, establish and/or reserve on that Lot additional licenses, reservations and rights-of-way to Declarant, to utility companies, or to others as may from time to time be reasonably necessary to the proper development and disposal of the Property. Declarant may use any structures owned by Declarant on the Property as model home complexes or real estate sales or leasing offices. The rights of Declarant hereunder may be assigned by Declarant to any successor in interest in connection with Declarant’s interest in any portion of the Property, by an express written assignment recorded in the Office of the Ada County Recorder.
+            Section 31.
+            The “Architectural Control Committee’s” decision is final and binding on all issues.
+            Section 32.
+            “Common Area” – The Common Area to be owned and maintained by the Baldwin Park Neighborhood Association at the time of the conveyance of the first Lot is described as follows: Lot 1 Block 1, Lot 1, Block 2, Lot 1 Block 3, Lots 1, 15, 22, Block 4, and Lot 1 Block 5, of Baldwin Park Subdivision No. 1, Meridian, Ada County, Idaho.
+            Section 33.
+            “Annexation” – It is intended that additional Phases of Baldwin Park Subdivision may be annexed or included within the jurisdiction of this Declaration by Declarant without approval of the Lot Owners. Common Areas included in annexed Phases are for common use of Lot Owners in all Phases of the Subdivision and will be maintained by the Baldwin Park Neighborhood Association, Inc.
+            ARTICLE III
+            ARCHITECTURAL CONTROL
+            Section 1.
+            “Architectural Control Committee” – A committee of three persons shall act as an Architectural Committee and shall, prior to any new construction be furnished with one set of detailed plans and specifications of any proposed improvement and shall be allowed fifteen (15) days to review said plans, drawings, and specifications. If said Committee shall approve the proposed Improvement, or any modification or alteration thereof, they shall so indicate by the dating and signing of the set of plans by a member of the Committee, and their approval shall be construed as full compliance with the provisions of these Covenants. Said Committee shall have sole discretion to determine what shall be substantial compliance with said Covenants. No building shall occupy any portion of said Subdivision without prior consent of said Committee.
+            Section 2.
+            “Discretion of Committee” ­ The decision to approve or disapprove proposed plans rests entirely with the Architectural Control Committee, and shall be authorized to issue rules relating to the implementation of these Declarations, including governing the design, construction, location, and appearance of all Improvements and landscaping on the Property.
+            Section 3.
+            “Committee Membership“
+            (a) A majority of said Committee is empowered to act for the Committee. In the event any member of the Committee is unable to act or fails or desires not to act, the remaining Committee members shall appoint an Owner of a Lot in said Subdivision to serve on said Committee, all of whom serve without compensation.(b) Upon the sale of the last Lot of the last Phase in said Subdivision, the work of the initial Committee shall be deemed completed, and said Committee members shall then be automatically released from all responsibilities thereto. There is a Neighborhood Association, notwithstanding any other provision to the contrary in the Covenants, Conditions and Restrictions for this Subdivision, after the Declarant has sold all the Lots in the properties, and not before, the then seated Directors of the Neighborhood Association shall automatically become the Architectural Control Committee. Amending this instrument shall not affect this provision.
+            (c) In the event there is not a Neighborhood Association for the Subdivision, it is the responsibility of the Homeowners to select among themselves an Architectural Control Committee.
+
+            ARTICLE IV
+            GENERAL PROVISIONS
+            Section 1.
+            “Enforcement” ­ Any Owner, the Association or Declarant shall have the right to enforce, by any proceeding at law or in equity, all restrictions, conditions covenants, reservations, liens, and charges now or hereafter imposed by the provisions of this Declaration. Enforcement against any person or persons violating or attempting to violate any covenant herein may be commenced after ten (10) days notice thereof in writing served on the offending party. In the event of judgment against any person for such, the Court may award injunction against any person for such violation, require such compliance as the Court deems necessary, award such damages, reasonable attorney’s fees, and Court costs as may be suffered or incurred, and such other or further relief as may be deemed just and equitable. Failure by any Owner to enforce any covenant or restriction herein contained shall in no event be deemed a waiver of the right to do so thereafter.
+            Section 2.
+            “Severability” – Invalidation of any one of these covenants or restrictions by judgment or Court order shall in no wise affect any other provisions, which shall remain in full force and effect.
+            Section 3.
+            “Amendment” – This Declaration may be amended during the first thirty (30) year period by an instrument signed by not less than sixty-seven percent (67%) of the Lot Owners. Any amendment must be recorded.
+            Section 4.
+            “Time Extension for Covenants” – The Covenants set forth in this instrument shall run with the land and shall be binding on all persons owning a Lot(s) under them for a period of thirty (30) years from the date of this recording thereof, after which time such Covenants shall be automatically extended for successive periods of ten (10) years, unless at any time after the initial recording of this instrument an instrument signed by sixty-seven percent (67%) of the Lot Owners of this Subdivision has been recorded agreeing to terminate said Covenants, in whole or in part.
+            Section 5.
+            “Annexation of Additional Phases” – It is intended that additional Phases of Baldwin Park Subdivision may be annexed or included within the jurisdiction of this Declaration by Declarant without approval of the Lot Owners. Common Areas included in annexed Phases, as well as the Common Areas included in this Declaration, are for common use of Lot Owners in all Phases of the Subdivision and will be maintained by the Baldwin Park Neighborhood Association, Inc. Homeowners of all future Phases will pay dues and assessments to the Association, which will be used for maintenance of all Common Areas and other Association expenses.
+            ARTICLE V
+            COMMON AREA PROPERTY RIGHTS
+            Section 1.
+            “Owner’s Easement of Enjoyment” – Every Owner shall have the right and easement of enjoyment in and to the Common Area which shall be appurtenant to and shall pass with the title to every Lot, subject to the following provisions:(a) The right of the Association to charge assessments as provided herein.
+            (b) The right of the Association to charge a setup fee to an Owner when titles to a Lot pass from the Grantor to an Owner other than the Grantor.
+
+            (c) The right of the Association to suspend the voting rights and right to use of the Common Area by an Owner for any period during which any assessment against such Owner’s Lot remains unpaid, and for a period not to exceed sixty (60) days for any infraction of its public rules and regulations.
+
+            (d) The right of the Association to dedicate or transfer all or any part of the Common Area to any public agency, authority, or utility for such purposes and subject to such conditions as may be agreed to by the members. No such dedication or transfer shall be effective unless an instrument agreeing to such dedication or transfer signed by two-thirds (2/3) of each class of members has been recorded in the appropriate county deed records, agreeing to such dedication or transfer; provided that the public agency accepts such dedication or transfer.
+
+            (e) The right of the Association to prohibit the construction of structures or Improvements on the Common Area.
+
+            Section 2.
+            “Delegation of Use” – Any Owner may delegate, in accordance with the Bylaws, his right of enjoyment to the Common Area and facilities to the members of his family, his tenants, or contract purchasers who reside on the properties.
+            Section 3.
+            “Annexation of Additional Phases” – It is intended that additional Phases of Baldwin Park Subdivision may be annexed or included within the jurisdiction of this Declaration by Declarant without approval of the Lot Owners. Common Areas included in annexed Phases, as well as the Common Areas included in this Declaration, are for common use of Lot Owners in all Phases of the Subdivision and will be maintained by the Baldwin Park Neighborhood Association, Inc. Homeowners of all future Phases will pay dues and assessments to the Association, which will be used for maintenance of all Common Areas and other Association expenses.
+            Section 4.
+            “Damages” – Each Owner shall be fully liable for any damage to any Common Area which may be sustained by reason of the negligence or willful misconduct of the Owner, such Owner’s resident tenant or contract purchaser, or such Owner’s family and guests, both minor and adult. In the case of joint ownership of a Lot, the liability of such Owners shall be joint and several. The cost of correcting such damage shall be a Limited Assessment against the Lot and may be collected as provided herein for the collection of other Assessments. No Owner shall be liable for any amounts greater than is legally allowable under Idaho law.
+            ARTICLE VI
+            BALDWIN PARK NEIGHBORHOOD ASSOCIATION
+            Section 1.
+            “Organization of Baldwin Park Neighborhood Association, Inc.” – Baldwin Park Neighborhood Association, Inc. (the Association) shall be initially organized by Declarant as an Idaho non-profit corporation under the provisions of the Idaho Code relating to general non-profit corporations and shall be charged with the duties and invested with the powers prescribed by law and set forth in the Articles, Bylaws and this Declaration. Neither the Articles nor the Bylaws shall be amended or otherwise changed or interpreted so as to be inconsistent with this Declaration.
+            Section 2.
+            “Membership” – Every Owner of a Lot which is subject to assessment shall be a Member of the Association. Membership shall be appurtenant to and may not be separated from ownership of any Lot which is subject to assessment. Every person or entity who is a record owner (including contract sellers) of a fee or undivided fee interest in any Lot located within said property shall, by virtue of such ownership, be a Member of the Association. When more than one person holds such interest in any occupied Lot, all such persons shall be Members. The foregoing is not intended to include persons or entities that hold an interest merely as security for the performance of an obligation. The Association shall maintain a Member list and may require written proof of any Member’s lot ownership interest.The financial reports, books, and records of the Association may be examined, at a reasonable time, by any Member of record.
+            Section 3.
+            “Voting Rights” – The Association will have two classes of voting memberships.(a) Class A Membership: Class A Members shall be the Owners of Lots, with the exception of the Declarants. Each Member shall be entitled to cast one vote or fractional vote as set forth herein for each Lot in whom he holds the interest required for membership. Only one vote shall be cast with respect to each Lot. The vote applicable to any Lot being sold under a contract of sale shall be exercised by the contract vendor unless the contract expressly provided otherwise and the Association has been notified, in writing, of such provision. Voting by proxy shall be permitted.
+            (b) Class B Membership: Class B members shall be the Declarants. The Declarants shall be entitled to six (6) votes for each Lot of which Declarants are the record owners.
+
+            Section 4.
+            “Officers and Directors” – At an annual meeting called pursuant to notice as herein provided for the establishment of annual assessments, a Board of Directors of the Association shall be elected by ballot of those attending said meeting or voting by proxy in accordance with the Association Bylaws. There shall be three Directors elected to serve for a period of one year.
+            Section 5.
+            “Suspension of Voting Rights” – The Association shall have the right to suspend any voting rights for any period during which any assessment against said Member’s property remains unpaid; and for a period not exceeding sixty (60) days for each infraction of its published rules and regulations.
+            Section 6.
+            “Association Powers” – The Association shall have the powers of a corporation organized under the general corporation laws of the State of Idaho subject only to such limitations upon the exercise of such powers as are expressly set forth in the Articles, the Bylaws, and this Declaration. The Association shall have the power to do any and all lawful things which may be authorized, required or permitted to be done by the Association under Idaho law and under this Declaration, and the Articles and Bylaws, and to do and perform any and all acts which may be necessary to, proper for, or incidental to the proper management and operation of the Common Area and the Association’s other assets, including water rights when and if received from Declarant, and affairs and the performance of the other responsibilities herein assigned, including without limitation:(a) Assessments. The power to levy Assessments on any Owner or any portion of the Property and to enforce payment of such Assessments, all in accordance with the provisions of the Declaration.
+            (b) Right of Enforcement. The power and authority from time to time in its own name, on its behalf, or on behalf of any Owner who consents thereto, to commence and maintain actions and suits to restrain and enjoin any breach of this Declaration or the Articles or the Bylaws.
+
+            Section 7.
+            “Association Duties” – In addition to duties necessary and proper to carry out the power delegated to the Association by this Declaration, and the Articles and Bylaws without limiting the generality thereof, the Association or its Agent, if any, shall have the authority and the obligation to conduct all business affairs of the Association and to perform, without limitation, each of the following duties:(a) Operation and maintenance of Common Area. Operate, maintain, and otherwise manage or provide for the operation, maintenance of the Common Area.
+            (b) Maintenance of berms, retaining walls and fences. The Association shall maintain or provide for the maintenance of any and all berms, retaining walls, and the exterior of fences, if any, within and abutting the Common Area.
+
+            (c) Taxes and assessments. Pay all real personal property taxes and assessments separately levied against the Common Area or against the Association and/or any other property owned by the Association. Such taxes and assessments may be contested or compromised by the Association, provided, however, that such taxes and assessments are paid or a bond insuring payment is posted prior to the sale or disposition of any property to satisfy the payment of such taxes and assessments. In addition, the Association shall pay all other federal, state or local taxes, including income or corporate taxes levied against the Association, in the event that the Association is denied the status of a tax exempt corporation.
+
+            (d) Water and other utilities. Acquire, provide and/or pay for water, sewer, garbage disposal, refuse and rubbish collection, electrical, telephone and gas and other necessary services for the Common Area.
+
+            (e) Insurance. If desired, obtain insurance from reputable insurance companies authorized to do business in the State of Idaho, and maintain in effect any insurance policy the Board deems necessary or advisable, including, without limitation, all risk insurance and comprehensive public liability insurance, the extent of which coverage shall be determined by the Board.
+
+            (f) Enforcement of Restrictions and Rules. Perform such other acts whether or not expressly authorized by this Declaration, as may be reasonably advisable or necessary to enforce any of the provisions of the Declaration, or of the Articles or Bylaws, including without limitations, the recordation of any claim of lien with the Ada County Recorder, as more fully provided herein.
+
+            Section 8.
+            “Personal Liability” – No Member of the Board, or member of any committee of the Association, or any officer of the Association, or the Declarant, or the Manager, if any, shall be personally liable to any Owner, or to any other party, including the Association, for any damage, loss or prejudice suffered or claimed on the account of any act, omission, error or negligence of the Association, the Board, the Manager, if any, or other representative or employee of the Association, the Declarant, or any committee, or any officer of the Association or the Declarant, provided that such person, upon the basis of such information as may be possessed by such person, has acted in good faith without willful or intentional misconduct.
+            Section 9.
+            “Meetings of Association” – Each year the Association shall hold at least one meeting of the Members, according to the schedule for such meetings established by the Bylaws; provided, that such meeting shall occur in the fall approximately in the month of November once a year. Members shall be entitled to attend Association meetings, and all other persons may be excluded.
+            Section 10.
+            “Notice and Quorum to Conduct Business of the Neighborhood Association” – Written notice of any meeting of the Neighborhood Association called for the purpose of taking any action as specified in this Declaration shall be sent to all Members not less than 10 days nor more than 50 days in advance of the meeting, setting forth the place, date and hour of the meeting and nature of the business to be conducted. The presence of Members, of proxies, or written or absentee ballots from Members entitled to cast sixty percent (60%) of the total votes of the membership shall constitute a quorum to transact routine business and set annual assessments. If the required quorum is not present, the meeting may be rescheduled, and at the rescheduled meeting, the presence of Owners or of proxies entitled to cast ten percent (10%) of the total votes shall constitute a quorum. No written notice of the rescheduled meeting shall be required and official business of the Association shall then be conducted.
+            Section 11.
+            “The Association shall not be dissolved or relieved of its responsibility” to maintain the defined common area and facilities contained therein without the prior written approval from City of Meridian. The Association and all Lot Owners by accepting title to a Lot agree that all Lot Owners within this Subdivision are benefited property owners of such maintenance.
+            ARTICLE VII
+            ASSESSMENT
+            Section 1.
+            “Creation of the Lien and Personal Obligation of Assessments” – The Declarant, for each Lot owned within the Properties, hereby covenants, and each Owner of any Lot by acceptance of a deed therefore, whether or not it shall be so expressed in such deed, is deemed to covenant and agree to pay to the Association: (a) an initial assessment of two-hundred fifty dollars ($250.00) for each Lot payable at closing, and (b) a transfer fee, which is an assessment of one-hundred dollars ($100.00) of future closings that follow the initial closing, and (c) annual assessments or charges, and (d) special assessments and such assessments to be established and collected as hereinafter provided. The assessments, together with interest, costs, and reasonable attorney’s fees, shall be a charge on the land and shall be a continuing lien upon the Property against which each such assessment is made. Each such assessment, together with interest, costs, and reasonable attorney’s fees, shall also be the personal obligation of the person who was the Owner of such Property at the time when the assessment fell due. However, the personal obligation for delinquent assessments shall pass to his successors in title. The Board or its authorized representative may enforce the obligations of the Owners to pay such assessments by commencement and maintenance of a suit at law or in equity, or the Board may exercise the power of foreclosure and sale pursuant to this Declaration to enforce the liens created hereby. A suit to recover a money judgment for an unpaid assessment shall be maintainable without foreclosing or waiving the lien hereinafter provided.
+            Section 2.
+            “Regular Assessments” – All Owners, including Declarant, are obligated to pay regular assessments to the Treasurer of the Association on a schedule of payments established by the Board. See Section below “Maximum Annual Assessments” for the amount of the assessment.(a) “Purpose of Regular Assessments” The proceeds from regular assessments are to be used to pay for all costs and expenses incurred by the Association including legal and attorneys fees and other professional fees, for the conduct of its affairs, including without limitation the costs and expenses of construction, improvement, utilities, protection, maintenance, repair, management and operation of the Common Area, including all improvements located on such areas owned and/or managed and maintained by the Association, and an amount allocated to an adequate reserve fund to be used for repairs, replacement maintenance and improvement of those elements of the Common Area, or other property of the Association that must be replaced and maintained on a regular basis (collectively “Expenses”).
+            (b) “Maximum Annual Assessment” – For the year 2003, the maximum assessment shall be four hundred and No/100 dollars ($400.00 per year) per Lot prorated to the end of the calendar year and billed annually, quarterly, or as otherwise decided by the Association.
+
+            (1) From and after January 1 of the year immediately following the conveyance of the first Lot to an Owner, the maximum annual assessment may be increased each year not more than 15% above the maximum assessment for the previous year without a vote of the membership.
+
+            (2) From and after January 1 of the year immediately following the conveyance of the first Lot to an Owner, the maximum annual assessment may be increased above 15% by a majority vote of a quorum of members who are voting in person, by proxy, or by written or absentee ballot at a meeting of the Homeowners.
+
+            (3) The Board of Directors may fix the annual assessment at an amount not in excess of the maximum.
+
+            Section 3.
+            “Limited Assessments” – Notwithstanding the above provisions with respect to regular and special assessments, a Board may levy a Limited Assessment against a Member as a remedy to reimburse the Association for costs incurred in bringing the Member and/or such Member’s Lot into compliance with the provisions of the governing instruments for Baldwin Park Subdivision.
+            Section 4.
+            “Special Assessments for Capital Improvements” – In addition to the annual assessments authorized above, the Association may levy, in any assessment year, a special assessment applicable to that year only for the purpose of defraying, in whole or in part, the cost of any construction, reconstruction, repair, or replacement of a capital improvement upon the Common Area, including fixtures and personal property related thereto, provided that any such assessment shall have the assent of two-thirds (2/3) of the votes of each class of members who are voting in person or by proxy at a meeting duly called for this purpose.
+            Section 5.
+            “Uniform Rate of Assessment” – Both annual and special assessments must be fixed at a uniform rate for all Lots in each class of membership and may be collected on a monthly, quarterly, or annual basis at the discretion of the board.
+            Section 6.
+            “Date of Commencement of Annual Assessments: Due Dates” – The annual assessments provided for herein shall commence at the time of the conveyance of each Lot to an Owner. The first annual assessment shall be adjusted according to the number of months remaining in the calendar year. The Board of Directors shall fix the amount of the annual assessment against each Lot at least thirty (30) days in advance of each annual assessment period. Written notice of the annual assessment shall be sent to every Owner subject thereto. The due dates shall be established by the Board of Directors. The Association shall, upon demand, and for a reasonable charge, furnish a certificate by an officer of the Association setting forth whether the assessments on the specified Lot have been paid. A properly executed certificate of the Association as to the status of assessments on a Lot is binding upon the Association as of the date of its issuance.
+            Section 7.
+            “Effect of Nonpayment of Assessments: Remedies of the Association” – Any assessment not paid within thirty (30) days after the due date shall bear interest from the due date at the rate of 18% per annum. The Association, or any Owner, may bring an action at law against the Owner personally obligated to pay the same, or foreclose the lien against the property. No Owner may waive or otherwise escape liability for the assessments provided for herein by non-use of the Common Area or abandonment of his Lot.
+            Section 8.
+            “Right to Enforce” – The Association has the right to collect and enforce its assessments pursuant to the provisions of this Declaration.
+            Section 9.
+            “Subordination of the Lien to Mortgages.” – The lien of the assessments provided for herein shall be subordinate to the lien of any first mortgage. Sale or transfer of any Lot shall not affect the assessment lien. However, the sale or transfer of any Lot pursuant to mortgage foreclosure or any proceeding in lieu thereof shall extinguish the lien of such assessments as to payments which became due prior to such sale or transfer. No sale or transfer shall relieve such Lot from liability for any assessments thereafter becoming due or from the lien thereof.
+            Section 10.
+            “Property Exempt from Assessments” – The following property subject to this declaration shall be exempt from the assessments created herein:(a) All properties expressly dedicated to and accepted by a local public authority.
+            (b) Any local properties owned by the Association.
+
+            (c) Any properties owned by the Declarant.
+
+            ARTICLE VIII
+            STORMWATER DRAINAGE POND
+            Included within the property known as Baldwin Park Subdivision No. 1, located on Lot 22 Block 4 is a twenty foot (20′) irrigation easement for the white drain and a 15′ sewer easement, to be maintained by Settlers Irrigation District. If the easement area between the drain ditch and North boundary of easement (rear lot lines of residences), then Baldwin Park Neighborhood Association shall maintain weeds and debris. On Lot 15 Block 4, is a landscape stormwater drainage lot which shall be used for a detention pond/drainage basin in the Baldwin Park Subdivision in which shall be maintained as follows:
+            Section 1.
+            “`Heavy’ Maintenance of Drainage Pond” – “Heavy” maintenance consists of periodically inspecting the drainage pond facility to ensure it is functioning properly; cleaning out the facility piping and mucking out the facility when the sediment level exceeds the designed storage level. All other maintenance shall be referred to herein as “light” maintenance. Ada County Highway District (ACHD) has opted to perform this “heavy” maintenance and shall be allowed by the Owners and the Association to perform this maintenance work. In the event ACHD shall decide not to do such “heavy” maintenance, then the Association shall do so.
+            Section 2.
+            “`Light’ Maintenance of Drainage Pond” – The Association shall provide all “light” maintenance of the drainage pond as specified in the MANUAL FOR LIGHT MAINTENANCE. If the Association does not do the required “light” maintenance, ACHD shall have the right to do such maintenance and assess the costs back to the association. This light maintenance shall include the following items:The maintenance area shall include the entire Lot in which the pond is located. For the various “light” maintenance items involved, periodic inspections are to be made of the pond in addition to any work required in each of the categories below. These inspections shall be done a minimum of once every month.
+            (a) Weed Control. In the spring of each year, a herbicide shall be applied to the entire area of the infiltration pit lot. The application shall be in accordance with the manufacturer’s requirements. During the periodic inspections, any weeds found shall be removed at the root and disposed of offsite.
+
+            (b) Lawn Care. Since the drainage pond is grassed, fertilizer shall be applied at a rate and interval to keep the grass healthy. Also weekly mowing and grass clipping removal shall be performed to maintain a healthy appearance and working drainage facility.
+
+            (c) Irrigation. Water shall be applied to the grass at a rate that will keep the grass healthy and not interfere with the proper operation of the stormwater drainage pond. Over irrigating must be avoided, as this will cause ponding and deterioration of pond performance.
+
+            (d) Storm Drain Manholes. During the periodic inspections, the inside of the storm drain manholes shall be checked for any accumulated debris or trash. Any debris or trash shall be removed and disposed offsite.
+
+            (e) Trash Cleanup. During the periodic inspections, any trash found within the boundary of the Pond Lot shall be collected and disposed of offsite.
+
+
+
+            (f) Bank Stability. During the periodic inspections, the banks of the pond shall be checked for any water spots, water entering the pond from adjacent lots, rodent holes, and bank erosion. If any serious problems are found, the homeowner’s association shall contact a licensed earthwork contractor to make the necessary repairs to the pond.
+
+            (g) Inspection and cleaning of pipes. After a rainstorm, the stormwater pipes shall be inspected to ensure they drain the sediment traps. In the event that a pipe does not drain or flooding occurs in the street at the sediment trap locations, the Homeowner’s Association shall have the pipes cleaned by a certified pipe inspection and plumbing service. In the event that a drainage pipe is broken or needs to be replaced, the Homeowner’s Association shall contact a licensed underground pipe contractor to do the necessary construction.
+
+            Section 3.
+            “Operation and Maintenance Manual for Storm Drainage for Baldwin Park Subdivision” – The neighborhood association must follow the practices and procedures as outlined in the Operation and Maintenance Manual for Storm Drainage for the Baldwin Park Subdivision.
+            Section 4.
+            “Proposed Changes” ­ Any proposed changes to the drainage pond, or any other documents related to the storm water drainage system previously approved by the ACHD, requires concurrence by the ACHD prior to making such changes. See Article II, Section 10 ” Landscaping” for landscaping requirements along the rural section road.
+            Section 5.
+            “Association Failure to Maintain: ACHD Remedies“: – In the event that ACHD determines, in its sole discretion, that the Association is not adequately maintaining the infiltration pits, then ACHD shall, before undertaking maintenance of said common area, provide written notice if its intention to begin maintenance within a thirty (30) day period, within which time frame the Association may undertake to initiate and conclude all maintenance defects as identified by ACHD. In the event that the Association shall fail to commence and conclude maintenance of the infiltration pits to the extent said items of specific maintenance are identified by ACHD within the prescribed thirty (30) days, then in that event, ACHD may begin to undertake such maintenance. ACHD is hereby granted an irrevocable license and easement to enter upon any portion of the common area to perform such inspection and maintenance of the infiltration pits.Should ACHD engage in maintenance of the defined common area or facility after having provided notice to the Association and having provided the Association an opportunity to undertake said maintenance, ACHD shall first bill the Association and if such bill shall not be paid within sixty (60) days, then ACHD shall be entitled to and empowered to file a taxable lien against all lots within the subdivision with power of sale as to each and every lot in order to secure payment of any and all assessments levied against all lots in this Subdivision pursuant to the Declaration as if said had been performed by the Association, together with interest at the rate which accrues on judgements thereon and all costs of collection which may be paid or incurred by ACHD.
+            The Association shall not be dissolved or relieved of its responsibility to maintain the defined common area and facilities contained therein without the prior written approval from ACHD.
+
+            The Association and all Lot Owners, by accepting title to a Lot, agree that all Lot Owners within this Subdivision are benefited property owners of such maintenance.
+        </p>
+    </div>
+
 
 </div>
 
@@ -416,7 +718,9 @@
 <script type="text/javascript" src="{% static 'neighborhood/js/page_swap.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
 {#<script>centerUserMap([{{ user.house.lat }},{{ user.house.lon }}])</script>#}
-<script>centerUserMap([34.220912, -119.055079])</script>
+<script>
+    centerUserMap([34.220912, -119.055079])
+</script>
 <script type="text/javascript" src="{% static 'neighborhood/js/events.js' %}"></script>
 
 {#<script>showMap();</script>#}
