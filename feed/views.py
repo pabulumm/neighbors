@@ -3,8 +3,9 @@ from .models import FeedPost, Feed, PostView
 from .forms import AnnouncementForm
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 import json
+
+from markers.models import Marker
 
 
 def get_recent_posts(feed_id):
@@ -65,7 +66,52 @@ def view_post(request):
 
 @login_required
 def submit_post(request):
-	post = ""
+	post_dict = []
 	if request.is_ajax() and request.method == 'POST':
-		pass
-	return HttpResponse(json.dumps({'post': post}), content_type='application/json')
+		success = False
+		text = request.POST['text']
+		user = request.user
+		neighborhood = request.user.userprofile.house.neighborhood
+		feed = Feed.objects.get(neighborhood=neighborhood)
+		post_type = request.POST['post_type']
+		post = FeedPost(text=text, user=user, feed=feed, type=post_type)
+		if int(request.POST['marker_id']) > 0:
+			post.marker = Marker.objects.get(id=request.POST['marker_id'])
+		print('**********************SANITY CHECK*************************')
+		if post:
+			post.save()
+
+			return HttpResponse(json.dumps({'post': post_dict}), content_type='application/json')
+	return HttpResponse(json.dumps({'success': True}), content_type='application/json')
+
+
+@login_required
+def get_recent_posts_ajax(request):
+	"""
+	AJAX call for a refresh of the most recent posts to be displayed on the home page.
+	:param request:
+	:return:
+	"""
+	if request.method == 'GET' and request.is_ajax():
+		neighborhood = request.user.userprofile.house.neighborhood
+		feed = Feed.objects.get(neighborhood=neighborhood)
+		post_dict = []
+		for post in FeedPost.objects.filter(feed=feed).order_by('-create_date')[:20]:
+			post_as_dict = post.as_dict()
+			if post.marker is not None:
+				post_as_dict['marker_id'] = post.marker.id
+			elif post.poll is not None:
+				post_as_dict['poll_id'] = post.poll.id
+			post_dict.append(post_as_dict)
+		return HttpResponse(json.dumps({'posts': post_dict}), content_type='application/json')
+
+
+@login_required
+def get_announcements(request):
+	if request.method == 'GET' and request.is_ajax():
+		neighborhood = request.user.userprofile.house.neighborhood
+		feed = Feed.objects.get(neighborhood=neighborhood)
+		post_dict = []
+		for announcement in FeedPost.objects.filter(feed=feed, type='ANNOUNCEMENT').order_by('-create_date'):
+			post_dict.append(announcement.as_dict())
+		return HttpResponse(json.dumps({'announcements': post_dict}), content_type='application/json')

@@ -64,9 +64,9 @@
                     <div class="col-md-3">
                         {% if polls %}
                             {% for question in polls %}
-                                <div class="poll-menu-item-container">
+                                <div class="poll-item-container">
                                     <a href="{% url 'polls:detail' question.id %}">
-                                        <div class="poll-menu-item">
+                                        <div class="poll-item">
                                             <h1>{{ question.question_text }}</h1>
                                             <small>{{ question.pub_date }}</small>
                                         </div>

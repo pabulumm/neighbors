@@ -12,11 +12,13 @@ $('#neigh-info').hide();
 function showMap() {
     swapMainWindow($('#map-container'));
     if (!($('#feed').hasClass('side-visible'))) {
+        //refresh-feed();
         loadFeed();
     }
 }
 
 function loadFeed() {
+    console.log('Loading FeedPosts');
     $.each(post_ids, function (index, post_id) {
         $(post_id).css('left', "-100%");
     });
@@ -83,12 +85,12 @@ function toggleListMenu() {
 $('#toggle-user-post').click(function() {
     var toggle = $('#toggle-post-icon');
     if (toggle.hasClass('glyphicon-menu-up')) {
-        $('#feed-header').animate({height:60});
-        $('#user-post').hide();
+        $('#feed-header').animate({height:70});
+        $('#user-post').hide().addClass('user-post-invis');
     }
     else {
         $('#feed-header').animate({'height':"260px"}, 'slow');
-        $('#user-post').show();
+        $('#user-post').show().removeClass('user-post-invis');
     }
 
     toggle.toggleClass("glyphicon-menu-up glyphicon-menu-down");
@@ -122,9 +124,8 @@ $('#account-select').click(function () {
 });
 
 $('#poll-select').click(function () {
-    swapMainWindow($('#poll-detail'));
-    swapSideBar($('#poll-menu'));
-    loadFirstPoll();
+    swapMainWindow($('#poll-main'));
+    swapSideBar($('#poll-sidebar'));
     toggleListMenu();
 
 });
@@ -136,8 +137,9 @@ $('#event-select').click(function () {
 });
 
 $('#announce-index').click(function () {
-    swapMainWindow($('#announcement-detail'));
-    swapSideBar($('#announcement-index'));
+    //getAnnouncements();
+    swapMainWindow($('#announcement-main'));
+    swapSideBar($('#announcement-sidebar'));
     toggleListMenu();
 });
 

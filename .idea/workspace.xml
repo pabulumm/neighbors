@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5bff289d-a442-44ca-b9ba-f7d20d3fb670" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/colors.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/csrf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/markers/static/markers/js/markers.js" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/lib/python3.4/site-packages/pip-8.0.2.dist-info/DESCRIPTION.rst" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/lib/python3.4/site-packages/pip-8.0.2.dist-info/INSTALLER" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/lib/python3.4/site-packages/pip-8.0.2.dist-info/METADATA" afterPath="" />
@@ -14,20 +12,26 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/lib/python3.4/site-packages/pip-8.0.2.dist-info/metadata.json" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/lib/python3.4/site-packages/pip-8.0.2.dist-info/top_level.txt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/fixtures/users.json" afterPath="$PROJECT_DIR$/accounts/fixtures/users.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feed/admin.py" afterPath="$PROJECT_DIR$/feed/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/models.py" afterPath="$PROJECT_DIR$/accounts/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/static/accounts/css/profile.css" afterPath="$PROJECT_DIR$/accounts/static/accounts/css/profile.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feed/forms.py" afterPath="$PROJECT_DIR$/feed/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feed/models.py" afterPath="$PROJECT_DIR$/feed/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feed/urls.py" afterPath="$PROJECT_DIR$/feed/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feed/views.py" afterPath="$PROJECT_DIR$/feed/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/index.css" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/index.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/style.css" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/get_icon.js" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/get_icon.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/page_swap.js" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/page_swap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/style.js" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/style.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/templates/neighborhood/index.html" afterPath="$PROJECT_DIR$/neighborhood/templates/neighborhood/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" afterPath="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/views.py" afterPath="$PROJECT_DIR$/neighborhood/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighbors/settings.py" afterPath="$PROJECT_DIR$/neighbors/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pip-selfcheck.json" afterPath="$PROJECT_DIR$/pip-selfcheck.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/polls/static/polls/detail.css" afterPath="$PROJECT_DIR$/polls/static/polls/detail.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/polls/templates/polls/detail.html" afterPath="$PROJECT_DIR$/polls/templates/polls/detail.html" />
     </list>
     <ignored path="neighbors.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,7 +60,7 @@
     <favorites_list name="neighbors" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.49933156">
+    <splitter split-orientation="horizontal" split-proportion="0.51487553">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
@@ -71,25 +75,16 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="map_home.css" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="10.666667">
-                  <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="map_home.html" pinned="false" current-in-tab="false">
+          <file leaf-file-name="map_home.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-302.66666">
-                  <caret line="727" column="7" selection-start-line="727" selection-start-column="7" selection-end-line="727" selection-end-column="7" />
+                <state vertical-scroll-proportion="0.35840708">
+                  <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
                   <folding>
-                    <marker date="1460414982385" expanded="true" signature="19206:80054" placeholder="..." />
-                    <marker date="1460414982385" expanded="false" signature="19219:80045" placeholder="..." />
-                    <marker date="1460414982385" expanded="true" signature="19223:79899" placeholder="..." />
+                    <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                    <marker date="1460607001270" expanded="true" signature="19600:86003" placeholder="..." />
+                    <marker date="1460607001270" expanded="false" signature="19613:85994" placeholder="..." />
+                    <marker date="1460607001270" expanded="true" signature="19617:85836" placeholder="..." />
                   </folding>
                 </state>
               </provider>
@@ -99,30 +94,20 @@
             <entry file="file://$PROJECT_DIR$/feed/forms.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+                  <caret line="0" column="24" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/neighborhood/views.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
                   <folding>
-                    <element signature="e#0#24#0" expanded="true" />
+                    <element signature="e#0#15#0" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="events.json" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/neighborhood/fixtures/events.json">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-2.6666667">
-                  <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="feed.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="1.6433942">
-                  <caret line="124" column="47" selection-start-line="124" selection-start-column="47" selection-end-line="124" selection-end-column="47" />
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -131,33 +116,11 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/feed/models.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="22" column="15" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="15" />
-                  <folding>
-                    <element signature="e#0#28#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="users.json" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/accounts/fixtures/users.json">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-8.0">
-                  <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/feed/views.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <caret line="116" column="101" selection-start-line="116" selection-start-column="101" selection-end-line="116" selection-end-column="101" />
                   <folding>
                     <element signature="e#0#82#0" expanded="true" />
                   </folding>
@@ -165,11 +128,23 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="feed.css" pinned="false" current-in-tab="false">
+          <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/feed/models.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+                  <folding>
+                    <element signature="e#0#28#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="feed.css" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-18.666666">
-                  <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+                <state vertical-scroll-proportion="0.41542003">
+                  <caret line="145" column="19" selection-start-line="145" selection-start-column="19" selection-end-line="145" selection-end-column="19" />
                   <folding />
                 </state>
               </provider>
@@ -179,18 +154,72 @@
             <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/page_swap.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="143" column="0" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
+                  <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/neighborhood/models.py">
+          <file leaf-file-name="mapscript.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+                  <caret line="68" column="27" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="markers.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/markers/static/markers/js/markers.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="map_home.css" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="136.95161">
+                  <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="profile.css" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/accounts/static/accounts/css/profile.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-16.0">
+                  <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="feed.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="189" column="1" selection-start-line="189" selection-start-column="1" selection-end-line="189" selection-end-column="1" />
+                  <folding>
+                    <marker date="1460604865582" expanded="true" signature="1980:2075" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="1980:2262" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="2075:2261" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="2171:2261" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="2180:2243" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="8113:8178" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="8113:8219" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="8113:8231" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="8113:8288" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="8113:8349" placeholder="..." />
+                    <marker date="1460604865582" expanded="true" signature="8173:8178" placeholder="..." />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -215,8 +244,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/buttons.css" />
-        <option value="$PROJECT_DIR$/accounts/templates/accounts/profile.html" />
         <option value="$PROJECT_DIR$/polls/templates/polls/index.html" />
         <option value="$PROJECT_DIR$/markers/views.py" />
         <option value="$PROJECT_DIR$/budget/static/budget/chart.js" />
@@ -236,7 +263,6 @@
         <option value="$PROJECT_DIR$/polls/views.py" />
         <option value="$PROJECT_DIR$/polls/models.py" />
         <option value="$PROJECT_DIR$/neighborhood/urls.py" />
-        <option value="$PROJECT_DIR$/accounts/models.py" />
         <option value="$PROJECT_DIR$/feed/fixtures/posts.json" />
         <option value="$PROJECT_DIR$/feed/fixtures/announcements.json" />
         <option value="$PROJECT_DIR$/neighborhood/fixtures/events.json" />
@@ -245,27 +271,30 @@
         <option value="$PROJECT_DIR$/polls/static/polls/detail.css" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/polls.js" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/events.js" />
-        <option value="$PROJECT_DIR$/accounts/static/accounts/css/profile.css" />
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/get_icon.js" />
         <option value="$PROJECT_DIR$/neighborhood/models.py" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/style.js" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/colors.js" />
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/csrf.js" />
-        <option value="$PROJECT_DIR$/feed/models.py" />
-        <option value="$PROJECT_DIR$/feed/forms.py" />
-        <option value="$PROJECT_DIR$/neighborhood/views.py" />
-        <option value="$PROJECT_DIR$/feed/urls.py" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/style.css" />
         <option value="$PROJECT_DIR$/feed/admin.py" />
         <option value="$PROJECT_DIR$/neighborhood/fixtures/houses.json" />
         <option value="$PROJECT_DIR$/accounts/fixtures/users.json" />
-        <option value="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" />
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" />
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css" />
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/page_swap.js" />
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js" />
+        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/get_icon.js" />
+        <option value="$PROJECT_DIR$/feed/forms.py" />
+        <option value="$PROJECT_DIR$/accounts/models.py" />
+        <option value="$PROJECT_DIR$/markers/static/markers/js/markers.js" />
+        <option value="$PROJECT_DIR$/neighbors/settings.py" />
+        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js" />
+        <option value="$PROJECT_DIR$/feed/models.py" />
+        <option value="$PROJECT_DIR$/accounts/static/accounts/css/profile.css" />
+        <option value="$PROJECT_DIR$/feed/urls.py" />
         <option value="$PROJECT_DIR$/feed/views.py" />
+        <option value="$PROJECT_DIR$/neighborhood/views.py" />
+        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" />
+        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js" />
+        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/page_swap.js" />
+        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css" />
+        <option value="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" />
       </list>
     </option>
   </component>
@@ -309,6 +338,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches">
+        <subPane />
+      </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
         <subPane subId="Changed Files">
@@ -330,448 +362,6 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="polls">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="polls">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="templates">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="polls">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="polls">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="static">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="polls">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="polls">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="fixtures">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="templates">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="static">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="js">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="static">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="static">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="css">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="migrations">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighborhood">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="fixtures">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="feed">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="templates">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="static">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="static">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="static">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="css">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="neighbors">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="accounts">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="fixtures">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -1148,9 +738,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches">
-        <subPane />
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1186,7 +773,7 @@
       <recent name="\" />
     </key>
   </component>
-  <component name="RunManager" selected="Django server.neighbors">
+  <component name="RunManager" selected="Django tests.Test: neighborhood.static.neighborhood.js.mapscript.js">
     <configuration default="false" name="Test: neighborhood.templates.neighborhood.scripts" type="DjangoTestsConfigurationType" factoryName="Django tests" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -1261,6 +848,26 @@
       <module name="neighbors" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="TARGET" value="neighborhood.templates.neighborhood" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Test: neighborhood.static.neighborhood.js.mapscript.js" type="DjangoTestsConfigurationType" factoryName="Django tests" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="neighbors" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="TARGET" value="neighborhood.static.neighborhood.js.mapscript.js" />
       <option name="SETTINGS_FILE" value="" />
       <option name="CUSTOM_SETTINGS" value="false" />
       <option name="USE_OPTIONS" value="false" />
@@ -1508,19 +1115,21 @@
       <option name="customRunCommand" value="" />
       <method />
     </configuration>
-    <list size="5">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Django server.neighbors" />
       <item index="1" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood.scripts" />
       <item index="2" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood.neighborhood_home.html" />
       <item index="3" class="java.lang.String" itemvalue="Django tests.Test: accounts.static.accounts.css.style.css" />
       <item index="4" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood" />
+      <item index="5" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.static.neighborhood.js.mapscript.js" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood" />
-        <item index="1" class="java.lang.String" itemvalue="Django tests.Test: accounts.static.accounts.css.style.css" />
-        <item index="2" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood.neighborhood_home.html" />
-        <item index="3" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood.scripts" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.static.neighborhood.js.mapscript.js" />
+        <item index="1" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood" />
+        <item index="2" class="java.lang.String" itemvalue="Django tests.Test: accounts.static.accounts.css.style.css" />
+        <item index="3" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood.neighborhood_home.html" />
+        <item index="4" class="java.lang.String" itemvalue="Django tests.Test: neighborhood.templates.neighborhood.scripts" />
       </list>
     </recent_temporary>
   </component>
@@ -1543,6 +1152,9 @@
     </history-entry>
     <history-entry file="Test__accounts_static_accounts_css_style_css - 2016.02.23 at 18h 39m 27s.xml">
       <configuration name="Test: accounts.static.accounts.css.style.css" configurationId="DjangoTestsConfigurationType" />
+    </history-entry>
+    <history-entry file="Test__neighborhood_static_neighborhood_js_mapscript_js - 2016.04.11 at 16h 40m 40s.xml">
+      <configuration name="Test: neighborhood.static.neighborhood.js.mapscript.js" configurationId="DjangoTestsConfigurationType" />
     </history-entry>
     <history-entry file="Test__neighborhood_templates_neighborhood - 2016.03.08 at 18h 58m 02s.xml">
       <configuration name="Test: neighborhood.templates.neighborhood" configurationId="DjangoTestsConfigurationType" />
@@ -1570,7 +1182,7 @@
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15478165" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09121061" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1583,34 +1195,13 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32832617" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39914164" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32832617" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17468214" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39914164" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -1636,55 +1227,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/polls/static/polls/slide.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/feed/static/feed/feed.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/templates/neighborhood/details.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5420354">
-          <caret line="36" column="10" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/static/accounts/js/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/report.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.4181416">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/templates/neighborhood/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.333333">
@@ -1699,24 +1241,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/polls/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/markers/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="48" selection-start-line="41" selection-start-column="48" selection-end-line="42" selection-end-column="98" />
         </state>
       </provider>
     </entry>
@@ -1755,13 +1283,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/polls/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6766917">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/polls/fixtures/polls.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.3333335">
@@ -1790,27 +1311,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/static/accounts/css/profile.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4814814">
-          <caret line="58" column="15" selection-start-line="58" selection-start-column="15" selection-end-line="58" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/colors.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#59#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1828,9 +1332,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#getCookie#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1841,16 +1342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/markers/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/polls.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1858,24 +1349,6 @@
           <folding>
             <marker date="1460002040963" expanded="true" signature="663:708" placeholder="..." />
             <marker date="1460002040963" expanded="true" signature="711:739" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/get_icon.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8281417">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1892,7 +1365,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1900,25 +1372,77 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/fixtures/houses.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25884956">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/fixtures/events.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07964602">
+          <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/get_icon.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25134265">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/fixtures/users.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/pycharm.jar!/resources/html5-schema/html5/web-forms.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33261803">
+          <caret line="503" column="16" selection-start-line="503" selection-start-column="16" selection-end-line="503" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/polls/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1460002111207" expanded="true" signature="845:941" placeholder="..." />
-            <marker date="1460002111207" expanded="true" signature="1062:1160" placeholder="..." />
-            <marker date="1460002111207" expanded="true" signature="1288:1369" placeholder="..." />
-            <marker date="1460002111207" expanded="true" signature="1330:1363" placeholder="..." />
-            <marker date="1460002111207" expanded="true" signature="3103:3203" placeholder="..." />
-            <marker date="1460002111207" expanded="true" signature="3328:3430" placeholder="..." />
-            <marker date="1460002111207" expanded="true" signature="3566:3651" placeholder="..." />
-            <marker date="1460002111207" expanded="true" signature="3608:3645" placeholder="..." />
+            <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/views.py">
+    <entry file="file://$PROJECT_DIR$/neighbors/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.3480129">
+        <state vertical-scroll-proportion="0.5934066">
+          <caret line="56" column="48" selection-start-line="56" selection-start-column="48" selection-end-line="56" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markers/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#57#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1928,25 +1452,81 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#0#43#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markers/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/polls/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#28#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1328903">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#59#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feed/static/feed/announcement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feed/static/feed/feed.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feed/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.1933405">
+          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
           <folding>
             <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/fixtures/houses.json">
+    <entry file="file://$PROJECT_DIR$/neighborhood/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25884956">
-          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/pycharm.jar!/resources/html5-schema/html5/phrase.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3329753">
+          <caret line="108" column="16" selection-start-line="108" selection-start-column="16" selection-end-line="108" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -1961,100 +1541,123 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-302.66666">
-          <caret line="727" column="7" selection-start-line="727" selection-start-column="7" selection-end-line="727" selection-end-column="7" />
-          <folding>
-            <marker date="1460414982385" expanded="true" signature="19206:80054" placeholder="..." />
-            <marker date="1460414982385" expanded="false" signature="19219:80045" placeholder="..." />
-            <marker date="1460414982385" expanded="true" signature="19223:79899" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/feed/forms.py">
+    <entry file="file://$PROJECT_DIR$/budget/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/fixtures/events.json">
+    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6666667">
-          <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="27" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markers/static/markers/js/markers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.666667">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state vertical-scroll-proportion="136.95161">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/static/accounts/css/profile.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.0">
+          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/feed.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.6433942">
-          <caret line="124" column="47" selection-start-line="124" selection-start-column="47" selection-end-line="124" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.666666">
-          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/page_swap.js">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="143" column="0" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/feed/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="15" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="15" />
+          <caret line="189" column="1" selection-start-line="189" selection-start-column="1" selection-end-line="189" selection-end-column="1" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <marker date="1460604865582" expanded="true" signature="1980:2075" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="1980:2262" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="2075:2261" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="2171:2261" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="2180:2243" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="8113:8178" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="8113:8219" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="8113:8231" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="8113:8288" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="8113:8349" placeholder="..." />
+            <marker date="1460604865582" expanded="true" signature="8173:8178" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/fixtures/users.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.0">
-          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feed/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="116" column="101" selection-start-line="116" selection-start-column="101" selection-end-line="116" selection-end-column="101" />
           <folding>
             <element signature="e#0#82#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feed/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/page_swap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41542003">
+          <caret line="145" column="19" selection-start-line="145" selection-start-column="19" selection-end-line="145" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feed/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="24" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35840708">
+          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1460607001270" expanded="true" signature="19600:86003" placeholder="..." />
+            <marker date="1460607001270" expanded="false" signature="19613:85994" placeholder="..." />
+            <marker date="1460607001270" expanded="true" signature="19617:85836" placeholder="..." />
           </folding>
         </state>
       </provider>

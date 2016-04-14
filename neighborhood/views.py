@@ -35,6 +35,7 @@ def neighborhood_home(request):
 	request.session['neighborhood_id'] = neighborhood.id
 	feed = Feed.objects.get(neighborhood=neighborhood)
 	feedposts = get_recent_posts(feed.id)
+
 	request.session['feed_id'] = feed.id
 	user_prof = request.user.userprofile
 	polls = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')

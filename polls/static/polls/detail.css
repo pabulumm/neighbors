@@ -12,7 +12,7 @@
     box-shadow: 1px 1px 12px 2px rgba(221,148,84,1);
 }
 
-.poll-menu-item-container {
+.poll-item-container {
     height:80px;
     position:relative;
     width:100%;
@@ -22,28 +22,28 @@
     border-bottom: 2px solid #DD9454;
 
 }
-.poll-menu-item {
+.poll-item {
     text-align: center;
     position:relative;
     text-decoration: none;
     height:80px;
 }
 
-.poll-menu-item a {
+.poll-item a {
     width: 100%;
     height:80px;
     text-decoration: none;
 }
 
-.poll-menu-item h1 {
+.poll-item h1 {
     font-size: 15px;
 }
 
-.poll-menu-item strong {
+.poll-item strong {
     float:left;
 }
 
-.poll-menu-item small {
+.poll-item small {
     float:none;
 }
 

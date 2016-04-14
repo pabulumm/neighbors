@@ -13,8 +13,8 @@ class UserProfile(models.Model):
 	neighborhood_id = models.IntegerField(null=True)
 
 	def is_board_member(self):
-		return self.member_status is 'neighbor'
+		return self.member_status is not 'neighbor'
 
 	def __str__(self):
-		return self.user
+		return self.user.first_name + " " + self.user.last_name
 

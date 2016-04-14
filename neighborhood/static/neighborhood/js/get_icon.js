@@ -6,19 +6,19 @@ function getIconType(type, url_only) {
     var url = "";
     switch (type) {
         case 'HOUSE':
-            url = "/static/markers/png/house-32.png";
+            url = "/static/markers/png/house-38-64.png";
             break;
         case 'YARD_SALE':
-            url = "/static/markers/png/shopping-tag-32.png";
+            url = "/static/markers/png/sale-28-48.png";
             break;
         case 'CONSTRUCTION':
-            url = "/static/markers/png/bulldozer-32.png";
+            url = "/static/markers/png/construction-28-48.png";
             break;
         case 'THEFT':
-            url = "/static/markers/png/burglar-32.png";
+            url = "/static/markers/png/crime-28-48.png";
             break;
         case 'EVENT':
-            url = "/static/markers/png/event-32.png";
+            url = "/static/markers/png/event-28-48.png";
             break;
         case 'TRASH':
             url = "/static/markers/png/trash-32.png";
@@ -33,12 +33,9 @@ function getIconType(type, url_only) {
     else {
         return new L.icon({
             iconUrl: url,
-            iconSize: [32, 32],
-            iconAnchor: [16, 16],
+            iconSize: [38, 64],
+            iconAnchor: [0, 16],
             popupAnchor: [0, -16]
         });
     }
 }
-
-
-

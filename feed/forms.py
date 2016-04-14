@@ -6,8 +6,7 @@ class AnnouncementForm(forms.ModelForm):
 	class Meta:
 		model = FeedPost
 		fields = (
-			'title',
-			'description',
+			'text',
 		)
 
 
@@ -15,7 +14,6 @@ class FeedPostForm(forms.ModelForm):
 	class Meta:
 		model = FeedPost
 		fields = (
-			'title',
-			'description',
+			'text',
 			'type'
 		)

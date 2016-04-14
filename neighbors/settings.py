@@ -15,7 +15,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -39,6 +38,8 @@ INSTALLED_APPS = (
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'django.contrib.gis',
+	'debug_toolbar',
+	'debug_panel',
 	'markers',
 	'messaging',
 	'neighborhood',
@@ -51,6 +52,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
 	'django.contrib.sessions.middleware.SessionMiddleware',
+	'debug_panel.middleware.DebugPanelMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -59,7 +61,6 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	'django.middleware.security.SecurityMiddleware',
 )
-
 
 ROOT_URLCONF = 'neighbors.urls'
 
@@ -81,13 +82,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'neighbors.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2',
+		'ENGINE': 'django.contrib.gis.db.backends.postgis',  # Add 'postgresql_psycopg2',
 		'NAME': 'neighborsdb',
 		'USER': 'django',
 		'PASSWORD': 'neighbors',
@@ -95,7 +95,6 @@ DATABASES = {
 		'PORT': '',
 	}
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -110,14 +109,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
 
 MEDIA_URL = ''
-
 
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = 'neighborhood.views.neighborhood_home'
