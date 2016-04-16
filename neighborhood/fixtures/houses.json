@@ -7,7 +7,7 @@
       "neighborhood": 1,
       "permission_code": "ASDJKFIDS",
       "lat": "34.221879",
-      "lon": "119.055522"
+      "lon": "-119.055522"
     }
   },
   {
@@ -18,7 +18,7 @@
       "neighborhood": 1,
       "permission_code": "FSDFJIMEM",
       "lat": "34.221741",
-      "lon": "119.054882"
+      "lon": "-119.054882"
     }
   },
   {
@@ -29,7 +29,7 @@
       "neighborhood": 1,
       "permission_code": "FHISOIMEM",
       "lat": "34.222474",
-      "lon": "119.055344"
+      "lon": "-119.055344"
     }
   },
   {
@@ -40,7 +40,7 @@
       "neighborhood": 1,
       "permission_code": "FHISOIMEM",
       "lat": "34.222726",
-      "lon": "119.054706"
+      "lon": "-119.054706"
     }
   },
   {
@@ -51,7 +51,7 @@
       "neighborhood": 1,
       "permission_code": "FHISOIMEM",
       "lat": "34.223725",
-      "lon": "119.057742"
+      "lon": "-119.057742"
     }
   },
   {
@@ -62,7 +62,7 @@
       "neighborhood": 1,
       "permission_code": "SADHUSEV",
       "lat": "34.224178",
-      "lon": "119.058231"
+      "lon": "-119.058231"
     }
   },
   {
@@ -73,7 +73,7 @@
       "neighborhood": 1,
       "permission_code": "SADHUSEV",
       "lat": "34.225153",
-      "lon": "119.057773"
+      "lon": "-119.057773"
     }
   },
   {
@@ -106,7 +106,7 @@
       "neighborhood": 1,
       "permission_code": "HSNCHDSI",
       "lat": "34.221272",
-      "lon": "119.060539"
+      "lon": "-119.060539"
     }
   },
   {
@@ -117,7 +117,7 @@
       "neighborhood": 1,
       "permission_code": "HSNCHDSI",
       "lat": "34.224208",
-      "lon": "119.059842"
+      "lon": "-119.059842"
     }
   }
 ]

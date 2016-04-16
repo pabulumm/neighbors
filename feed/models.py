@@ -12,7 +12,7 @@ class Feed(models.Model):
 	create_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return self.id
+		return str(self.id)
 
 
 class FeedPost(models.Model):

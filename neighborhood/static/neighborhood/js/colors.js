@@ -11,10 +11,10 @@
 //];
 
 var colors = [
+    [10,104,245], // #0a68f5 - blue
     [255,41,95], // #ff295f - red
     [133,34,214], //# #b940ff - purple
-    [10,104,245], // #0a68f5 - blue
-    [0,174,255] // #00aeff - light blue
+    [255,41,95] // #ff295f - red
 ];
 
 
@@ -28,7 +28,7 @@ var step = 0;
 var colorIndices = [0, 1, 2, 3];
 
 //transition speed
-var gradientSpeed = 0.002;
+var gradientSpeed = 0.004;
 
 function updateGradient() {
 

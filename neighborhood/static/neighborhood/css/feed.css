@@ -1,16 +1,36 @@
 @import url(https://fonts.googleapis.com/css?family=Holtwood+One+SC);
 
+.post-tag {
+    position: relative;
+    float:right;
+    padding:3px 2em 5px 2em;
+    font-size:16px;
+    text-transform: uppercase;
+    color:#ffffff;
+    font-family: "Candal";
+}
+
+.post-tag-container {
+    position: relative;
+    padding-bottom: 10px;
+    top:0;
+    left:0;
+    height:26px;
+    width:100%;
+    background:#DD9454;
+}
+
 .flag {
     position: absolute;
-    width: 30px;
-    height: 30px;
-    right: 10px;
-    top: 10px;
+    width: 40px;
+    height: 40px;
+    left: -20px;
+    top: -20px;
     text-align: center;
     background: #000000;
     font-size: 30px;
     line-height: 1.33;
-    border-radius: 40px;
+    transform: rotate(45deg);
 }
 
 .flag p {
@@ -20,13 +40,13 @@
 }
 
 #refresh-feed {
-    border:none;
+    border: none;
     background: none;
     color: #4c87cf;
-    font-size:30px;
-    float:right;
-    margin-right:25px;
-    margin-top:20px;
+    font-size: 30px;
+    float: right;
+    margin-right: 25px;
+    margin-top: 20px;
 }
 
 #feed {
@@ -40,9 +60,9 @@
 }
 
 #feed-header {
-    position:relative;
+    position: relative;
     width: 100%;
-    height:240px;
+    height: 240px;
     background: rgba(245, 245, 245, 1);
     background: -moz-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
     background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245, 245, 245, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
@@ -55,8 +75,8 @@
 
 #feed-header-toggle {
     width: 100%;
-    height:40px;
-    background:#ffffff;
+    height: 40px;
+    background: #ffffff;
     text-align: center;
     -webkit-box-shadow: 0px 3px 6px 0px rgba(158, 158, 158, 1);
     -moz-box-shadow: 0px 3px 6px 0px rgba(158, 158, 158, 1);
@@ -88,38 +108,38 @@
 }
 
 #post-text {
-    position:relative;
+    position: relative;
     height: 96%;
     width: 80%;
     float: left;
     background: #ffffff;
     padding: 0.4em 0.4em 0.4em 0.4em;
-    border:none;
+    border: none;
     -webkit-box-shadow: inset 0px 0px 3px 1px rgba(74, 74, 74, 1);
     -moz-box-shadow: inset 0px 0px 3px 1px rgba(74, 74, 74, 1);
     box-shadow: inset 0px 0px 3px 1px rgba(74, 74, 74, 1);
 }
 
 .post-button {
-    position:relative;
-    width:16%;
-    margin-left:2%;
-    float:left;
-    text-align:center;
-	display: inline-block;
-	color: #fff;
-	background-color: #4c87cf;
-	font-size: 16px;
+    position: relative;
+    width: 16%;
+    margin-left: 2%;
+    float: left;
+    text-align: center;
+    display: inline-block;
+    color: #fff;
+    background-color: #4c87cf;
+    font-size: 16px;
     height: 40px;
-    border:none;
+    border: none;
 }
 
 #submit-post {
-    padding:5px 5px;
+    padding: 5px 5px;
     position: relative;
-    margin-top:76px;
-    color:#fff;
-    background:#54E5B0;
+    margin-top: 76px;
+    color: #fff;
+    background: #54E5B0;
 }
 
 #toggle-user-post {
@@ -129,17 +149,18 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 #toggle-user-post span {
     color: #0d0d0d;
 }
 
 .viewed-date {
-    float:right;
+    float: right;
     opacity: 0.7;
 }
 
 .feed-post-name {
-    padding-bottom:30px;
+    padding-bottom: 30px;
     font-size: 16px;
 }
 
@@ -154,16 +175,16 @@
 }
 
 #menu-icon {
-    color:#ffffff;
+    color: #ffffff;
 }
 
 .menu-section-title {
     margin-top: 100px;
-    padding-top:50px;
-    margin-bottom:1px;
+    padding-top: 50px;
+    margin-bottom: 1px;
     font-size: 12px;
-    margin-left:20px;
-    font-family:"Roboto", sans-serif;
+    margin-left: 20px;
+    font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     opacity: 0.8;
 }
@@ -206,9 +227,9 @@
 
 #feed-post-container {
     position: absolute;
-    width:103.25%;
+    width: 103.25%;
     height: 100%;
-    overflow-y:auto;
+    overflow-y: auto;
 }
 
 .feed-item {
@@ -219,7 +240,6 @@
     margin-top: 10px;
     margin-bottom: 10px;
     width: 90%;
-    padding: 5px 5px 5px 5px;
     -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
     -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
     box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
@@ -248,9 +268,15 @@
 }
 
 .feed-post-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.feed-post-user-icon {
     float: left;
-    margin-right: 5px;
     margin-top: 5px;
+    margin-left: 5px;
 }
 
 .news {

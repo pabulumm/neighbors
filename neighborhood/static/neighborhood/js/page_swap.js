@@ -1,13 +1,4 @@
 var nav_visible;
-var mw_right_vis = "0";
-var mw_right_hid = "-100%";
-
-var sw_bot_vis = "0";
-var sw_bot_hid = "-100%";
-
-var sw_nav_vis = "20%";
-
-$('#neigh-info').hide();
 
 function showMap() {
     swapMainWindow($('#map-container'));
@@ -24,7 +15,7 @@ function loadFeed() {
     });
     swapSideBar($('#feed'));
     $.each(post_ids, function (index, post_id) {
-        $('#feed-post'+post_id).delay(200 * index + 500).animate({
+        $('#feed-post' + post_id).delay(200 * index + 500).animate({
             'left': "5%"
         })
     });
@@ -82,14 +73,14 @@ function toggleListMenu() {
     menu_icon.toggleClass("glyphicon-list glyphicon-remove");
 }
 
-$('#toggle-user-post').click(function() {
+$('#toggle-user-post').click(function () {
     var toggle = $('#toggle-post-icon');
     if (toggle.hasClass('glyphicon-menu-up')) {
-        $('#feed-header').animate({height:70});
+        $('#feed-header').animate({height: 70});
         $('#user-post').hide().addClass('user-post-invis');
     }
     else {
-        $('#feed-header').animate({'height':"260px"}, 'slow');
+        $('#feed-header').animate({'height': "260px"}, 'slow');
         $('#user-post').show().removeClass('user-post-invis');
     }
 
@@ -130,6 +121,11 @@ $('#poll-select').click(function () {
 
 });
 
+$('#info-select').click(function () {
+    swapMainWindow($('#info-main'));
+    swapSideBar($('#info-sidebar'));
+    toggleListMenu();
+});
 $('#event-select').click(function () {
     swapMainWindow($('#event-calendar'));
     swapSideBar($('#event-detail'));
@@ -142,7 +138,6 @@ $('#announce-index').click(function () {
     swapSideBar($('#announcement-sidebar'));
     toggleListMenu();
 });
-
 
 
 $('#poll-header').click(function (e) {
@@ -170,6 +165,20 @@ $('#list-menu-button').click(function () {
 });
 
 
+$(document).ready(function () {
+    $('.info-section-link').click(function() {
+        if (!$(this).hasClass('active')) {
+            $('.active').removeClass('active');
+            $(this).addClass('active');
+        }
+    });
+
+    $('.info-section-link a').click(function() {
+        if (!$(this).parent().hasClass('active')) {
+            $(this).tab('show');
+        }
+    });
+});
 
 
 

@@ -68,21 +68,20 @@ def view_post(request):
 def submit_post(request):
 	post_dict = []
 	if request.is_ajax() and request.method == 'POST':
-		success = False
 		text = request.POST['text']
 		user = request.user
 		neighborhood = request.user.userprofile.house.neighborhood
 		feed = Feed.objects.get(neighborhood=neighborhood)
 		post_type = request.POST['post_type']
+		marker_id = request.POST['marker_id']
 		post = FeedPost(text=text, user=user, feed=feed, type=post_type)
-		if int(request.POST['marker_id']) > 0:
-			post.marker = Marker.objects.get(id=request.POST['marker_id'])
-		print('**********************SANITY CHECK*************************')
+		if marker_id is not None:
+			post.marker = Marker.objects.get(id=marker_id)
+			print('**********************ADDED MARKER TO POST**************')
 		if post:
+			print('**********************SANITY CHECK*************************')
 			post.save()
-
 			return HttpResponse(json.dumps({'post': post_dict}), content_type='application/json')
-	return HttpResponse(json.dumps({'success': True}), content_type='application/json')
 
 
 @login_required

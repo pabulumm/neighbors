@@ -31,7 +31,7 @@ function checkPostViewed(feed_post_id) {
                 $('#feed-post' + feed_post_id).append('<small class="viewed-date">Viewed on:' + data.date + '</small>');
             }
             else { // add unseen post animation to div
-                $('#feed-post' + feed_post_id).append('<div id="flag' + feed_post_id + '" class="flag"><p>!</p></div>');
+                //$('#feed-post' + feed_post_id).append('<div id="flag' + feed_post_id + '" class="flag"><p>!</p></div>');
             }
         },
         error: function (xhr, errmsg, err) {
@@ -61,63 +61,96 @@ function viewPost(post_id) {
     });
 }
 
-function replaceFeedPost(post_id_val, post_id_lab, post_type, user_name, text, date) {
+//function replaceFeedPost(post_id_val, post_id_lab, post_type, user_name, text, date) {
+//
+//    // add post id to the current list
+//    newPostId(post_id_val);
+//
+//    // check if the post has already been viewed or not to determine unseen flag state.
+//    checkPostViewed(post_id_val);
+//    console.log('preparing to append.');
+//    // create the div w/ contents
+//    $(post_id_lab).append(
+//        + '<small id="time-stamp">' + date + '</small>'
+//        + '<div class="feed-item-body">'
+//        + '<small class="feed-post-name"><strong>' + user_name + '</strong></small>'
+//        + '<small> on '+date+'</small>'
+//        + '<p id="text">' + text + '</p>'
+//        + '</div>'
+//    );
+//    console.log('Shoulda been did bout now');
+//    if (post_type == 'POLL') {
+//        $(post_id_lab).append(
+//            '<button id="" class="vote-yes">Yes</button>',
+//            '<button id="" class="vote-no">No</button>'
+//        )
+//    }
+//    $(post_id_lab).on('click', function () {
+//        viewPost(post_id_val);
+//    });
+//    $(post_id_lab).css({
+//        'left': "5%"
+//    });
+//    console.log('Replaced display div for feed post div ID: ' + post_id_lab);
+//}
 
-    // add post id to the current list
-    newPostId(post_id_val);
-
-    // check if the post has already been viewed or not to determine unseen flag state.
-    checkPostViewed(post_id_val);
-    console.log('preparing to append.');
-    // create the div w/ contents
-    $(post_id_lab).append(
-        + '<small id="time-stamp">' + date + '</small>'
-        + '<div class="feed-item-body">'
-        + '<small class="feed-post-name"><strong>' + user_name + '</strong></small>'
-        + '<small> on '+date+'</small>'
-        + '<p id="text">' + text + '</p>'
-        + '</div>'
-    );
-    console.log('Shoulda been did bout now');
-    if (post_type == 'POLL') {
-        $(post_id_lab).append(
-            '<button id="" class="vote-yes">Yes</button>',
-            '<button id="" class="vote-no">No</button>'
-        )
-    }
-    $(post_id_lab).on('click', function () {
-        viewPost(post_id_val);
-    });
-    $(post_id_lab).css({
-        'left': "5%"
-    });
-    console.log('Replaced display div for feed post div ID: ' + post_id_lab);
-}
-
+var confirm_post_phrase = "Are you sure the marker you've chosen is of the correct type and in the correct place?";
 function submitPost() {
     console.log('Called submit post!');
-    $.ajax({
-        url: '/feed/submit-post/',
-        type: 'POST',
-        data: {
-            'text': $('#post-text').val(),
-            'marker_id': post_marker_id,
-            'post_type': 'POST-NORMAL',
-            csrfmiddlewaretoken: csrftoken
-        },
-        dataType: 'json',
-        success: function (data) {
-            if (!data.success) {
-                console.log('AJAX: New Feed creation successful');
+    if (can_place_marker && confirm(confirm_post_phrase)) {
+        var text = $('#post-text').val();
+        newMarker(text, function(result) {
+            if (result > 0) {
+                console.log('newMarker returned marker id: ' + result);
+                $.ajax({
+                    url: '/feed/submit-post/',
+                    type: 'POST',
+                    data: {
+                        'text': text,
+                        'marker_id': result,
+                        'post_type': 'POST-MARKER',
+                        csrfmiddlewaretoken: csrftoken
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (!data.success) {
+                            console.log('AJAX: New Feed creation successful');
+                            $('#post-text').val('');
+                            location.reload();
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+                        alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
+                    }
+                });
             }
+        });
 
-            // reset check for null marker for post
-            post_marker_id = -1;
-        },
-        error: function (xhr, errmsg, err) {
-            alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
-        }
-    });
+    }
+    else {
+        $.ajax({
+            url: '/feed/submit-post/',
+            type: 'POST',
+            data: {
+                'text': $('#post-text').val(),
+                'marker_id': -1,
+                'post_type': 'POST-NORMAL',
+                csrfmiddlewaretoken: csrftoken
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.success) {
+                    console.log('AJAX: New Feed creation successful');
+                    $('#post-text').val('');
+                    location.reload();
+                }
+            },
+            error: function (xhr, errmsg, err) {
+                alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
+            }
+        });
+    }
+
 }
 
 //
@@ -172,14 +205,16 @@ function submitPost() {
 
 function createMarkerFeedPost(marker_type, post_id,
                               marker_id, marker_lat, marker_lon) {
-    //alert('Received parameters: '+ marker_type + post_username+post_id+marker_id+marker_lat+marker_lon);
+    console.log('createMarkerFeedPost: Received parameters: '+ marker_type+post_id+marker_id+marker_lat+marker_lon);
     var post_statement = getMarkerPostStatement(marker_type);
     var full_post_id = "#feed-post" + post_id;
     //changeElemBorderColor(full_post_id, getPostColor(marker_type));
     var src = getIconType(marker_type, true);
     var icon_img = $("<img>", {class: 'feed-post-icon', src: src});
     $(full_post_id + " .feed-item-body").append(icon_img);
+    console.log('appending post statment: ' + post_statement);
     $(full_post_id + " .feed-item-body").append('<p>' + post_statement + '</p>');
+    console.log('Appended statement to: '+full_post_id + " .feed-item-body");
     $(full_post_id).on('click', function () {
         viewPost(post_id);
         // center map on clicked post designated marker
@@ -197,7 +232,7 @@ function createMarkerFeedPost(marker_type, post_id,
 function getUserImage(post_id) {
 
     var src = '/static/markers/png/user2.png';
-    var icon_img = $("<img>", {class: 'feed-post-icon', src: src});
+    var icon_img = $("<img>", {class: 'feed-post-user-icon', src: src});
     $(post_id+' .feed-item-body').append(icon_img);
 }
 
@@ -262,10 +297,4 @@ function getAnnouncements() {
     });
 }
 
-// TODO - IMPLEMENT FEED POST REFRESH WITH AJAX
-$(function () {
-    $('#refresh-feed').click(function() {
-        refreshFeed();
-    })
-});
 

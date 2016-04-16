@@ -1,4 +1,4 @@
-/**
+ /**
  * CUSTOM ICON INSTANTIATION
  *
  * Types of Markers -
@@ -26,6 +26,83 @@ function toggleMarkerInfo() {
         $('#new-marker-info').show();
     }
 }
+
+
+
+var marker_list = [];
+
+var can_place_marker = false;
+
+function newMarker(name, callback) {
+    var post_marker_id = -1;
+    console.log('New Marker called.');
+    $.ajax({
+        url: "/markers/new-marker/",
+        type: "Post",
+        data: {
+            title: name,
+            lat: pin_latlng.lat,
+            lon: pin_latlng.lng,
+            type_of_marker: type_of_marker,
+            csrfmiddlewaretoken: csrftoken
+        },
+        success: function (json) {
+            console.log('AJAX newMarker returned SUCCESSFUL');
+            pin.closePopup();
+            console.log('Created a ' + type_of_marker + ' marker at latitude:' +
+                pin_latlng.lat + ' and longitude:' + pin_latlng.lng);
+            L.marker([pin_latlng.lat, pin_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);
+            console.log(json['marker_id']);
+            pin = null;
+            callback(json['marker_id']);
+        },
+        error: function (xhr, errmsg, err) {
+            alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+    return post_marker_id;
+}
+
+
+function getAllMarkers() {
+    $.ajax({
+        url: "/markers/get-markers/",
+        type: 'GET',
+        data: {
+            csrfmiddlewaretoken: csrftoken
+        },
+        dataType: "json",
+        success: function (data) {
+            $.each(data.markers, function (markerIndex, marker) {
+
+                // create a new L.marker for each retrieved model instance
+                var mark = L.marker([marker.lat, marker.lon])
+                    .setIcon(getIconType(marker.type_of_marker, false))
+                    // creating the popup for our marker
+                    .bindPopup(
+                        '<h3>' + marker.title + '</h3><p>' + marker.description +
+                        '<br/><strong>' + marker.type_of_marker +
+                        '</strong><br/><small>' + marker.create_date + '</small>'
+                    ).addTo(map);
+                // create a marker variable reference
+                var marker_reference = {
+                    'id': marker.id,
+                    'lat': marker.lat,
+                    'lon': marker.lon,
+                    'type': marker.type_of_marker,
+                    'title': marker.title,
+                    'marker': mark
+                };
+                // add the loaded marker to the reference list
+                marker_list.push(marker_reference);
+            });
+        },
+        error: function (xhr, errmsg, err) {
+            alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
 
 L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
 var map = L.mapbox.map('map', 'mapbox.streets', {
@@ -67,10 +144,13 @@ map.on('click', function (e) {
             pin_latlng = e.latlng;
             pin = new L.marker(pin_latlng).addTo(map)
                 .bindPopup(
-                    '<button class="popup-button" id=house>House</button><button class="popup-button" id=event>Event</button><br />' +
-                    '<button class="popup-button" id=const>Construction</button><button class="popup-button" id=trash>Trash</button><br />' +
-                    '<button class="popup-button" id=theft>Theft</button><button class="popup-button" id=yard>Yard Sale</button><br />' +
-                    '<button class=save>SAVE</button>')
+                    '<button class="popup-button" id=comment>Comment</button>' +
+                    '<button class="popup-button" id=event>Event</button><br />' +
+                    '<button class="popup-button" id=const>Construction</button>' +
+                    '<button class="popup-button" id=trash>Trash</button><br />' +
+                    '<button class="popup-button" id=theft>Theft</button>' +
+                    '<button class="popup-button" id=yard>Yard Sale</button><br />'
+                )
                 .openPopup();
         }
     }
@@ -79,78 +159,68 @@ map.on('click', function (e) {
 // Getting all markers in db and loading to map
 
 
-$('#marker-post-button').click(function(event) {
+$('#marker-post-button').click(function (event) {
     event.preventDefault();
     if ($('#marker-post-button').hasClass('marker-active')) {
         $('#marker-post-button').removeClass('marker-active');
+        $('#new-marker-info').hide();
+        if (pin) {
+            map.removeLayer(pin);
+        }
         can_place_marker = false;
     }
     else {
         $('#marker-post-button').addClass('marker-active');
+        $('#new-marker-info').show();
         can_place_marker = true;
     }
     toggleMarkerInfo();
 });
 
 
-
-
-$('#map').on('click', '#house', function () {
-    type_of_marker = "HOUSE";
+$('#map').on('click', '#comment', function () {
+    type_of_marker = "COMMENT";
     pin.setIcon(getIconType(type_of_marker));
+    pin.closePopup();
 });
 $('#map').on('click', '#yard', function () {
     type_of_marker = "YARD_SALE";
     pin.setIcon(getIconType(type_of_marker));
+    pin.closePopup();
 });
 $('#map').on('click', '#const', function () {
     type_of_marker = "CONSTRUCTION";
     pin.setIcon(getIconType(type_of_marker));
+    pin.closePopup();
 });
 $('#map').on('click', '#theft', function () {
     type_of_marker = "THEFT";
     pin.setIcon(getIconType(type_of_marker));
+    pin.closePopup();
 });
 $('#map').on('click', '#event', function () {
     type_of_marker = "EVENT";
     pin.setIcon(getIconType(type_of_marker));
+    pin.closePopup();
 });
 $('#map').on('click', '#trash', function () {
     type_of_marker = "TRASH";
     pin.setIcon(getIconType(type_of_marker));
+    pin.closePopup();
 });
 $('#map').on('click', '#default', function () {
     type_of_marker = "TRASH";
     pin.setIcon(getIconType(type_of_marker));
+    pin.closePopup();
 });
-$('#map').on('click', '.save', function () {
-    // AJAX call to save new marker as GeoDjango model
-    //$.ajax({
-    //    url: "/markers/new_marker/",
-    //    type: "Post",
-    //    data: {
-    //        title: title,
-    //        lat: pin_latlng.lat,
-    //        lon: pin_latlng.lng,
-    //        type_of_marker: type_of_marker,
-    //        csrfmiddlewaretoken: csrftoken
-    //    },
-    //    success: function (json) {
-    //        pin.closePopup();
-    //        alert('Created a ' + type_of_marker + ' marker at latitude:' + json['lat'] + ' and longitude:' + json['lon']);
-    //        L.marker([pin_latlng.lat, pin_latlng.lng]).setIcon(getIconType(type_of_marker)).addTo(map);
-    //        pin = null;
-    //
-    //    },
-    //    error: function (xhr, errmsg, err) {
-    //        alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-    //    }
-    //})
-});
+//$('#map').on('click', '.save', function () {
+//    newMarker(name, pin_latlng.lat, pin_latlng.lng, type_of_marker);
+//});
 
-function centerUserMap(latlng) {
-    new L.marker(latlng).setIcon(getIconType("HOUSE", false)).addTo(map2);
-    map2.setView(latlng, 18);
+function centerUserMap(lat, lng) {
+    console.log('centering user map to ' + lat + ', ' + lng);
+    new L.marker([lat, lng]).setIcon(getIconType("HOUSE", false)).addTo(map2);
+    map2.setView([lat, lng], 17);
 }
 
 function centerEventMap(latlng) {

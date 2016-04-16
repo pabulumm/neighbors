@@ -12,25 +12,17 @@ def new_marker(request):
 	if request.method == 'POST' and request.is_ajax():
 		neighborhood = request.user.userprofile.house.neighborhood
 		# grab attr values for the new marker
-		name = request.POST['name']
+		name = request.POST['title']
 		lat = request.POST['lat']
 		lon = request.POST['lon']
 		type_of_marker = request.POST['type_of_marker']
 		# create the new marker object
 		marker = Marker(neighborhood_id=neighborhood.id,
-								  name=name, lat=lat, lon=lon,
+								  title=name, lat=lat, lon=lon,
 								  type_of_marker=type_of_marker)
 		# save the new marker
 		marker.save()
-
-		# now create a new FeedPost for our home page
-		feed = Feed.objects.get(neighborhood=neighborhood)
-		feedpost = FeedPost(title=name, user=request.user,
-							type='MARKER', feed=feed, marker=marker)
-		feedpost.save()
-		return HttpResponse(json.dumps({'name': name, 'lat': lat, 'lon': lon,
-										'type_of_marker': type_of_marker}),
-							content_type='application/json')
+		return HttpResponse(json.dumps({'marker_id': marker.id}), content_type='application/json')
 
 
 @login_required

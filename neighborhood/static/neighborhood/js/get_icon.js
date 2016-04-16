@@ -20,8 +20,19 @@ function getIconType(type, url_only) {
         case 'EVENT':
             url = "/static/markers/png/event-28-48.png";
             break;
+        case 'COMMENT':
+            url = "/static/markers/png/comment-location-28-48";
+            break;
         case 'TRASH':
-            url = "/static/markers/png/trash-32.png";
+            url = "/static/markers/png/trash-24.png";
+            if (!url_only) {
+                return new L.icon({
+                    iconUrl: url,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, -12]
+                });
+            }
             break;
         default:
             return new L.Icon.Default;
@@ -33,9 +44,9 @@ function getIconType(type, url_only) {
     else {
         return new L.icon({
             iconUrl: url,
-            iconSize: [38, 64],
-            iconAnchor: [0, 16],
-            popupAnchor: [0, -16]
+            iconSize: [28, 48],
+            iconAnchor: [14, 48],
+            popupAnchor: [0, -48]
         });
     }
 }
