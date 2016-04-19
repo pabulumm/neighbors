@@ -6,7 +6,7 @@ from accounts.models import UserProfile
 from budget.models import Budget, Expense
 from discussions.models import Discussion
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse, get_object_or_404, HttpResponseRedirect
 from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 from feed.forms import AnnouncementForm, FeedPostForm
@@ -17,6 +17,7 @@ from messaging.forms import ReportForm
 from polls.models import Poll, Question
 from polls.forms import PollForm
 from .models import Neighborhood, Event
+from .forms import EventForm
 
 
 @login_required
@@ -25,10 +26,10 @@ def neighborhood_home(request):
 	if request.method == 'POST':
 		report_form = ReportForm(request.POST)
 		if report_form.is_valid():
-			report = report_form.save
+			report = report_form.save()
 			report.sender = request.user
 			report.time = timezone.now()
-			#report.save()
+			report.save()
 	report_form = ReportForm()
 	announcement_form = AnnouncementForm()
 	pollform = PollForm()
@@ -36,7 +37,7 @@ def neighborhood_home(request):
 	request.session['neighborhood_id'] = neighborhood.id
 	feed = Feed.objects.get(neighborhood=neighborhood)
 	feedposts = get_recent_posts(feed.id)
-
+	eventform = EventForm()
 	request.session['feed_id'] = feed.id
 	user_prof = request.user.userprofile
 	polls = Poll.objects.filter(neighborhood=neighborhood,
@@ -50,6 +51,7 @@ def neighborhood_home(request):
 														  'report_form': report_form,
 														  'announcement_form':announcement_form,
 														  'pollform':pollform,
+														  'eventform':eventform,
 														  'polls': polls})
 
 
@@ -154,19 +156,22 @@ def get_specific_calendar(request):
 	if request.method == 'GET' and request.is_ajax():
 		month_int = request.GET['month']
 		year_int = request.GET['year']
-		month = month_name[month_int]
-		event_teasers = get_event_teasers(year_int, month_int)
+		print('**** Got values year:'+year_int+' & month:'+month_int+' ****"')
+		month = month_name[int(month_int)]
+		print('**** Fetching Event Teasers ****"')
+		event_teasers = get_event_teasers(int(month_int), int(month_int))
 		days = []
-		for week in monthcalendar(year_int, month_int):
+		print('**** Generating new list of days with year'+year_int+' & month'+month_int+' ****"')
+		for week in monthcalendar(int(year_int), int(month_int)):
 			for day in week:
 				days.append(day)
 		return HttpResponse(json.dumps({'month': month,
-										'month_int': month_int,
-										'year': year_int,
+										'month_int': int(month_int),
+										'year': int(year_int),
 										'event_teasers': event_teasers,
 										'days': days}),
 							content_type='application/json')
-	return HttpResponse('Ya dun fucked up')
+	return HttpResponse('Request was not of type GET or this method was called without using ajax.')
 
 
 @login_required
@@ -177,4 +182,19 @@ def get_event(request):
 		return HttpResponse(json.dumps({'event': event_dict}))
 
 
+@login_required
+def new_event(request):
+	if request.method == 'POST':
+		eventform = EventForm(request.POST)
+		if eventform.is_valid():
+
+			event = eventform.save()
+			event.neighborhood = request.user.userprofile.house.neighborhood
+			event.creator = request.user
+			event.save()
+			if event.id is not None:
+				return HttpResponseRedirect('/neighborhood/home')
+		else:
+			return HttpResponse("Event form is not valid!")
+	return HttpResponse('Not a POST request')
 

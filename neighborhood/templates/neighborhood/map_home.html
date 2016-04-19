@@ -154,7 +154,7 @@
                             <small> on {{ post.create_date }}</small>
                             <script>
                                 createMarkerFeedPost(
-                                        "{{ post.marker.type_of_marker }}", {{ post.id }}, {{ post.text }}, {{ post.marker.id }}, {{ post.marker.lat }}, {{ post.marker.lon }});
+                                        "{{ post.marker.type_of_marker }}", {{ post.id }}, "{{ post.text }}", {{ post.marker.id }}, {{ post.marker.lat }}, {{ post.marker.lon }});
                             </script>
                         {% elif post.type == 'ANNOUNCEMENT' %}
                             <p class="poll-post-text">{{ post.text }}</p>
@@ -191,7 +191,7 @@
     {#-----------------------POLLS MAIN WINDOW ---------------------------#}
     <div id="poll-main" class="main">
         <h1 id="poll-title" class="section-title">{{ neighborhood.division_title }} Decisions</h1>
-        <button id="new-poll-button" type="button"
+        <button id="new-poll-button" class="add-content-button" type="button"
                 data-toggle="modal" data-target="#newPollModal">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
@@ -236,7 +236,7 @@
             {% endif %}
         </div>
 
-
+{#---------------------------------POLL MODAL ----------------------------------#}
         <div class="container">
             <!-- Modal -->
             <div class="modal fade" id="newPollModal" role="dialog">
@@ -418,6 +418,7 @@
     <div id="event-calendar" class="main">
         <div id="calendar-head">
             <p id="event-section-title" class="section-title">{{ neighborhood.division_title }} Events</p>
+
             {#            <button id="calendar-month-prev" class="btn btn-default">#}
             {#                <span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span>#}
             {#            </button>#}
@@ -426,11 +427,36 @@
             {#            </button>#}
         </div>
         <div id="calendar-body"></div>
-        {#        {% for i in 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' %}#}
-        {#            <div id="day{{ forloop.counter }}" class="day">#}
-        {#                <p>{{ forloop.counter }}</p>#}
-        {#            </div>#}
-        {#        {% endfor %}#}
+
+
+{#---------------------------------EVENT MODAL ----------------------------------#}
+
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="newEventModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <form id="new-event-form" method="post" action="{% url 'neighborhood:new-event' %}">
+                            {% csrf_token %}
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">New Event</h4>
+                            </div>
+                            <div class="modal-body">
+                                {{ eventform.as_p }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     >
@@ -448,8 +474,16 @@
             <div id="event-list-day">
 
             </div>
+            <button id="new-event-button" class="add-content-button" type="button"
+                    data-toggle="modal" data-target="#newEventModal">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
         </div>
     </div>
+
+
+
+
 
 
     {#==============================================================================#}

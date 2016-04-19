@@ -11,4 +11,5 @@ urlpatterns = [
 	url(r'^get-event/$', views.get_event, name='get_event'),
 	url(r'^current-calendar/$', views.get_current_calendar, name='current_calendar'),
 	url(r'^specific-calendar/$', views.get_specific_calendar, name='specific_calendar'),
+	url(r'^new-event/$', views.new_event, name='new-event'),
 ]

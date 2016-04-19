@@ -29,12 +29,12 @@ $.ajax({
         curr_month = data.month_int;
         curr_year = data.year;
         get_event(event_teasers[0].id);
-        $('#calendar-head').append('<button id="calendar-month-prev" class="btn btn-default">'
-            + '<span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span></button>'
-            + '<h1>' + data.month + ' ~ ' + data.year + '</h1><button id="calendar-month-next" class="btn btn-default">'
-            + '<span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span></button>');
+        $('#calendar-head').append('<button id="calendar-month-next" class="btn btn-default">'
+            + '<span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span></button>'
+            + '<h1 id="month-label">' + data.month + ' ~ ' + data.year + '</h1><button id="calendar-month-prev" class="btn btn-default">'
+            + '<span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span></button>');
         $.each(days, function (index, value) {
-            $('#event-calendar').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
+            $('#calendar-body').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
                 + value + '</p></div>');
             $.each(event_teasers, function (index, event) {
                 if (event.day == value) {
@@ -79,19 +79,20 @@ function reloadCalendar(direction) {
         },
         dataType: "json",
         success: function (data) {
-            alert("Retrieval Success!");
+            console.log("AJAX: specific-calendar returned SUCCESSFUL");
             // clear last calendar html
-            $('#event-calendar').html('<div id=calendar-head"></div><div id="calendar-body"></div>');
+            $('#calendar-body').html('');
             //alert("Successfully retrieved event calendar for month "+data.month);
             event_teasers = data.event_teasers;
             var days = data.days;
-            get_event(event_teasers[0].id);
-            $('#calendar-head').append('<button id="calendar-month-prev" class="btn btn-default">'
-                + '<span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span></button>'
-                + '<h1>' + data.month + ' ~ ' + data.year + '</h1><button id="calendar-month-next" class="btn btn-default">'
-                + '<span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span></button>');
+            if (event_teasers.length > 0) {
+                get_event(event_teasers[0].id);
+            }
+
+
+            $('#month-label').html(data.month + ' ~ ' + data.year);
             $.each(days, function (index, value) {
-                $('#event-calendar').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
+                $('#calendar-body').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
                     + value + '</p></div>');
                 $.each(event_teasers, function (index, event) {
                     if (event.day == value) {
@@ -101,10 +102,10 @@ function reloadCalendar(direction) {
             });
         },
         error: function (xhr, errmsg, err) {
-            alert('ID requested was: ' + id + 'ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            alert('ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
-    alert('finished reloading');
+    console.log('Completed event calendar switch');
 }
 
 function isValidCalendarBox(id) {
@@ -147,17 +148,21 @@ function get_event(id) {
     });
 }
 
+
+/**
+ *
+ */
 function loadDayListeners() {
     $('#event-calendar').click(function (event) {
-        var id = event.target.id;
-        if (id == "calendar-month-prev" || id == "left-arrow") {
+        var event_id = event.target.id;
+        if (event_id == "calendar-month-prev" || event_id == "left-arrow") {
             return reloadCalendar('LEFT');
         }
-        else if (id == "calendar-month-next" || id == "right-arrow") {
+        else if (event_id == "calendar-month-next" || event_id == "right-arrow") {
             return reloadCalendar('RIGHT');
         }
         else {
-            var id_as_num = isValidCalendarBox(event.target.id);
+            var id_as_num = isValidCalendarBox(event_id);
             var id = '#' + id_as_num;
             if (id_as_num > 0
                 && (!($(id).hasClass('highlight')))) {
