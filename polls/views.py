@@ -8,8 +8,8 @@ import json
 
 from neighborhood.models import Neighborhood
 
-from .models import Question, Choice, Vote
-from .forms import QuestionForm, ChoiceForm
+from .models import Question, Choice, Vote, VotePoll, Poll
+from .forms import QuestionForm, ChoiceForm, PollForm
 from feed.models import Feed, FeedPost
 
 
@@ -45,41 +45,64 @@ class ResultsView(generic.DetailView):
 
 @login_required
 def new_poll(request):
-	ChoiceFormSet = formset_factory(ChoiceForm, extra=2)
 	if request.method == 'POST':
 		# Validate the poll topic Question and Choices
-		question_form = QuestionForm(request.POST)
-		choice_formset = ChoiceFormSet(request.POST)
-		if question_form.is_valid() and choice_formset.is_valid():
-			neighborhood = get_object_or_404(Neighborhood, pk=request.session['neighborhood_id'])
+		poll_form = PollForm(request.POST)
+		if poll_form.is_valid():
+			neighborhood = request.user.userprofile.house.neighborhood
 			# Save question_form and create Question object
-			question = question_form.save()
-			question.neighborhood = neighborhood
-			question.creator = request.user
-			question.save()
-			# Save each choice form into Choice object
-			for choice_form in choice_formset:
-				choice = choice_form.save()
-				choice.question = question
-				choice.save()
-
-			# create feedpost to post this new poll to the neighborhood feed
-			feed = Feed.objects.get(neighborhood=neighborhood)
-			feedpost = FeedPost(title=question.question_text, user=request.user,
-								type='POLL', feed=feed, poll=question)
-			feedpost.save()
-			return HttpResponseRedirect('/neighborhood/home')
-			# choice_form.is_valid() failed
-		# question_form.is_valid() failed
+			poll = poll_form.save()
+			poll.neighborhood = neighborhood
+			poll.creator = request.user
+			poll.save()
+			if poll.id is not None:
+				# create feedpost to post this new poll to the neighborhood feed
+				feed = Feed.objects.get(neighborhood=neighborhood)
+				feedpost = FeedPost(text=poll.question_text, user=request.user,
+									type='POLL', feed=feed, decision=poll)
+				feedpost.save()
+				return HttpResponseRedirect('/neighborhood/home')
 		else:
-			return HttpResponse("Poll topic is not valid")
-	# not a request.POST
-	# create blank forms to return
-	else:
-		question_form = QuestionForm()
-		choice_formset = ChoiceFormSet()
-	return render(request, 'polls/new_poll.html', {'question_form': question_form,
-												   'choice_formset': choice_formset})
+			return HttpResponse("Poll is not valid")
+
+
+# @login_required
+# def new_question(request):
+# 	ChoiceFormSet = formset_factory(ChoiceForm, extra=2)
+# 	if request.method == 'POST':
+# 		# Validate the poll topic Question and Choices
+# 		question_form = QuestionForm(request.POST)
+# 		choice_formset = ChoiceFormSet(request.POST)
+# 		if question_form.is_valid() and choice_formset.is_valid():
+# 			neighborhood = get_object_or_404(Neighborhood, pk=request.session['neighborhood_id'])
+# 			# Save question_form and create Question object
+# 			question = question_form.save()
+# 			question.neighborhood = neighborhood
+# 			question.creator = request.user
+# 			question.save()
+# 			# Save each choice form into Choice object
+# 			for choice_form in choice_formset:
+# 				choice = choice_form.save()
+# 				choice.question = question
+# 				choice.save()
+#
+# 			# create feedpost to post this new poll to the neighborhood feed
+# 			feed = Feed.objects.get(neighborhood=neighborhood)
+# 			feedpost = FeedPost(title=question.question_text, user=request.user,
+# 								type='POLL', feed=feed, poll=question)
+# 			feedpost.save()
+# 			return HttpResponseRedirect('/neighborhood/home')
+# 			# choice_form.is_valid() failed
+# 		# question_form.is_valid() failed
+# 		else:
+# 			return HttpResponse("Poll topic is not valid")
+# 	# not a request.POST
+# 	# create blank forms to return
+# 	else:
+# 		question_form = QuestionForm()
+# 		choice_formset = ChoiceFormSet()
+# 	return render(request, 'polls/new_poll.html', {'question_form': question_form,
+# 												   'choice_formset': choice_formset})
 
 
 @login_required
@@ -126,7 +149,8 @@ def vote(request, question_id):
 			return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-def vote_from_feed(request):
+@login_required
+def vote_from_feed(request, question_id):
 	if request.method == 'POST' and request.is_ajax():
 		question = get_object_or_404(Question, pk=question_id)
 		neighborhood = request.user.userprofile.house.neighborhood
@@ -139,3 +163,18 @@ def vote_from_feed(request):
 				'error_message': "You didn't select a choice",
 			})
 # end
+
+
+@login_required
+def poll_vote(request):
+	if request.method == 'POST' and request.is_ajax():
+		vote_choice = request.POST['vote']
+		poll_id = request.POST['poll_id']
+		print('********SERVER RECEIVED VOTE FOR POLL: ' + poll_id + '********')
+		poll = get_object_or_404(Poll, pk=poll_id)
+		vote, created = VotePoll.objects.get_or_create(choice=vote_choice,
+						user=request.user,
+						poll=poll)
+		if created:
+			return HttpResponse(json.dumps({'vote_id': vote.id}), content_type='application/json')
+	return HttpResponse(json.dumps({'vote_id': -1}), content_type='application/json')

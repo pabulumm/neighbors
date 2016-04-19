@@ -51,3 +51,27 @@ class Vote(models.Model):
 
 	class Meta:
 		unique_together = (('user','choice'),)
+
+
+class Poll(models.Model):
+	id = models.AutoField(primary_key=True)
+	question_text = models.CharField(max_length=400)
+	description = models.TextField(max_length=1000, default="Default question description")
+	status = models.CharField(max_length=20, default='TENTATIVE')
+	creator = models.ForeignKey(User, null=True)
+	neighborhood = models.ForeignKey(Neighborhood, null=True)
+	pub_date = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return self.question_text
+
+	def get_confirm_count(self):
+		return VotePoll.objects.filter(poll=self, status='CONFIRM').length
+
+
+class VotePoll(models.Model):
+	id = models.AutoField(primary_key=True)
+	poll = models.ForeignKey(Poll, null=True)
+	choice = models.CharField(max_length=20)
+	user = models.ForeignKey(User, null=True)
+	time = models.DateTimeField(auto_now=True)

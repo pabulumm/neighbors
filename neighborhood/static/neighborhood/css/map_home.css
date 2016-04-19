@@ -24,6 +24,17 @@
     font-family: "Ultra";
 }
 
+
+
+.section-title {
+    font-size: 40px;
+    font-family: "Candal";
+    float:left;
+    color: #DD9454;
+    margin-left: 20px;
+}
+
+
 .side-window-title {
     font-family: "Candal";
     letter-spacing: 0.1em;
@@ -59,13 +70,53 @@
     color: #a1a1a1;
 }
 
-#map-container {
+.main {
     position: absolute;
     width: 75%;
     right: -100%;
     height: 100%;
     float: right;
     background-color: #FFFFFF;
+    /*display:none;*/
+}
+
+.sidebar {
+    position: absolute;
+    float:left;
+    left:0;
+    width: 25%;
+    height: 100%;
+    bottom: -100%;
+    background-color: #FFFFFF;
+}
+
+#info-sidebar {}
+#info-main {
+    overflow: hidden;
+}
+
+#account {
+    overflow-y: auto;
+}
+#account-options {}
+
+#announcement-sidebar {}
+#announcement-main {
+    padding: 20px 20px 20px 20px;
+    overflow: hidden;
+}
+
+#poll-sidebar {}
+#poll-main {}
+
+#map-container {}
+#feed {
+    overflow: hidden;
+}
+
+#event-detail {}
+#event-calendar {
+    padding: 20px 20px 20px 20px;
 }
 
 .marker-active {
@@ -140,24 +191,6 @@
     z-index: 100;
 }
 
-#event-detail {
-    position: absolute;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    bottom: -100%;
-    background-color: #FFFFFF;
-}
-
-#event-calendar {
-    padding: 20px 20px 20px 20px;
-    position: absolute;
-    float: right;
-    width: 75%;
-    right: -100%;
-    height: 100%;
-    background-color: #FFFFFF;
-}
 
 #event-map-container {
     position: relative;
@@ -281,25 +314,7 @@
     color: #0a68f5;
 }
 
-#announcement-sidebar {
-    position: absolute;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    bottom: -100%;
-    background-color: #FFFFFF;
-}
 
-#announcement-main {
-    padding: 20px 20px 20px 20px;
-    position: absolute;
-    float: right;
-    width: 75%;
-    right: -100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #FFFFFF;
-}
 
 .announcement-item-container {
     position: relative;
@@ -320,9 +335,6 @@
 
 }
 
-.announcement-item {
-
-}
 
 .announcement-item h1 {
     position: relative;
@@ -364,33 +376,6 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9eecff', endColorstr='#bdd7ff', GradientType=1);
 }
 
-#poll-sidebar {
-    position: absolute;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    bottom: -100%;
-    background-color: #FFFFFF;
-}
-
-.poll-item-container {
-    position: relative;
-    height: 100px;
-    width: 1000px;
-    margin-top: 20px;
-    -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
-    -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
-    box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
-    background: rgba(245, 245, 245, 1);
-    background: -moz-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245, 245, 245, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
-    background: -webkit-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -o-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -ms-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ffffff', GradientType=1);
-
-}
 
 .section-container {
     position: relative;
@@ -400,19 +385,6 @@
     overflow-y: auto;
 }
 
-.poll-item {
-    position: relative;
-    height: 100%;
-}
-
-#poll-main {
-    position: absolute;
-    width: 75%;
-    right: -100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #FFFFFF;
-}
 
 .separator {
 
@@ -423,6 +395,83 @@
     background: #0a68f5;
     border-radius: 5px;
 }
+
+
+#new-poll-button {
+    position:relative;
+    width:60px;
+    height:60px;
+    margin-left: 30%;
+    margin-top: 20px;
+	font-weight: 600;
+    float:left;
+    border:none;
+    border-radius:30px;
+	color: #fff;
+    background: #1E90FF;
+    -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+}
+
+.poll-item-container {
+    position: relative;
+    height: 100px;
+    width: 1000px;
+    margin-top: 20px;
+    -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    background: #fff;
+    overflow:hidden;
+    /*background: rgba(245, 245, 245, 1);*/
+    /*background: -moz-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: -webkit-gradient(left top, right top, color-stop(0%, rgba(245, 245, 245, 1)), color-stop(100%, rgba(255, 255, 255, 1)));*/
+    /*background: -webkit-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: -o-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: -ms-linear-gradient(left, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#ffffff', GradientType=1);
+}
+
+.poll-item-header {
+    position: relative;
+    width:100%;
+    height:100px;
+}
+
+.poll-item-body {
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+    position: relative;
+    width: 100%;
+    height:auto;
+}
+
+.vote-count {
+    position:absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;
+}
+
+.vote-count span {
+    font-size: 16px;
+    font-weight: 500;
+    color:#000;
+}
+
+.vote-button {
+    padding: 1em 2em;
+    display:inline;
+    outline: none;
+    font-weight: 600;
+    border: none;
+    background: #54E5B0;
+    color: #fff;
+    width: 100px;
+}
+
 
 .poll-status {
     width: 100px;
@@ -439,7 +488,7 @@
     width: 80px;
     font-size: 40px;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 22px;
     margin-top: 10px;
     margin-left: 10px;
     border-radius: 40px;
@@ -447,7 +496,7 @@
     color: #fff;
 }
 
-.poll-item h1 {
+.poll-item-header h1 {
     position: relative;
     font-size: 25px;
     float: left;
@@ -457,7 +506,7 @@
     opacity: 0.9;
 }
 
-.poll-item small {
+.poll-item-header small {
     position: relative;
     float: right;
     text-align: right;
@@ -470,30 +519,7 @@
     padding-left: 20px;
 }
 
-.section-title {
-    font-size: 40px;
-    font-family: "Candal";
-    color: #DD9454;
-    margin-left: 20px;
-}
 
-#account {
-    position: absolute;
-    width: 75%;
-    right: -100%;
-    height: 100%;
-    overflow-y: auto;
-    background-color: #FFFFFF;
-}
-
-#account-options {
-    position: absolute;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    bottom: -100%;
-    background-color: #FFFFFF;
-}
 
 #account-options .holder {
     position: relative;
@@ -548,25 +574,6 @@
     padding: 20px 20px 20px 20px;
     width: 100%;
     height: 100%;
-}
-
-#info-sidebar {
-    position: absolute;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    bottom: -100%;
-    background-color: #FFFFFF;
-}
-
-#info-main {
-    position: absolute;
-    float: right;
-    width: 75%;
-    right: -100%;
-    height: 100%;
-    overflow: hidden;
-    background: #ffffff;
 }
 
 #info-nav-container {

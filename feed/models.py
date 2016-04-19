@@ -3,7 +3,7 @@ from django.utils import timezone
 from accounts.models import User
 from neighborhood.models import Neighborhood
 from markers.models import Marker
-from polls.models import Question
+from polls.models import Poll, Question
 
 
 class Feed(models.Model):
@@ -24,6 +24,7 @@ class FeedPost(models.Model):
 	create_date = models.DateTimeField(default=timezone.now)
 	marker = models.ForeignKey(Marker, null=True)
 	poll = models.ForeignKey(Question, null=True)
+	decision = models.ForeignKey(Poll, null=True)
 
 	def __str__(self):
 		return self.user.username

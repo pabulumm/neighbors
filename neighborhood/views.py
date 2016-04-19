@@ -14,7 +14,8 @@ from feed.models import Feed, FeedPost
 from feed.views import get_recent_posts
 from markers.models import Marker
 from messaging.forms import ReportForm
-from polls.models import Question
+from polls.models import Poll, Question
+from polls.forms import PollForm
 from .models import Neighborhood, Event
 
 
@@ -30,7 +31,7 @@ def neighborhood_home(request):
 			#report.save()
 	report_form = ReportForm()
 	announcement_form = AnnouncementForm()
-	post_form = FeedPostForm()
+	pollform = PollForm()
 	neighborhood = request.user.userprofile.house.neighborhood
 	request.session['neighborhood_id'] = neighborhood.id
 	feed = Feed.objects.get(neighborhood=neighborhood)
@@ -38,7 +39,8 @@ def neighborhood_home(request):
 
 	request.session['feed_id'] = feed.id
 	user_prof = request.user.userprofile
-	polls = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
+	polls = Poll.objects.filter(neighborhood=neighborhood,
+								pub_date__lte=timezone.now()).order_by('-pub_date')
 
 	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
 	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
@@ -47,7 +49,7 @@ def neighborhood_home(request):
 														  'feedposts': feedposts,
 														  'report_form': report_form,
 														  'announcement_form':announcement_form,
-														  'post_form':post_form,
+														  'pollform':pollform,
 														  'polls': polls})
 
 

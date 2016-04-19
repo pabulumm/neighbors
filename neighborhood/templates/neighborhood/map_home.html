@@ -8,7 +8,7 @@
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{#    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>#}
     <script type="text/javascript" src="{% static 'budget/chart.js' %}"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -65,14 +65,6 @@
 <div id="content" class="content">
 
 
-    {#-----------------------MAP MAIN WINDOW---------------------------#}
-    <div id="map-container">
-        <p id="new-marker-info">Click anywhere on the map to place the marker.</p>
-        <div id='map' class='streets'>
-        </div>
-    </div>
-
-
     {#-------------------- MAIN NAV SLIDE OUT WINDOW ----------------------------#}
     <div id="list-menu">
         <div style="height:80px"></div>
@@ -99,49 +91,20 @@
     </div>
 
 
-    <div id="status">
-        <div class="section">
+    {#==============================================================================#}
+    {#------------------------------- HOME PAGE ------------------------------------#}
+    {#==============================================================================#}
 
-            <div id="budget" class="">
-                <div class="chart-menu">
-                    <button id="expense-chart" class="btn btn-default">Expenses</button>
-                    <button id="history-chart" class="btn btn-default">Performance History</button>
-                </div>
-                <div id="piechart"></div>
-                <div id="linechart"></div>
-                <!--
-                    <div class="row">
-                        {% if budget %}
-                            <p>Budget instance accessible.</p>
-                        {% else %}
-                            <p>Unable to access budget.</p>
 
-                        {% endif %}
-                        <h1>Budget</h1>
-                        <p>Neighborhood: {{ budget.neighborhood }}</p>
-                        <p>Total Funds: {{ budget.total_funds }}</p>
-                        <p>Total Expenses: {{ budget.total_expenses }}</p>
-                        <p>Residence Fee: {{ budget.residence_fee }}</p>
-                        <p>Creation Date: {{ budget.create_date }}</p>
-                    </div>
-                    <div class="row">
-                        <h3>Expenses</h3>
-                        {% if expense_list %}
-                            {% for expense in expense_list %}
-                                <p><a href="{% url 'budget:expense_detail' expense.id %}">{{ expense.title }}</a>
-                                    cost={{ expense.cost }} : approved={{ expense.approved }}</p>
-                            {% endfor %}
-                        {% endif %}
-                        <a class="btn btn-default" href="{% url 'budget:new_expense' %}">New Expense</a><br/>
-                    </div>-->
-            </div>
-
+    {#-----------------------MAP MAIN WINDOW---------------------------#}
+    <div id="map-container" class="main">
+        <p id="new-marker-info">Click anywhere on the map to place the marker.</p>
+        <div id='map' class='streets'>
         </div>
-
     </div>
 
     {#-----------------------FEED SIDE BAR (WITH MAP) ---------------------------#}
-    <div id="feed">
+    <div id="feed" class="sidebar">
         {#        <span class="side-title-span"></span>#}
         <div id="feed-header">
             <p id="feed-title" class="side-window-title">The Feed</p>
@@ -172,46 +135,41 @@
                     {#                                                        <div class="flag"><p>!</p></div>#}
                     <script>
                         newPostId({{ post.id }});
-                        checkPostViewed({{ post.id }})
+{#                        checkPostViewed({{ post.id }});#}
+                        addPostBanner({{ post.id }}, "{{ post.type }}");
                     </script>
-                    {% if post.type == 'ANNOUNCEMENT' %}
-                        <div class="post-tag-container">
-                            <p class="post-tag">announcement</p>
-                        </div>
-                    {% endif %}
                     <div class="feed-item-body">
-                        <script>getUserImage('#feed-post{{ post.id }}');</script>
-                        <small class="feed-post-name">
-                            <strong>{{ post.user.first_name }} {{ post.user.last_name }}</strong>
-                        </small>
-                        <small> on {{ post.create_date }}</small>
                         {% if post.type == 'POST-NORMAL' %}
+                            <script>getUserImage('#feed-post{{ post.id }}');</script>
+                            <small>
+                                <strong style="font-size:16px">{{ post.user.first_name }} {{ post.user.last_name }}</strong>
+                            </small>
+                            <small> on {{ post.create_date }}</small>
                             <p id="text">{{ post.text }}</p>
                         {% elif post.type == 'POST-MARKER' or post.type == 'MARKER' %}
+                            <script>getUserImage('#feed-post{{ post.id }}');</script>
+                            <small>
+                                <strong style="font-size:16px">{{ post.user.first_name }} {{ post.user.last_name }}</strong>
+                            </small>
+                            <small> on {{ post.create_date }}</small>
                             <script>
                                 createMarkerFeedPost(
-                                        "{{ post.marker.type_of_marker }}", {{ post.id }}, {{ post.marker.id }}, {{ post.marker.lat }}, {{ post.marker.lon }});
+                                        "{{ post.marker.type_of_marker }}", {{ post.id }}, {{ post.text }}, {{ post.marker.id }}, {{ post.marker.lat }}, {{ post.marker.lon }});
                             </script>
                         {% elif post.type == 'ANNOUNCEMENT' %}
-                            <p id="text">{{ post.text }}</p>
-
+                            <p class="poll-post-text">{{ post.text }}</p>
+                            <small class="feed-post-name">
+                                <strong>{{ post.user.first_name }} {{ post.user.last_name }}</strong>
+                            </small>
+                            <small class="post-date"> on {{ post.create_date }}</small>
                         {% elif post.type == 'POLL' %}
-                            <a href="{% url 'polls:detail' post.poll.id %}"><p id="poll-header">{{ post.title }}</p></a>
-                            <p id="text">{{ post.text }}</p>
-                            {% if post.poll.is_yes_no %}
-                                <button id="" class="vote-yes">Yes</button>
-                                <button id="" class="vote-no">No</button>
-                            {% else %}
-                                <form action="{% url 'polls:vote' post.poll.id %}" method="post">
-                                    {% csrf_token %}
-                                    {% for choice in post.poll.choice_set.all %}
-                                        <input type="radio" name="choice" id="choice{{ forloop.counter }}"
-                                               value="{{ choice.id }}"/>
-                                        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br/>
-                                    {% endfor %}
-                                    <input id='poll-vote' type="submit" value="Submit"/>
-                                </form>
-                            {% endif %}
+                            <a class="poll-link"><p class="poll-post-text">{{ post.text }}</p></a>
+                            <button id="{{ post.decision.id }}" class="vote-confirm">Yes</button>
+                            <button id="{{ post.decision.id }}" class="vote-deny">No</button>
+                            <small class="feed-post-name">
+                                <strong>{{ post.user.first_name }} {{ post.user.last_name }}</strong>
+                            </small>
+                            <small> on {{ post.create_date }}</small>
                         {% endif %}
                         <script>
                             $("#feed-post{{ post.id }}").click(function () {
@@ -225,26 +183,51 @@
 
     </div>
 
+
+    {#==============================================================================#}
+    {#------------------------------- DECISIONS ------------------------------------#}
+    {#==============================================================================#}
+
     {#-----------------------POLLS MAIN WINDOW ---------------------------#}
-    <div id="poll-main">
+    <div id="poll-main" class="main">
         <h1 id="poll-title" class="section-title">{{ neighborhood.division_title }} Decisions</h1>
+        <button id="new-poll-button" type="button"
+                data-toggle="modal" data-target="#newPollModal">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
         <div id="poll-container" class="section-container">
             {% if polls %}
                 {% for poll in polls %}
                     <div class="poll-item-container">
-                        <div class="poll-status">
-                            <span class="glyphicon glyphicon-time"></span>
-                        </div>
-                        <script>newPollId({{ poll.id }})</script>
-                        <div class="poll-item">
+                        <div class="poll-item-header">
+                            <div class="poll-status">
+                                {% if poll.status == 'PENDING' %}
+                                    <span class="glyphicon glyphicon-time"></span>
+                                {% elif poll.status == 'CONFIRMED' %}
+                                    <span style="background: rgba(162,241,212,1)"
+                                          class="glyphicon glyphicon-thumbs-up"></span>
+                                {% elif poll.status == 'DENIED' %}
+                                    <span style="background: rgba(221,146,147,1)"
+                                          class="glyphicon glyphicon-thumbs-down"></span>
+                                {% endif %}
+                            </div>
+                            <script>newPollId({{ poll.id }})</script>
                             <h1>{{ poll.question_text }}</h1>
                             <small>{{ poll.pub_date }}</small>
-                            {% for choice in selected_question.choice_set.all %}
-                                <input type="radio" name="choice" id="choice{{ forloop.counter }}"
-                                       value="{{ choice.id }}"/>
-                                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br/>
-                            {% endfor %}
+                            <div class="vote-count">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                                <label>14   </label>
+                                <span class="glyphicon glyphicon-thumbs-down"></span>
+                                <label>3</label>
+                            </div>
                         </div>
+                        <div class="poll-item-body">
+                            <p>{{ poll.description }}</p>
+
+                            <button id="{{ poll.id }}" class="vote-button">Yes</button>
+                            <button id="{{ poll.id }}" style="background: #c94e50" class="vote-button">No</button>
+                        </div>
+
                     </div>
 
                 {% endfor %}
@@ -254,11 +237,38 @@
         </div>
 
 
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="newPollModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <form id="new-poll-form" method="post" action="{% url 'polls:new' %}">
+                            {% csrf_token %}
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">New Decision</h4>
+                            </div>
+                            <div class="modal-body">
+                                {{ pollform.as_p }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
     {#----------------------- POLLS MENU SIDE BAR ---------------------------#}
-    <div id="poll-sidebar">
+    <div id="poll-sidebar" class="sidebar">
         <span class="separator"></span>
         <h1 class="sidebar-tag">
             <span class="emphasize">Our</span> neighborhood.<br/>
@@ -267,9 +277,14 @@
     </div>
 
 
+    {#==============================================================================#}
+    {#------------------------------- ANNOUNCEMENTS --------------------------------#}
+    {#==============================================================================#}
+
     {#-----------------------ANNOUNCEMENTS MAIN WINDOW ---------------------------#}
-    <div id="announcement-main">
+    <div id="announcement-main" class="main">
         <h1 id="announcement-title" class="section-title"> {{ neighborhood.division_title }} Announcements</h1>
+
         <div id="announcement-container" class="section-container">
             {% if feedposts %}
                 {% for post in feedposts %}
@@ -287,13 +302,11 @@
                 <p>No announcements to show you!</p>
             {% endif %}
         </div>
-
-
     </div>
 
 
     {#----------------------- ANNOUNCEMENTS MENU SIDE BAR ---------------------------#}
-    <div id="announcement-sidebar">
+    <div id="announcement-sidebar" class="sidebar">
         <span class="separator"></span>
         <h1 class="sidebar-tag">
             <span class="emphasize">Our</span> perspective.<br/>
@@ -301,8 +314,13 @@
             <span class="emphasize">Our</span> way.</h1>
     </div>
 
+
+    {#==============================================================================#}
+    {#-------------------------------------- PROFILE -------------------------------#}
+    {#==============================================================================#}
+
     {#-----------------------ACCOUNT MAIN WINDOW---------------------------#}
-    <div id="account">
+    <div id="account" class="main">
         <div class="container">
             <div id="profile-pic">
                 <img src="{% static 'markers/png/user-alt-256.png' %}"/>
@@ -374,7 +392,7 @@
 
 
     {#-----------------------ACCOUNT SIDE BAR---------------------------#}
-    <div id="account-options">
+    <div id="account-options" class="sidebar">
         <p id="account-title" class="side-window-title">Profile</p>
         <div id="map-account-container">
             <div id='map2'></div>
@@ -391,24 +409,13 @@
         </div>
     </div>
 
-    {#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
-    <div id="event-detail">
-        <div id="event-box">
-            <div id="event-map-container">
-                <div id='map3'></div>
-            </div>
-            <h1 id="event-title">Event Title</h1>
-            <small id="time" class="time"></small>
-            <small id="location" class="time">Location:</small>
-            <p id="description"></p>
-            <div id="event-list-day">
 
-            </div>
-        </div>
-    </div>
+    {#==============================================================================#}
+    {#------------------------------- EVENT CALENDAR -------------------------------#}
+    {#==============================================================================#}
 
     {#----------------------- EVENT CALENDAR MAIN WINDOW ---------------------------#}
-    <div id="event-calendar">
+    <div id="event-calendar" class="main">
         <div id="calendar-head">
             <p id="event-section-title" class="section-title">{{ neighborhood.division_title }} Events</p>
             {#            <button id="calendar-month-prev" class="btn btn-default">#}
@@ -426,20 +433,30 @@
         {#        {% endfor %}#}
     </div>
 
-    <div id="info-sidebar">
-        <div id="info-nav-container">
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active info-section-link"><a href="#about">About</a></li>
-                <li class="info-section-link"><a href="#budget-tab">Budget</a></li>
-                <li class="info-section-link"><a href="#ccr">CC&Rs</a></li>
-                <li class="info-section-link"><a href="#board">Board Members</a></li>
-            </ul>
+    >
 
+    {#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
+    <div id="event-detail" class="sidebar">
+        <div id="event-box">
+            <div id="event-map-container">
+                <div id='map3'></div>
+            </div>
+            <h1 id="event-title">Event Title</h1>
+            <small id="time" class="time"></small>
+            <small id="location" class="time">Location:</small>
+            <p id="description"></p>
+            <div id="event-list-day">
+
+            </div>
         </div>
-
     </div>
 
-    <div id="info-main">
+
+    {#==============================================================================#}
+    {#------------------------------- NEIGHBORHOOD INFO ----------------------------#}
+    {#==============================================================================#}
+
+    <div id="info-main" class="main">
 
         {#        <div id="info-tab-container">#}
         <div class="tab-content">
@@ -449,7 +466,7 @@
             <div id="budget-tab" class="tab-pane fade">
                 <p class="section-title">{{ neighborhood.division_title }} Budget</p>
                 <div id="piechart"></div>
-                {#                    <div id="linechart"></div>#}
+{#                <div id="linechart"></div>#}
             </div>
             <div id="ccr" class="tab-pane fade">
                 <p class="section-title">{{ neighborhood.division_title }} Covenants, Conditions & Restrictions.</p>
@@ -461,8 +478,18 @@
             </div>
         </div>
         {#        </div>#}
+    </div>
 
 
+    <div id="info-sidebar" class="sidebar">
+        <div id="info-nav-container">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active info-section-link"><a href="#about">About</a></li>
+                <li class="info-section-link"><a href="#budget-tab">Budget</a></li>
+                <li class="info-section-link"><a href="#ccr">CC&Rs</a></li>
+                <li class="info-section-link"><a href="#board">Board Members</a></li>
+            </ul>
+        </div>
     </div>
 
 

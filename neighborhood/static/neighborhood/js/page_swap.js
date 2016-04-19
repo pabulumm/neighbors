@@ -35,6 +35,14 @@ function hideListMenu() {
     nav_visible = false;
 }
 
+
+/**
+ * swapMainWindow -
+ * Swaps the current main window with the new window to display.
+ * The main window is the detail/list section of the display occupying
+ * the right 75% of the screen with site-nav hidden and 55% when visible.
+ * @param id
+ */
 function swapMainWindow(id) {
     if (!(id.hasClass('visible'))) {
         $('.visible').animate({'right': "-100%"}).removeClass('visible');
@@ -44,20 +52,28 @@ function swapMainWindow(id) {
         else {
             id.animate({'margin-right': "0", 'width': "75%"});
         }
-        id.animate({'right': "0"}).addClass('visible');
+        id.show().animate({'right': "0"}).addClass('visible');
     }
 }
 
+
+/**
+ * swapSideBar -
+ * Swaps the current side bar div with the new sidebar div to display based
+ * on user nav selection.
+ * Always uses 25% of screen to left of main window div.
+ * @param id
+ */
 function swapSideBar(id) {
     if (!(id.hasClass('side-visible'))) {
-        $('.side-visible').animate({'bottom': "-100%"}).removeClass('side-visible');
+        $('.side-visible').animate({'bottom': "-100%"}).hide().removeClass('side-visible');
         if (nav_visible) {
             id.css({'left': "20%", 'width': "25%"});
         }
         else {
             id.css({'left': "0", 'width': "25%"});
         }
-        id.animate({'bottom': "0"}).addClass('side-visible');
+        id.show().animate({'bottom': "0"}).addClass('side-visible');
     }
 }
 
@@ -88,84 +104,87 @@ $('#toggle-user-post').click(function () {
 });
 
 
-nav_visible = false;
-showMap();
-$('.nav-tabs a').click(function () {
-    $(this).tab('show');
-});
 
-$('#status-button').click(function () {
-    swapMainWindow($('#status'));
-    if (!($('#feed').hasClass('side-visible'))) {
-        loadFeed();
-    }
-});
-$('#map-button').click(function () {
-    showMap();
-});
-$('#home-select').click(function () {
-    showMap();
-    toggleListMenu();
-});
-
-$('#account-select').click(function () {
-    swapMainWindow($('#account'));
-    swapSideBar($('#account-options'));
-    toggleListMenu();
-});
-
-$('#poll-select').click(function () {
-    swapMainWindow($('#poll-main'));
-    swapSideBar($('#poll-sidebar'));
-    toggleListMenu();
-
-});
-
-$('#info-select').click(function () {
-    swapMainWindow($('#info-main'));
-    swapSideBar($('#info-sidebar'));
-    toggleListMenu();
-});
-$('#event-select').click(function () {
-    swapMainWindow($('#event-calendar'));
-    swapSideBar($('#event-detail'));
-    toggleListMenu();
-});
-
-$('#announce-index').click(function () {
-    //getAnnouncements();
-    swapMainWindow($('#announcement-main'));
-    swapSideBar($('#announcement-sidebar'));
-    toggleListMenu();
-});
-
-
-$('#poll-header').click(function (e) {
-    e.preventDefault();
-    $('.visible').animate({
-        'right': "-100%"
-    }).removeClass('visible');
-
-    $('.side-visible').animate({
-        'bottom': "-100%"
-    }).removeClass('side-visible');
-
-    window.location = "http://localhost:8000/polls/8/";
-});
-
-$('#list-menu-button').click(function () {
-    var menu_icon = $('#menu-icon');
-    if (menu_icon.hasClass('glyphicon-remove')) {
-        hideListMenu();
-    }
-    else {
-        showListMenu();
-    }
-    menu_icon.toggleClass("glyphicon-list glyphicon-remove");
-});
 
 
 $(document).ready(function () {
+    nav_visible = false;
+    showMap();
+
+    $('.nav-tabs a').click(function () {
+        $(this).tab('show');
+    });
+
+    $('#status-button').click(function () {
+        swapMainWindow($('#status'));
+        if (!($('#feed').hasClass('side-visible'))) {
+            loadFeed();
+        }
+    });
+    $('#map-button').click(function () {
+        showMap();
+    });
+    $('#home-select').click(function () {
+        showMap();
+        toggleListMenu();
+    });
+
+    $('#account-select').click(function () {
+        swapMainWindow($('#account'));
+        swapSideBar($('#account-options'));
+        toggleListMenu();
+    });
+
+    $('#poll-select').click(function () {
+        swapMainWindow($('#poll-main'));
+        swapSideBar($('#poll-sidebar'));
+        toggleListMenu();
+
+    });
+
+    $('#info-select').click(function () {
+        swapMainWindow($('#info-main'));
+        swapSideBar($('#info-sidebar'));
+        toggleListMenu();
+    });
+    $('#event-select').click(function () {
+        swapMainWindow($('#event-calendar'));
+        swapSideBar($('#event-detail'));
+        toggleListMenu();
+    });
+
+    $('#announce-index').click(function () {
+        //getAnnouncements();
+        swapMainWindow($('#announcement-main'));
+        swapSideBar($('#announcement-sidebar'));
+        toggleListMenu();
+    });
+
+
+    $('#poll-header').click(function (e) {
+        e.preventDefault();
+        $('.visible').animate({
+            'right': "-100%"
+        }).removeClass('visible');
+
+        $('.side-visible').animate({
+            'bottom': "-100%"
+        }).removeClass('side-visible');
+
+        window.location = "http://localhost:8000/polls/8/";
+    });
+
+    $('#list-menu-button').click(function () {
+        var menu_icon = $('#menu-icon');
+        if (menu_icon.hasClass('glyphicon-remove')) {
+            hideListMenu();
+        }
+        else {
+            showListMenu();
+        }
+        menu_icon.toggleClass("glyphicon-list glyphicon-remove");
+    });
+
     $('.info-section-link').click(function() {
         if (!$(this).hasClass('active')) {
             $('.active').removeClass('active');
@@ -178,6 +197,13 @@ $(document).ready(function () {
             $(this).tab('show');
         }
     });
+
+    // When new poll is created we reload the home page and
+    // swap the page to the events section
+    $('#new-poll-form').bind('ajax:complete', function() {
+        swapMainWindow($('#poll-main'));
+        swapSideBar($('#poll-sidebar'));
+    })
 });
 
 

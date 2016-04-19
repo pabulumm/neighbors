@@ -75,7 +75,7 @@ def submit_post(request):
 		post_type = request.POST['post_type']
 		marker_id = request.POST['marker_id']
 		post = FeedPost(text=text, user=user, feed=feed, type=post_type)
-		if marker_id is not None:
+		if request.POST['has_marker'] is True:
 			post.marker = Marker.objects.get(id=marker_id)
 			print('**********************ADDED MARKER TO POST**************')
 		if post:

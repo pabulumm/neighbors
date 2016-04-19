@@ -16,50 +16,66 @@ function newPollId(id) {
     return id;
 }
 
-
-function checkPostViewed(feed_post_id) {
-    $.ajax({
-        url: '/feed/get-viewed/',
-        type: 'GET',
-        data: {
-            feed_post_id: feed_post_id,
-            csrfmiddlewaretoken: csrftoken
-        },
-        dataType: "json",
-        success: function (data) {
-            if (data.viewed == 1) { // add the date that the user viewed the post
-                $('#feed-post' + feed_post_id).append('<small class="viewed-date">Viewed on:' + data.date + '</small>');
-            }
-            else { // add unseen post animation to div
-                //$('#feed-post' + feed_post_id).append('<div id="flag' + feed_post_id + '" class="flag"><p>!</p></div>');
-            }
-        },
-        error: function (xhr, errmsg, err) {
-            alert('ERROR: ' + xhr.status + ": " + xhr.responseText + "\n\n" +
-                errmsg, +"\n\n" + err);
-        }
-    });
+// adds a decorative banner strip to the top of the post
+// div if it is of special type. i.e. ANNOUNCEMENT or POLL
+function addPostBanner(post_id, post_type) {
+    if (post_type == 'ANNOUNCEMENT') {
+        $('#feed-post'+post_id).append(
+            '<div class="post-tag-container">' +
+            '<p class="post-tag">announcement</p></div>'
+        )
+    }
+    else if (post_type == 'POLL') {
+        $('#feed-post'+post_id).append(
+            '<div class="post-tag-container" style="background:#c94e50">' +
+            '<p class="post-tag">pending decision</p></div>'
+        );
+    }
 }
-
-function viewPost(post_id) {
-    $.ajax({
-        url: '/feed/view-post/',
-        type: 'POST',
-        data: {
-            post_id: post_id,
-            csrfmiddlewaretoken: csrftoken
-        },
-        dataType: 'json',
-        success: function (data) {
-            if (data.post_viewed == true) {
-                $('#flag' + post_id).hide();
-            }
-        },
-        error: function (xhr, errmsg, err) {
-            alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
-        }
-    });
-}
+//
+//function checkPostViewed(feed_post_id) {
+//    $.ajax({
+//        url: '/feed/get-viewed/',
+//        type: 'GET',
+//        data: {
+//            feed_post_id: feed_post_id,
+//            csrfmiddlewaretoken: csrftoken
+//        },
+//        dataType: "json",
+//        success: function (data) {
+//            if (data.viewed == 1) { // add the date that the user viewed the post
+//                $('#feed-post' + feed_post_id).append('<small class="viewed-date">Viewed on:' + data.date + '</small>');
+//            }
+//            else { // add unseen post animation to div
+//                //$('#feed-post' + feed_post_id).append('<div id="flag' + feed_post_id + '" class="flag"><p>!</p></div>');
+//            }
+//        },
+//        error: function (xhr, errmsg, err) {
+//            alert('ERROR: ' + xhr.status + ": " + xhr.responseText + "\n\n" +
+//                errmsg, +"\n\n" + err);
+//        }
+//    });
+//}
+//
+//function viewPost(post_id) {
+//    $.ajax({
+//        url: '/feed/view-post/',
+//        type: 'POST',
+//        data: {
+//            post_id: post_id,
+//            csrfmiddlewaretoken: csrftoken
+//        },
+//        dataType: 'json',
+//        success: function (data) {
+//            if (data.post_viewed == true) {
+//                $('#flag' + post_id).hide();
+//            }
+//        },
+//        error: function (xhr, errmsg, err) {
+//            alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
+//        }
+//    });
+//}
 
 //function replaceFeedPost(post_id_val, post_id_lab, post_type, user_name, text, date) {
 //
@@ -107,6 +123,7 @@ function submitPost() {
                     type: 'POST',
                     data: {
                         'text': text,
+                        'has_marker': true,
                         'marker_id': result,
                         'post_type': 'POST-MARKER',
                         csrfmiddlewaretoken: csrftoken
@@ -133,6 +150,7 @@ function submitPost() {
             type: 'POST',
             data: {
                 'text': $('#post-text').val(),
+                'has_marker': false,
                 'marker_id': -1,
                 'post_type': 'POST-NORMAL',
                 csrfmiddlewaretoken: csrftoken
@@ -203,10 +221,16 @@ function submitPost() {
 //}
 
 
-function createMarkerFeedPost(marker_type, post_id,
+function createMarkerFeedPost(marker_type, post_id, post_text,
                               marker_id, marker_lat, marker_lon) {
     console.log('createMarkerFeedPost: Received parameters: '+ marker_type+post_id+marker_id+marker_lat+marker_lon);
-    var post_statement = getMarkerPostStatement(marker_type);
+    var post_statement;
+    if (post_text.length < 1 ) {
+        post_statement = getMarkerPostStatement(marker_type);
+    }
+    else {
+        post_statement = post_text;
+    }
     var full_post_id = "#feed-post" + post_id;
     //changeElemBorderColor(full_post_id, getPostColor(marker_type));
     var src = getIconType(marker_type, true);
@@ -298,3 +322,19 @@ function getAnnouncements() {
 }
 
 
+$(document).ready(function() {
+    $('.vote-confirm').click(function() {
+        var poll_id = +this.id;
+        if (confirm("AGREE: Are you sure?")) {
+            console.log("CONFIRM VOTE for poll: " + poll_id);
+            pollVote(poll_id, "CONFIRM");
+        }
+    });
+    $('.vote-deny').click(function() {
+        var poll_id = +this.id;
+        if (confirm("DISAGREE: Are you sure?")) {
+            console.log("DENY VOTE for poll: " + poll_id);
+            pollVote(poll_id, "DENY");
+        }
+    })
+});

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Question, Choice
+from .models import Question, Choice, Poll
 
 
 class QuestionForm(forms.ModelForm):
@@ -18,4 +18,14 @@ class ChoiceForm(forms.ModelForm):
 		model = Choice
 		fields = (
 			'choice_text',
+		)
+
+
+class PollForm(forms.ModelForm):
+
+	class Meta:
+		model = Poll
+		fields = (
+			'question_text',
+			'description'
 		)

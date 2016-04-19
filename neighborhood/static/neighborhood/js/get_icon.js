@@ -6,19 +6,19 @@ function getIconType(type, url_only) {
     var url = "";
     switch (type) {
         case 'HOUSE':
-            url = "/static/markers/png/house-38-64.png";
+            url = "/static/markers/png/house-28-48-cust1.png";
             break;
         case 'YARD_SALE':
-            url = "/static/markers/png/sale-28-48.png";
+            url = "/static/markers/png/sale-28-48-cust1.png";
             break;
         case 'CONSTRUCTION':
-            url = "/static/markers/png/construction-28-48.png";
+            url = "/static/markers/png/construction-28-48-cust1.png";
             break;
         case 'THEFT':
-            url = "/static/markers/png/crime-28-48.png";
+            url = "/static/markers/png/crime-28-48-cust1.png";
             break;
         case 'EVENT':
-            url = "/static/markers/png/event-28-48.png";
+            url = "/static/markers/png/event-28-48-cust1.png";
             break;
         case 'COMMENT':
             url = "/static/markers/png/comment-location-28-48";
