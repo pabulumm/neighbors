@@ -1,3 +1,4 @@
+from accounts.models import Activity
 from django.shortcuts import HttpResponse, HttpResponseRedirect, get_object_or_404
 from .models import FeedPost, Feed, PostView
 from .forms import AnnouncementForm
@@ -10,24 +11,26 @@ from markers.models import Marker
 
 def get_recent_posts(feed_id):
 	feed = get_object_or_404(Feed, pk=feed_id)
-	return FeedPost.objects.all().filter(feed=feed).order_by('-create_date')[:20]
+	return FeedPost.objects.filter(feed=feed).order_by('-create_date')[:20]
 
 
 @login_required
 def make_announcement(request):
-	if request.user.userprofile.member_status != 'neighbor':
-		announcement_form = AnnouncementForm(request.POST)
-		if announcement_form.is_valid():
-			announcement = announcement_form.save()
-			announcement.create_date = timezone.now()
-			announcement.feed = Feed.objects.get(
-				neighborhood=request.user.userprofile.house.neighborhood)
-			announcement.type = 'ANNOUNCEMENT'
-			announcement.user = request.user
-			announcement.save()
-			return HttpResponseRedirect('/neighborhood/home/')
-	else:
-		return HttpResponse("You're not allowed to make announcements homie.")
+	announcement_form = AnnouncementForm(request.POST)
+	if announcement_form.is_valid():
+		announcement = announcement_form.save()
+		announcement.create_date = timezone.now()
+		announcement.feed = Feed.objects.get(
+			neighborhood=request.user.userprofile.house.neighborhood)
+		announcement.type = 'ANNOUNCEMENT'
+		announcement.user = request.user
+		announcement.save()
+		if announcement.id is not None:
+			activity = Activity(type='ANNOUNCEMENT', user=request.user, assoc_obj_id=announcement.id)
+			activity.save()
+
+		return HttpResponseRedirect('/neighborhood/home/')
+	return HttpResponse("You're not allowed to make announcements homie.")
 
 
 @login_required
@@ -75,12 +78,16 @@ def submit_post(request):
 		post_type = request.POST['post_type']
 		marker_id = request.POST['marker_id']
 		post = FeedPost(text=text, user=user, feed=feed, type=post_type)
-		if request.POST['has_marker'] is True:
+		print("HAS_MARKER IS: " + request.POST['has_marker'])
+		if request.POST['has_marker'] == 1:
 			post.marker = Marker.objects.get(id=marker_id)
-			print('**********************ADDED MARKER TO POST**************')
+			print('*******************ADDED MARKER TO POST*******************')
 		if post:
 			print('**********************SANITY CHECK*************************')
 			post.save()
+			if post.id is not None:
+				activity = Activity(activity_type='POST', user=request.user, assoc_obj_id=post.id)
+				activity.save()
 			return HttpResponse(json.dumps({'post': post_dict}), content_type='application/json')
 
 

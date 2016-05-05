@@ -57,7 +57,7 @@ class Poll(models.Model):
 	id = models.AutoField(primary_key=True)
 	question_text = models.CharField(max_length=400)
 	description = models.TextField(max_length=1000, default="Default question description")
-	status = models.CharField(max_length=20, default='TENTATIVE')
+	status = models.CharField(max_length=20, default='TBD')
 	creator = models.ForeignKey(User, null=True)
 	neighborhood = models.ForeignKey(Neighborhood, null=True)
 	pub_date = models.DateTimeField(default=timezone.now)

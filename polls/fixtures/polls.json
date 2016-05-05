@@ -1,13 +1,62 @@
 [
   {
-    "model": "polls.question",
+    "model": "polls.poll",
     "fields": {
       "question_text": "Should we decrease the monthly residence fee?",
-      "description": "Voting to determine whether the collective neighborhood would like a decrease in the monthly payment for living in our lovely neighborhood.",
+      "description": "Last year left us with more additional funds than expected. Would everyone like a decrease in the monthly residence fee, or shall we keep it the same and use the additional funds to make improvements around the community?",
       "pub_date": "2016-01-17 10:00:00",
       "neighborhood": 1,
-      "creator": 2,
-      "is_yes_no": "True"
+      "creator": 2
+    }
+  },
+  {
+    "model": "polls.poll",
+    "fields": {
+      "question_text": "Approve re-paving of Main St.",
+      "description": "The members of the board are proposing that this years remaining funds be donated to re-pave Main St. It has been far too long since the road was last paved and the years are definitely showing.",
+      "pub_date": "2016-02-17 08:00:00",
+      "neighborhood": 1,
+      "creator": 2
+    }
+  },
+  {
+    "model": "polls.poll",
+    "fields": {
+      "question_text": "New pool for the Community Center",
+      "description": "We are gathering a neighborhood consensus regarding the installation of pool in our community center. This would require a small donation from each interested party to get the funds together. If we all join up, we can combat the relentless Southern California heat!",
+      "pub_date": "2016-02-22 13:00:00",
+      "neighborhood": 1,
+      "creator": 3
+    }
+  },
+  {
+    "model": "polls.poll",
+    "fields": {
+      "question_text": "Allow for the painting of mailboxes",
+      "description": "Some members of our community have expressed their desire to personalize their mailboxes. This one is an all or nothin' kind of thing folks. But hey, if I want my mailbox to be a trout fish, why can't I?",
+      "pub_date": "2016-03-06 09:00:00",
+      "neighborhood": 1,
+      "creator": 4
+    }
+  },
+  {
+    "model": "polls.poll",
+    "fields": {
+      "question_text": "Repaint fence surrounding the Community Center.",
+      "description": "A few of us have decided that the fence surrounding our beloved Community Center is looking down in the dumps. Funds can be allocated for a painting service, or we can make a community bonding day out of it!",
+      "pub_date": "2016-03-29 16:00:00",
+      "neighborhood": 1,
+      "creator": 3
+    }
+  },
+  {
+    "model": "polls.poll",
+    "fields": {
+      "question_text": "Allocate funds to repair damaged pipes in Deer Creek Park.",
+      "description": "Our park is so nice. Those old rusty pipes are so dangerous and unpleasant. Lets get those pipes fixed up before one of our little kiddies goes and injures themselves.",
+      "pub_date": "2016-04-16 08:00:00",
+      "neighborhood": 1,
+      "creator": 2
     }
   }
 ]

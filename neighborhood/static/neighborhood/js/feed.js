@@ -32,83 +32,6 @@ function addPostBanner(post_id, post_type) {
         );
     }
 }
-//
-//function checkPostViewed(feed_post_id) {
-//    $.ajax({
-//        url: '/feed/get-viewed/',
-//        type: 'GET',
-//        data: {
-//            feed_post_id: feed_post_id,
-//            csrfmiddlewaretoken: csrftoken
-//        },
-//        dataType: "json",
-//        success: function (data) {
-//            if (data.viewed == 1) { // add the date that the user viewed the post
-//                $('#feed-post' + feed_post_id).append('<small class="viewed-date">Viewed on:' + data.date + '</small>');
-//            }
-//            else { // add unseen post animation to div
-//                //$('#feed-post' + feed_post_id).append('<div id="flag' + feed_post_id + '" class="flag"><p>!</p></div>');
-//            }
-//        },
-//        error: function (xhr, errmsg, err) {
-//            alert('ERROR: ' + xhr.status + ": " + xhr.responseText + "\n\n" +
-//                errmsg, +"\n\n" + err);
-//        }
-//    });
-//}
-//
-//function viewPost(post_id) {
-//    $.ajax({
-//        url: '/feed/view-post/',
-//        type: 'POST',
-//        data: {
-//            post_id: post_id,
-//            csrfmiddlewaretoken: csrftoken
-//        },
-//        dataType: 'json',
-//        success: function (data) {
-//            if (data.post_viewed == true) {
-//                $('#flag' + post_id).hide();
-//            }
-//        },
-//        error: function (xhr, errmsg, err) {
-//            alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
-//        }
-//    });
-//}
-
-//function replaceFeedPost(post_id_val, post_id_lab, post_type, user_name, text, date) {
-//
-//    // add post id to the current list
-//    newPostId(post_id_val);
-//
-//    // check if the post has already been viewed or not to determine unseen flag state.
-//    checkPostViewed(post_id_val);
-//    console.log('preparing to append.');
-//    // create the div w/ contents
-//    $(post_id_lab).append(
-//        + '<small id="time-stamp">' + date + '</small>'
-//        + '<div class="feed-item-body">'
-//        + '<small class="feed-post-name"><strong>' + user_name + '</strong></small>'
-//        + '<small> on '+date+'</small>'
-//        + '<p id="text">' + text + '</p>'
-//        + '</div>'
-//    );
-//    console.log('Shoulda been did bout now');
-//    if (post_type == 'POLL') {
-//        $(post_id_lab).append(
-//            '<button id="" class="vote-yes">Yes</button>',
-//            '<button id="" class="vote-no">No</button>'
-//        )
-//    }
-//    $(post_id_lab).on('click', function () {
-//        viewPost(post_id_val);
-//    });
-//    $(post_id_lab).css({
-//        'left': "5%"
-//    });
-//    console.log('Replaced display div for feed post div ID: ' + post_id_lab);
-//}
 
 var confirm_post_phrase = "Are you sure the marker you've chosen is of the correct type and in the correct place?";
 function submitPost() {
@@ -123,7 +46,7 @@ function submitPost() {
                     type: 'POST',
                     data: {
                         'text': text,
-                        'has_marker': true,
+                        'has_marker': 1,
                         'marker_id': result,
                         'post_type': 'POST-MARKER',
                         csrfmiddlewaretoken: csrftoken
@@ -150,7 +73,7 @@ function submitPost() {
             type: 'POST',
             data: {
                 'text': $('#post-text').val(),
-                'has_marker': false,
+                'has_marker': 0,
                 'marker_id': -1,
                 'post_type': 'POST-NORMAL',
                 csrfmiddlewaretoken: csrftoken
@@ -171,66 +94,20 @@ function submitPost() {
 
 }
 
-//
-//function refreshFeed() {
-//    $('#feed-post-container').html('');
-//
-//    $.ajax({
-//        url: '/feed/refresh-feed/',
-//        type: 'GET',
-//        data: {
-//            csrfmiddlewaretoken: csrftoken
-//        },
-//        dataType: 'json',
-//        success: function(data) {
-//            console.log('AJAX: FeedPosts received from server');
-//            if (!data.posts) {
-//                alert('No posts to display :(');
-//            }
-//            else {
-//                $.each(data.posts, function(index, post) {
-//                    if (post.post_type == 'MARKER') {
-//                        $.each(marker_list, function(index, marker_ref) {
-//                            if (marker_ref.id == post.marker_id) {
-//                                createMarkerFeedPost(marker_ref.type, post.id,
-//                                    marker_ref.id, marker_ref.lat, marker_ref.lon)
-//                            }
-//                        });
-//
-//                    }
-//                    console.log('New Post' + post.post_id + ' that says ' + post.text);
-//                    var post_label = '#feed-post'+ post.post_id;
-//                    replaceFeedPost(post.post_id, post_label, post.post_type,
-//                        post.user, post.text, post.date);
-//                });
-//            }
-//        },
-//        error: function (xhr, errmsg, err) {
-//            alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
-//        }
-//    });
-//
-//
-//    $.each(post_ids, function (index, post_id) {
-//        $('#feed-post'+post_id).delay(200 * index + 500).animate({
-//            'left': "5%"
-//        })
-//    });
-//
-//
-//}
-
 
 function createMarkerFeedPost(marker_type, post_id, post_text,
                               marker_id, marker_lat, marker_lon) {
     console.log('createMarkerFeedPost: Received parameters: '+ marker_type+post_id+marker_id+marker_lat+marker_lon);
     var post_statement;
-    if (post_text.length < 1 ) {
-        post_statement = getMarkerPostStatement(marker_type);
-    }
-    else {
-        post_statement = post_text;
-    }
+    //if (post_text.length < 1 ) {
+    //    post_statement = getMarkerPostStatement(marker_type);
+    //}
+    //else {
+    //    post_statement = post_text;
+    //}
+    //
+    console.log(post_text);
+    post_statement = post_text;
     var full_post_id = "#feed-post" + post_id;
     //changeElemBorderColor(full_post_id, getPostColor(marker_type));
     var src = getIconType(marker_type, true);
@@ -338,3 +215,82 @@ $(document).ready(function() {
         }
     })
 });
+
+
+//
+//function checkPostViewed(feed_post_id) {
+//    $.ajax({
+//        url: '/feed/get-viewed/',
+//        type: 'GET',
+//        data: {
+//            feed_post_id: feed_post_id,
+//            csrfmiddlewaretoken: csrftoken
+//        },
+//        dataType: "json",
+//        success: function (data) {
+//            if (data.viewed == 1) { // add the date that the user viewed the post
+//                $('#feed-post' + feed_post_id).append('<small class="viewed-date">Viewed on:' + data.date + '</small>');
+//            }
+//            else { // add unseen post animation to div
+//                //$('#feed-post' + feed_post_id).append('<div id="flag' + feed_post_id + '" class="flag"><p>!</p></div>');
+//            }
+//        },
+//        error: function (xhr, errmsg, err) {
+//            alert('ERROR: ' + xhr.status + ": " + xhr.responseText + "\n\n" +
+//                errmsg, +"\n\n" + err);
+//        }
+//    });
+//}
+//
+//function viewPost(post_id) {
+//    $.ajax({
+//        url: '/feed/view-post/',
+//        type: 'POST',
+//        data: {
+//            post_id: post_id,
+//            csrfmiddlewaretoken: csrftoken
+//        },
+//        dataType: 'json',
+//        success: function (data) {
+//            if (data.post_viewed == true) {
+//                $('#flag' + post_id).hide();
+//            }
+//        },
+//        error: function (xhr, errmsg, err) {
+//            alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
+//        }
+//    });
+//}
+
+//function replaceFeedPost(post_id_val, post_id_lab, post_type, user_name, text, date) {
+//
+//    // add post id to the current list
+//    newPostId(post_id_val);
+//
+//    // check if the post has already been viewed or not to determine unseen flag state.
+//    checkPostViewed(post_id_val);
+//    console.log('preparing to append.');
+//    // create the div w/ contents
+//    $(post_id_lab).append(
+//        + '<small id="time-stamp">' + date + '</small>'
+//        + '<div class="feed-item-body">'
+//        + '<small class="feed-post-name"><strong>' + user_name + '</strong></small>'
+//        + '<small> on '+date+'</small>'
+//        + '<p id="text">' + text + '</p>'
+//        + '</div>'
+//    );
+//    console.log('Shoulda been did bout now');
+//    if (post_type == 'POLL') {
+//        $(post_id_lab).append(
+//            '<button id="" class="vote-yes">Yes</button>',
+//            '<button id="" class="vote-no">No</button>'
+//        )
+//    }
+//    $(post_id_lab).on('click', function () {
+//        viewPost(post_id_val);
+//    });
+//    $(post_id_lab).css({
+//        'left': "5%"
+//    });
+//    console.log('Replaced display div for feed post div ID: ' + post_id_lab);
+//}

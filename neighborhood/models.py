@@ -36,7 +36,7 @@ class Event(models.Model):
 	title = models.CharField(default="Event Title", max_length=200)
 	type = models.CharField(default="COMMUNITY", max_length=50)
 	description = models.TextField(max_length=1000, default="Event Description.")
-	neighborhood = models.ForeignKey(Neighborhood,null=True)
+	neighborhood = models.ForeignKey(Neighborhood, null=True)
 	creator = models.ForeignKey(User, null=True)
 
 	# TODO - add a field for recurring events eg. weekly, monthly, annually, etc.
@@ -53,7 +53,6 @@ class Event(models.Model):
 			'title': self.title,
 			'description': self.description,
 			'location': self.location,
-			'marker_id': self.marker.id,
 		}
 
 	def as_teaser(self):

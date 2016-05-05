@@ -13,8 +13,15 @@ class UserProfile(models.Model):
 	neighborhood_id = models.IntegerField(null=True)
 
 	def is_board_member(self):
-		return self.member_status is not 'neighbor'
+		return self.member_status == 'board-member'
 
 	def __str__(self):
 		return self.user.first_name + " " + self.user.last_name
 
+
+class Activity(models.Model):
+	id = models.AutoField(primary_key=True)
+	date = models.DateTimeField(auto_now=True)
+	activity_type = models.CharField(default='POST', max_length=30)
+	user = models.ForeignKey(User)
+	assoc_obj_id = models.IntegerField(default=-1)

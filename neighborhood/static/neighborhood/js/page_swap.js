@@ -149,7 +149,7 @@ $(document).ready(function () {
     });
     $('#event-select').click(function () {
         swapMainWindow($('#event-calendar'));
-        swapSideBar($('#event-detail'));
+        swapSideBar($('#event-detail-sidebar'));
         toggleListMenu();
     });
 
@@ -185,15 +185,16 @@ $(document).ready(function () {
         menu_icon.toggleClass("glyphicon-list glyphicon-remove");
     });
 
-    $('.info-section-link').click(function() {
-        if (!$(this).hasClass('active')) {
-            $('.active').removeClass('active');
-            $(this).addClass('active');
+    $('.info-section-pill').click(function() {
+        if (!$(this).hasClass('info-active')) {
+            $('.info-active').removeClass('info-active');
+            $(this).addClass('info-active');
+            //$(this).tab('show');
         }
     });
 
-    $('.info-section-link a').click(function() {
-        if (!$(this).parent().hasClass('active')) {
+    $('.info-section-pill a').click(function() {
+        if (!$(this).parent().hasClass('info-active')) {
             $(this).tab('show');
         }
     });

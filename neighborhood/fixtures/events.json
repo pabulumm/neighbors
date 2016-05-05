@@ -12,5 +12,159 @@
       "neighborhood": 1,
       "creator": 2
     }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-14 18:00:00",
+      "end": "2016-05-14 22:00:00",
+      "created": "2016-04-12 06:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "Backyard BBQ Mixer",
+      "description": "Come mingle and get to know your neighbors!",
+      "neighborhood": 1,
+      "creator": 4
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-07 13:00:00",
+      "end": "2016-05-07 18:00:00",
+      "created": "2016-03-12 12:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "Painting",
+      "description": "We're having a professional painter come give lessons and guidance for an entire afternoon! Take advantage of this outrageous opportunity to reveal your inner artist.",
+      "neighborhood": 1,
+      "creator": 3
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-21 08:00:00",
+      "end": "2016-05-21 12:00:00",
+      "created": "2016-02-12 12:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "Mud Run",
+      "description": "Come participate in the 2016 Mud Run! Your chance to get active with a dirty twist and tons of fun!",
+      "neighborhood": 1,
+      "creator": 3
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-04 19:00:00",
+      "end": "2016-05-04 21:00:00",
+      "created": "2016-04-13 12:00:00",
+      "location": "Community Center",
+      "type": "OFFICIAL",
+      "title": "Board Meeting",
+      "description": "Weekly board meeting to discuss some pressing issues in the neighborhood. All are welcome to come and voice their opinions in person!",
+      "neighborhood": 1,
+      "creator": 2
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-11 19:00:00",
+      "end": "2016-05-11 21:00:00",
+      "created": "2016-04-13 12:00:00",
+      "location": "Community Center",
+      "type": "OFFICIAL",
+      "title": "Board Meeting",
+      "description": "Weekly board meeting to discuss some pressing issues in the neighborhood. All are welcome to come and voice their opinions in person!",
+      "neighborhood": 1,
+      "creator": 2
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-18 19:00:00",
+      "end": "2016-05-18 21:00:00",
+      "created": "2016-04-13 12:00:00",
+      "location": "Community Center",
+      "type": "OFFICIAL",
+      "title": "Board Meeting",
+      "description": "Weekly board meeting to discuss some pressing issues in the neighborhood. All are welcome to come and voice their opinions in person!",
+      "neighborhood": 1,
+      "creator": 2
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-25 19:00:00",
+      "end": "2016-05-25 21:00:00",
+      "created": "2016-04-13 12:00:00",
+      "location": "Community Center",
+      "type": "OFFICIAL",
+      "title": "Board Meeting",
+      "description": "Weekly board meeting to discuss some pressing issues in the neighborhood. All are welcome to come and voice their opinions in person!",
+      "neighborhood": 1,
+      "creator": 2
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-08 08:00:00",
+      "end": "2016-05-08 12:00:00",
+      "created": "2016-04-13 12:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "Food Donation",
+      "description": "We will be at the Community Center for a short while collecting food donations from all who are interested in helping out! Donations will be given to the less fortunate children of our city.",
+      "neighborhood": 1,
+      "creator": 2
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-01 18:00:00",
+      "end": "2016-05-01 22:00:00",
+      "created": "2016-04-12 06:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "Backyard BBQ Mixer",
+      "description": "Come mingle and get to know your neighbors!",
+      "neighborhood": 1,
+      "creator": 4
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-08 18:00:00",
+      "end": "2016-05-08 22:00:00",
+      "created": "2016-04-12 06:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "Backyard BBQ Mixer",
+      "description": "Come mingle and get to know your neighbors!",
+      "neighborhood": 1,
+      "creator": 4
+    }
+  },
+  {
+    "model": "neighborhood.event",
+    "fields": {
+      "start": "2016-05-28 18:00:00",
+      "end": "2016-05-28 22:00:00",
+      "created": "2016-04-12 06:00:00",
+      "location": "Community Center",
+      "type": "COMMUNITY",
+      "title": "Backyard BBQ Mixer",
+      "description": "Come mingle and get to know your neighbors!",
+      "neighborhood": 1,
+      "creator": 4
+    }
   }
 ]

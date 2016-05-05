@@ -21,7 +21,7 @@ function getIconType(type, url_only) {
             url = "/static/markers/png/event-28-48-cust1.png";
             break;
         case 'COMMENT':
-            url = "/static/markers/png/comment-location-28-48";
+            url = "/static/markers/png/comment-location-28-48.png";
             break;
         case 'TRASH':
             url = "/static/markers/png/trash-24.png";

@@ -16,6 +16,7 @@ class Message(models.Model):
 	time = models.DateTimeField(default=timezone.now)
 	sender = models.ForeignKey(User, related_name='sender')
 	receiver = models.ForeignKey(User, related_name='recipient')
+	last_message_id = models.IntegerField(default=-1)
 
 
 class Alert(models.Model):
@@ -26,7 +27,7 @@ class Alert(models.Model):
 
 
 class Report(models.Model):
-	title = models.CharField(max_length=100)
+	title = models.CharField(max_length=200)
 	text = models.CharField(max_length=1000)
 	time = models.DateTimeField(auto_now=True)
 	sender = models.ForeignKey(User, related_name='reporter', null=True)

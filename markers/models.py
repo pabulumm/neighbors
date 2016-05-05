@@ -1,6 +1,8 @@
 from django.contrib.gis.db import models
 from django.utils import timezone
 
+from django.contrib.auth.models import User
+
 
 class Marker(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -11,6 +13,7 @@ class Marker(models.Model):
 	title = models.CharField(max_length=50)
 	lon = models.FloatField()
 	lat = models.FloatField()
+	creator = models.ForeignKey(User, null=True)
 
 	# Returns the string representation of the model.
 	def __str__(self):  # __unicode__ on Python 2

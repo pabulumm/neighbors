@@ -240,16 +240,6 @@
 
 .feed-item-body {
     padding: 10px 10px 10px 10px;
-
-}
-
-.feed-item-body button {
-    padding: 1em 2em;
-    outline: none;
-    font-weight: 600;
-    border: none;
-    color: #fff;
-    width: 50%;
 }
 
 .feed-post-icon {
@@ -293,38 +283,41 @@
     opacity: 0.7;
 }
 
-.vote-confirm {
-    padding: 10px 0 10px 0;
-    text-align:center;
-    outline: none;
-    font-weight: 600;
-    border: none;
-    background: #54E5B0;
-    color: #fff;
-    width: 20px;
-    float: left;
+.vote-buttons {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
-.vote-deny {
+.vote {
+    position:relative;
+    width: 90px;
+    height: 40px;
     padding: 10px 0 10px 0;
     text-align:center;
     outline: none;
     font-weight: 600;
     border: none;
-    background: #c94e50;
+    float:none;
     color: #fff;
-    width: 25%;
-    float: right;
+}
+.confirm {
+    background: #54E5B0;
+}
+
+.deny {
+    background: #c94e50;
 }
 
 .feed-post-name {
+    position:relative;
     margin-top: 20px;
-    padding-left: 10px;
-    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-bottom: 10px;
     font-size: 16px;
 }
 
-.poll-link {
+.poll-link a {
     text-decoration: none;
 }
 

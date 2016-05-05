@@ -1,3 +1,4 @@
+from accounts.models import Activity
 from django.shortcuts import render, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
@@ -61,6 +62,10 @@ def new_poll(request):
 				feedpost = FeedPost(text=poll.question_text, user=request.user,
 									type='POLL', feed=feed, decision=poll)
 				feedpost.save()
+
+				# create activity for user profile
+				activity = Activity(type='POLL-CREATE', user=request.user, assoc_obj_id=poll.id)
+				activity.save()
 				return HttpResponseRedirect('/neighborhood/home')
 		else:
 			return HttpResponse("Poll is not valid")
@@ -150,22 +155,6 @@ def vote(request, question_id):
 
 
 @login_required
-def vote_from_feed(request, question_id):
-	if request.method == 'POST' and request.is_ajax():
-		question = get_object_or_404(Question, pk=question_id)
-		neighborhood = request.user.userprofile.house.neighborhood
-		try:
-			selected_choice = question.choice_set.get(pk=request.POST['choice'])
-		except (KeyError, Choice.DoesNotExist):
-			# Redisplay the question voting form
-			return render(request, 'polls/detail.html', {
-				'question': question,
-				'error_message': "You didn't select a choice",
-			})
-# end
-
-
-@login_required
 def poll_vote(request):
 	if request.method == 'POST' and request.is_ajax():
 		vote_choice = request.POST['vote']
@@ -176,5 +165,19 @@ def poll_vote(request):
 						user=request.user,
 						poll=poll)
 		if created:
+			activity = Activity(type='POLL-VOTE', user=request.user, assoc_obj_id=vote.id)
+			activity.save()
 			return HttpResponse(json.dumps({'vote_id': vote.id}), content_type='application/json')
 	return HttpResponse(json.dumps({'vote_id': -1}), content_type='application/json')
+
+
+@login_required
+def get_votes(request):
+	if request.method == 'GET' and request.is_ajax():
+		poll = Poll.objects.get(id=request.GET['poll_id'])
+		total_votes = VotePoll.objects.filter(poll=poll).__len__()
+		confirm_votes = VotePoll.objects.filter(poll=poll, choice='CONFIRM').__len__()
+		deny_votes = VotePoll.objects.filter(poll=poll, choice='DENY').__len__()
+		return HttpResponse(json.dumps({'total_count': total_votes,
+										'confirm_count': confirm_votes,
+										'deny_count': deny_votes}), content_type='application/json')

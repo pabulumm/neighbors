@@ -35,12 +35,18 @@ var can_place_marker = false;
 
 function newMarker(name, callback) {
     var post_marker_id = -1;
+    var title = name;
     console.log('New Marker called.');
+    if (name.length > 45) {
+        title = name.substring(0, 45);
+        title.append("...");
+    }
     $.ajax({
         url: "/markers/new-marker/",
         type: "Post",
         data: {
-            title: name,
+            title: title,
+            description: name,
             lat: pin_latlng.lat,
             lon: pin_latlng.lng,
             type_of_marker: type_of_marker,
@@ -110,15 +116,15 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
         position: 'topleft'
     },
     zoomControl: false
-}).setView([34.220912, -119.055079], 16);
+}).setView([34.220912, -119.055079], 17);
 
 // move zoom control location to top right corner
 new L.Control.Zoom({position: 'topright'}).addTo(map);
 //map.legendControl.addLegend(document.getElementById('legend').innerHTML);
 
 // create profile map
-var map2 = L.mapbox.map('map2', 'mapbox.streets').setView([34.220912, -119.055079], 16);
-var map3 = L.mapbox.map('map3', 'mapbox.streets').setView([34.220912, -119.055079], 16);
+//var map2 = L.mapbox.map('map2', 'mapbox.streets').setView([34.220912, -119.055079], 16);
+//var map3 = L.mapbox.map('map3', 'mapbox.streets').setView([34.220912, -119.055079], 16);
 
 // Create holders for new marker info
 var name = "Sample Marker Name";
@@ -218,14 +224,14 @@ $('#map').on('click', '#default', function () {
 //});
 
 function centerUserMap(lat, lng) {
-    console.log('centering user map to ' + lat + ', ' + lng);
-    new L.marker([lat, lng]).setIcon(getIconType("HOUSE", false)).addTo(map2);
-    map2.setView([lat, lng], 17);
+    //console.log('centering user map to ' + lat + ', ' + lng);
+    //new L.marker([lat, lng]).setIcon(getIconType("HOUSE", false)).addTo(map2);
+    //map2.setView([lat, lng], 17);
 }
 
 function centerEventMap(latlng) {
-    new L.marker(latlng).setIcon(getIconType("EVENT", false)).addTo(map3);
-    map3.setView(latlng, 17);
+    //new L.marker(latlng).setIcon(getIconType("EVENT", false)).addTo(map3);
+    //map3.setView(latlng, 17);
 }
 
 function openPop(marker_id) {

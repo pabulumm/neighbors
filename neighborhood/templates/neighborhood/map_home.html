@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
 {#    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>#}
-    <script type="text/javascript" src="{% static 'budget/chart.js' %}"></script>
+{#    <script type="text/javascript" src="{% static 'budget/chart.js' %}"></script>#}
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
@@ -153,8 +153,7 @@
                             </small>
                             <small> on {{ post.create_date }}</small>
                             <script>
-                                createMarkerFeedPost(
-                                        "{{ post.marker.type_of_marker }}", {{ post.id }}, "{{ post.text }}", {{ post.marker.id }}, {{ post.marker.lat }}, {{ post.marker.lon }});
+                                createMarkerFeedPost("{{ post.marker.type_of_marker }}", {{ post.id }}, "{{ post.text }}", {{ post.marker.id }}, {{ post.marker.lat }}, {{ post.marker.lon }});
                             </script>
                         {% elif post.type == 'ANNOUNCEMENT' %}
                             <p class="poll-post-text">{{ post.text }}</p>
@@ -164,12 +163,13 @@
                             <small class="post-date"> on {{ post.create_date }}</small>
                         {% elif post.type == 'POLL' %}
                             <a class="poll-link"><p class="poll-post-text">{{ post.text }}</p></a>
-                            <button id="{{ post.decision.id }}" class="vote-confirm">Yes</button>
-                            <button id="{{ post.decision.id }}" class="vote-deny">No</button>
+                            <div class="vote-buttons">
+                                <button id="{{ post.decision.id }}" class="vote confirm">Yes</button>
+                                <button id="{{ post.decision.id }}" class="vote deny">No</button>
+                            </div>
                             <small class="feed-post-name">
                                 <strong>{{ post.user.first_name }} {{ post.user.last_name }}</strong>
-                            </small>
-                            <small> on {{ post.create_date }}</small>
+                            </small><small>on {{ post.create_date }}</small>
                         {% endif %}
                         <script>
                             $("#feed-post{{ post.id }}").click(function () {
@@ -201,7 +201,7 @@
                     <div class="poll-item-container">
                         <div class="poll-item-header">
                             <div class="poll-status">
-                                {% if poll.status == 'PENDING' %}
+                                {% if poll.status == 'TBD' %}
                                     <span class="glyphicon glyphicon-time"></span>
                                 {% elif poll.status == 'CONFIRMED' %}
                                     <span style="background: rgba(162,241,212,1)"
@@ -216,16 +216,22 @@
                             <small>{{ poll.pub_date }}</small>
                             <div class="vote-count">
                                 <span class="glyphicon glyphicon-thumbs-up"></span>
-                                <label>14   </label>
+                                <label id="yes{{ poll.id }}"></label>
                                 <span class="glyphicon glyphicon-thumbs-down"></span>
-                                <label>3</label>
+                                <label id="no{{ poll.id }}"></label>
                             </div>
+{#                            <script>getVotes({{ poll.id }})</script>#}
                         </div>
                         <div class="poll-item-body">
                             <p>{{ poll.description }}</p>
-
-                            <button id="{{ poll.id }}" class="vote-button">Yes</button>
-                            <button id="{{ poll.id }}" style="background: #c94e50" class="vote-button">No</button>
+                            {% if poll.status == 'TBD' %}
+                                <button id="{{ poll.id }}poll" class="vote-button">Yes</button>
+                                <button id="{{ poll.id }}poll" style="background: #c94e50" class="vote-button">No</button>
+                            {% elif poll.status == 'CONFIRMED' %}
+                                <button style="background: #54E5B0" class="vote-result-button">CONFIRMED</button>
+                            {% elif poll.status == 'DENIED' %}
+                                <button style="background: #c94e50" class="vote-result-button"> DENIED </button>
+                            {% endif %}
                         </div>
 
                     </div>
@@ -288,18 +294,20 @@
         <div id="announcement-container" class="section-container">
             {% if feedposts %}
                 {% for post in feedposts %}
-                    <div class="announcement-item-container">
-                        <div class="announcement-item">
-                            <h1>{{ post.title }}</h1>
-                            <small>{{ post.create_date }}</small>
-                            <p id="description">{{ post.description }}</p>
-                            <small><strong>{{ post.user }}</strong></small>
+                    {% if post.type == 'ANNOUNCEMENT' %}
+                        <div class="announcement-item-container">
+                            <div class="announcement-item">
+                                <small class="date">{{ post.create_date }}</small>
+                                <p id="description">{{ post.text }}</p>
+                                <small><strong class="user">
+                                    {{ post.user.first_name }} {{ post.user.last_name }}
+                                </strong></small>
+                            </div>
                         </div>
-                    </div>
-
+                    {% endif %}
                 {% endfor %}
             {% else %}
-                <p>No announcements to show you!</p>
+                <p id="empty-list-tag">No recent announcements.</p>
             {% endif %}
         </div>
     </div>
@@ -315,6 +323,13 @@
     </div>
 
 
+
+
+
+
+
+
+
     {#==============================================================================#}
     {#-------------------------------------- PROFILE -------------------------------#}
     {#==============================================================================#}
@@ -326,37 +341,57 @@
                 <img src="{% static 'markers/png/user-alt-256.png' %}"/>
             </div>
             {% if board_permissions == True %}
-
+                <button id="announcement" type="button" class="btn btn-info btn-lg"
+                        data-toggle="modal" data-target="#myModal">
+                    Make Announcement
+                </button>
             {% endif %}
-            <p id="account-name">{{ request.user.first_name }} {{ request.user.last_name }}</p>
-            <button id="announcement" type="button" class="btn btn-info btn-lg"
-                    data-toggle="modal" data-target="#myModal">
-                Make Announcement
-            </button>
+
+
+            <div id="profile" class="tab-pane fade in active">
+                <p id="account-name">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                <p>Family Name: {{ user.family_name }}</p>
+                <p>Join Date: {{ user.join_date }}</p>
+                <p>Address: {{ user.address }}</p>
+            </div>
 
             <div id="account-menu">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#profile">Profile</a></li>
-                    <li><a href="#activity">Activity</a></li>
+                    <li class="active"><a href="#activity">Activity</a></li>
                     <li><a href="#messages">messages</a></li>
                     <li><a href="#settings">Settings</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div id="profile" class="tab-pane fade in active">
-                        <p>Neighborhood: {{ user.house.neighborhood.division_title }}</p>
-                        <p>Family Name: {{ user.family_name }}</p>
-                        <p>Join Date: {{ user.join_date }}</p>
-                        <p>Address: {{ user.address }}</p>
-                    </div>
-                    <div id="activity" class="tab-pane fade">
-                        <p>This is the ACTIVITY tab.</p>
+                    <div id="activity" class="tab-pane fade in active">
+{#                        {% if activities.__len__ > 2 %}#}
+{#                            {% for activity in activities %}#}
+{#                                <div class="activity-container">#}
+{#                                    <p>Activity: {{ activity.id }} with type {{ activity.type }}#}
+{#                                    and object id: {{ activity.assoc_obj_id }}</p>#}
+{#                                </div>#}
+{#                            {% endfor %}#}
+{#                        {% else %}#}
+                            <p id="empty-list-tag">No recent activities.</p>
+{#                        {% endif %}#}
                     </div>
                     <div id="messages" class="tab-pane fade">
-                        <p>This is the MESSAGES tab.</p>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="message-container">
+                                    {% if message.last_message_id > 0 %}
+                                        <p>RE:</p>
+                                    {% endif %}
+                                    <p>Message: {{ message.id }} with text {{ message.text }}
+                                    from {{ message.sender.username }}</p>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p id="empty-list-tag">No recent messages.</p>
+                        {% endif %}
                     </div>
                     <div id="settings" class="tab-pane fade">
-                        <p>This is the SETTINGS tab.</p>
+                        <p id="empty-list-tag">Settings</p>
                     </div>
                 </div> <!-- end tab-content -->
             </div>
@@ -393,20 +428,26 @@
 
     {#-----------------------ACCOUNT SIDE BAR---------------------------#}
     <div id="account-options" class="sidebar">
-        <p id="account-title" class="side-window-title">Profile</p>
-        <div id="map-account-container">
-            <div id='map2'></div>
-        </div>
-        <div class="holder">
-            <a class="btn btn-primary" href="#">Edit Profile</a><br/>
-            <a class="btn btn-primary" href="#">Make Announcement</a><br/>
+
+        <span class="separator"></span>
+        <h1 class="sidebar-tag">
+            <span class="emphasize">Our</span> house.<br/>
+            <span class="emphasize">Our</span> style.<br/>
+            <span class="emphasize">Our</span> way.</h1>
+{#        <p id="account-title" class="side-window-title">Profile</p>#}
+{#        <div id="map-account-container">#}
+{#            <div id='map2'></div>#}
+{#        </div>#}
+{#        <div class="holder">#}
+{#            <a class="btn btn-primary" href="#">Edit Profile</a><br/>#}
+{#            <a class="btn btn-primary" href="#">Make Announcement</a><br/>#}
             {#            <button id="announcement" type="button" class="btn btn-info btn-lg"#}
             {#                    data-toggle="modal" data-target="#myModal">#}
             {#                Make Announcement#}
             {#            </button>#}
-            <a class="btn btn-primary" href="#">Report Incident</a><br/>
-            <a class="btn btn-primary" href="#">Neighbors List</a><br/>
-        </div>
+{#            <a class="btn btn-primary" href="#">Report Incident</a><br/>#}
+{#            <a class="btn btn-primary" href="#">Neighbors List</a><br/>#}
+{#        </div>#}
     </div>
 
 
@@ -462,17 +503,19 @@
     >
 
     {#----------------------- EVENT DETAIL SIDE BAR --------------------------------#}
-    <div id="event-detail" class="sidebar">
+    <div id="event-detail-sidebar" class="sidebar">
         <div id="event-box">
-            <div id="event-map-container">
-                <div id='map3'></div>
+            <div id="n-event-detail">
+                <h1 id="event-title">Event Title</h1>
+                <strong>Starts:    </strong><small id="starttime" class="event-time"></small><br/>
+                <strong>Ends:      </strong><small id="endtime" class="event-time"></small><br/>
+                <strong>Location:  </strong><small id="location" class="event-time"></small><br/>
+                <strong id="desc">Description:</strong><br/><p id="event-description"></p>
             </div>
-            <h1 id="event-title">Event Title</h1>
-            <small id="time" class="time"></small>
-            <small id="location" class="time">Location:</small>
-            <p id="description"></p>
-            <div id="event-list-day">
 
+            <div id="event-list-day">
+                <div id="event-list-header"><h1 id="event-list-header-text"></h1></div>
+                <div id="event-list-items"></div>
             </div>
             <button id="new-event-button" class="add-content-button" type="button"
                     data-toggle="modal" data-target="#newEventModal">
@@ -518,10 +561,10 @@
     <div id="info-sidebar" class="sidebar">
         <div id="info-nav-container">
             <ul class="nav nav-pills nav-stacked">
-                <li class="active info-section-link"><a href="#about">About</a></li>
-                <li class="info-section-link"><a href="#budget-tab">Budget</a></li>
-                <li class="info-section-link"><a href="#ccr">CC&Rs</a></li>
-                <li class="info-section-link"><a href="#board">Board Members</a></li>
+                <li class="info-active info-section-pill"><a href="#about">About</a></li>
+                <li class="info-section-pill"><a href="#budget-tab">Budget</a></li>
+                <li class="info-section-pill"><a href="#ccr">CC&Rs</a></li>
+                <li class="info-section-pill"><a href="#board">Board Members</a></li>
             </ul>
         </div>
     </div>
@@ -534,13 +577,7 @@
 <script type="text/javascript" src="{% static 'neighborhood/js/report.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/page_swap.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
-<script>
-    centerUserMap({{ user.house.lat }}, {{ user.house.lon }})</script>
-{#<script>#}
-{#    centerUserMap([34.220912, -119.055079])#}
-{#</script>#}
 <script type="text/javascript" src="{% static 'neighborhood/js/events.js' %}"></script>
 
-{#<script>showMap();</script>#}
 </body>
 </html>

@@ -1,10 +1,8 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, HttpResponse
-from django.core import serializers
 import json
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import HttpResponse
 from .models import Marker
-from feed.models import Feed, FeedPost
 
 
 @login_required
@@ -13,11 +11,12 @@ def new_marker(request):
 		neighborhood = request.user.userprofile.house.neighborhood
 		# grab attr values for the new marker
 		name = request.POST['title']
+		description = request.POST['description']
 		lat = request.POST['lat']
 		lon = request.POST['lon']
 		type_of_marker = request.POST['type_of_marker']
 		# create the new marker object
-		marker = Marker(neighborhood_id=neighborhood.id,
+		marker = Marker(neighborhood_id=neighborhood.id, description=description,
 								  title=name, lat=lat, lon=lon,
 								  type_of_marker=type_of_marker)
 		# save the new marker

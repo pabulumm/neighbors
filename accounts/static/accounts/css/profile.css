@@ -47,6 +47,19 @@
     background:#FFFFFF;
 }
 
+#activity-container {
+    position: absolute;
+    width: 80%;
+    height: 100px;
+    margin-top: 15px;
+    margin-left: 10%;
+    -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    background:#FFFFFF;
+}
+
+
 #account-title {
     padding-left:30px;
 }

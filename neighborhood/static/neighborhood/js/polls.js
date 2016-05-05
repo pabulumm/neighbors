@@ -67,7 +67,27 @@ function pollVote(poll_id, vote) {
     });
 }
 
-var selected_poll =
+function getVotes(poll_id) {
+    $.ajax({
+        url: '/polls/get-votes/',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            poll_id: poll_id,
+            csrfmiddlewaretoken: csrftoken
+        },
+        success: function (data) {
+            console.log('AJAX: pollVote returned SUCCESSFUL');
+
+            $('#yes'+poll_id).append(data.confirm_count);
+            $('#no'+poll_id).append(data.deny_count);
+        },
+        error: function (xhr, errmsg, err) {
+            alert('ID requested was: ' + id + 'ERROR: ' + xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+}
+
 
 $(document).ready(function() {
     $('.poll-item-container').click(function() {

@@ -39,7 +39,6 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'django.contrib.gis',
 	'debug_toolbar',
-	'debug_panel',
 	'markers',
 	'messaging',
 	'neighborhood',

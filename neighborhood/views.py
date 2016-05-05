@@ -2,22 +2,23 @@ import datetime
 import json
 from calendar import monthcalendar, month_name
 
-from accounts.models import UserProfile
+from accounts.models import UserProfile, Activity
 from budget.models import Budget, Expense
 from discussions.models import Discussion
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponse, get_object_or_404, HttpResponseRedirect
 from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
-from feed.forms import AnnouncementForm, FeedPostForm
+from feed.forms import AnnouncementForm
 from feed.models import Feed, FeedPost
 from feed.views import get_recent_posts
 from markers.models import Marker
+from messaging.models import Message
 from messaging.forms import ReportForm
-from polls.models import Poll, Question
 from polls.forms import PollForm
-from .models import Neighborhood, Event
+from polls.models import Poll, Question
 from .forms import EventForm
+from .models import Neighborhood, Event
 
 
 @login_required
@@ -40,18 +41,26 @@ def neighborhood_home(request):
 	eventform = EventForm()
 	request.session['feed_id'] = feed.id
 	user_prof = request.user.userprofile
+	# return the 20 most recent activities from the user
+	activities = Activity.objects.filter(user=request.user).order_by('date')[:20]
+	# return the 20 most recent user messages
+	messages = Message.objects.filter(receiver=request.user).order_by('time')[:20]
+	board_permissions = user_prof.is_board_member()
 	polls = Poll.objects.filter(neighborhood=neighborhood,
 								pub_date__lte=timezone.now()).order_by('-pub_date')
 
 	markers = Marker.objects.all().filter(neighborhood_id=neighborhood.id)
 	return render(request, 'neighborhood/map_home.html', {'neighborhood': neighborhood,
 														  'user': user_prof,
+														  'activities': activities,
+														  'messages':messages,
 														  'markers': markers,
 														  'feedposts': feedposts,
 														  'report_form': report_form,
 														  'announcement_form':announcement_form,
 														  'pollform':pollform,
 														  'eventform':eventform,
+														  'board_permissions': board_permissions,
 														  'polls': polls})
 
 
@@ -122,8 +131,8 @@ def get_neighborhoods(request):
 	return HttpResponse(data, mimetype)
 
 
-def get_event_teasers(year, month):
-	all_events = Event.objects.all()
+def get_event_teasers(year, month, neighborhood):
+	all_events = Event.objects.filter(neighborhood=neighborhood)
 	event_teasers = []
 	for event in all_events:
 		edate = event.start.date()
@@ -137,8 +146,8 @@ def get_current_calendar(request):
 	if request.method == 'GET' and request.is_ajax():
 		now = datetime.datetime.now()
 		month = month_name[now.month]
-
-		event_teasers = get_event_teasers(now.year, now.month)
+		neighborhood = request.user.userprofile.house.neighborhood
+		event_teasers = get_event_teasers(now.year, now.month, neighborhood)
 		days = []
 		for week in monthcalendar(now.year, now.month):
 			for day in week:
@@ -177,7 +186,9 @@ def get_specific_calendar(request):
 @login_required
 def get_event(request):
 	if request.method == 'GET' and request.is_ajax():
-		event = get_object_or_404(Event, pk=request.GET['id'])
+		print("*************"+request.GET['event_id']+"***************")
+		event = get_object_or_404(Event, pk=request.GET['event_id'])
+		print("*************EVENT FOUND****************")
 		event_dict = event.as_dict()
 		return HttpResponse(json.dumps({'event': event_dict}))
 
@@ -193,6 +204,9 @@ def new_event(request):
 			event.creator = request.user
 			event.save()
 			if event.id is not None:
+
+				activity = Activity(type='EVENT-CREATE', user=request.user, assoc_obj_id=event.id)
+				activity.save()
 				return HttpResponseRedirect('/neighborhood/home')
 		else:
 			return HttpResponse("Event form is not valid!")
