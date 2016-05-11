@@ -27,6 +27,9 @@
     <script type="text/javascript" src="{% static 'neighborhood/js/feed.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/csrf.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/colors.js' %}"></script>
+    <script type="text/javascript">
+        google.load("jqueryui", "1.5.2");
+    </script>
 </head>
 <body>
 
@@ -68,26 +71,38 @@
     {#-------------------- MAIN NAV SLIDE OUT WINDOW ----------------------------#}
     <div id="list-menu">
         <div style="height:80px"></div>
-        <small class="menu-section-title">The Buzz</small>
-        <span class="divider"></span>
-        <button id="home-select" class="menu-option">Home</button>
-        <button id="poll-select" class="menu-option">Decisions</button>
-        <button id="announce-index">Announcements</button>
 
         <small class="menu-section-title">My Neighborhood</small>
         <span class="divider"></span>
-
-        <button id="info-select" class="menu-option">Information</button>
-        <button id="event-select">Event Calendar</button>
+        <div class="menu-option">
+            <button id="home-select"
+                style="border-bottom: 1px solid #707070;">
+            <span class="menu-option-text">Home</span></button>
+        </div>
+        <div class="menu-option">
+        <button id="info-select"
+                style="border-bottom: 1px solid #707070;">
+            <span class="menu-option-text">Information</span></button>
+        </div>
+        <div class="menu-option">
+        <button id="poll-select"
+                style="border-bottom: 1px solid #707070;">
+            <span class="menu-option-text">Decisions</span></button></div>
+        <div class="menu-option">
+        <button id="event-select">
+            <span class="menu-option-text">Event Calendar</span></button>
+        </div>
 
         <small class="menu-section-title">My House</small>
         <span class="divider"></span>
+        <div class="menu-option">
+        <button id="account-select"><span class="menu-option-text">Profile</span>
+            </button></div>
 
-
-        <button id="account-select" class="menu-option">Profile</button>
+        <div class="menu-option">
         <a style="text-decoration:none;" href="{% url 'accounts:user_logout' %}">
-            <button>Logout</button>
-        </a>
+            <button><span class="menu-option-text">Logout</span></button>
+        </a></div>
     </div>
 
 

@@ -183,23 +183,36 @@
     background-color: #ffffff;
 }
 
-#list-menu button {
-    margin-top: 10px;
-    margin-left: 10%;
-    margin-bottom: 10px;
-    height: 50px;
+#list-menu .menu-option {
+    position:relative;
+    width: 100%;
+    height: 80px;
     display: block;
     border: none;
-    background-color: #ffffff;
+    text-align: center;
+    background: #ffffff;
+}
+#list-menu button {
+    padding-top: 10px;
+    height:100%;
+    width: 80%;
+    padding-bottom: 10px;
+    border: none;
+    background: #ffffff;
+    color: rgba(158, 158, 158, 1);
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
-    width: 80%;
-    color: rgba(158, 158, 158, 1);
+}
+.menu-option span { display: block; width: 100%; height: 25px; }
+.menu-option-text {
+
 }
 
-#list-menu .menu-option {
-    border-bottom: 1px solid #707070;
+.highlight-menu-option {
+    background: #0a68f5;
+    color: #ffffff;
 }
+
 
 #list-menu .divider {
     margin-left: 5%;

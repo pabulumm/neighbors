@@ -387,7 +387,6 @@
     position: relative;
     font-size: 25px;
     float: left;
-    font-family: "Candal";
     margin-left: 20px;
     margin-top: 20px;
     opacity: 0.9;
@@ -403,7 +402,6 @@
 
 .announcement-item p {
     position: relative;
-    font-family: "PT Sans";
     font-weight: 500;
     font-size:20px;
     padding: 20px 10px 20px 20px;
@@ -415,9 +413,8 @@
     padding-left: 30px;
     padding-bottom: 10px;
     font-size:18px;
-    opacity: 0.9;
+    opacity: 0.8;
     right: 10px;
-    bottom: 10px;
 }
 
 .highlight {
@@ -698,7 +695,7 @@
     height: auto;
     width: 90%;
     border-radius: 75px;
-    margin-top: 50px;
+    margin: 50px 10px;
     float:right;
     -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
     -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
@@ -772,7 +769,7 @@
     position: relative;
     display: inline-block;
     width: 430px;
-    height: 350px;
+    height: 360px;
     margin-left: 40px;
     font-family: "Roboto", sans-serif;
     -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);

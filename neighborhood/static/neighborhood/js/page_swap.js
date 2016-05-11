@@ -104,15 +104,18 @@ $('#toggle-user-post').click(function () {
 });
 
 
-
-
-
 $(document).ready(function () {
     nav_visible = false;
     showMap();
 
     $('.nav-tabs a').click(function () {
         $(this).tab('show');
+    });
+
+    $('.menu-option').hover(function() {
+        $(this).stop().animate({backgroundColor:'#4E1402'}, 300);
+        }, function () {
+        $(this).stop().animate({backgroundColor:'#943D20'}, 100);
     });
 
     $('#status-button').click(function () {
@@ -185,7 +188,7 @@ $(document).ready(function () {
         menu_icon.toggleClass("glyphicon-list glyphicon-remove");
     });
 
-    $('.info-section-pill').click(function() {
+    $('.info-section-pill').click(function () {
         if (!$(this).hasClass('info-active')) {
             $('.info-active').removeClass('info-active');
             $(this).addClass('info-active');
@@ -193,19 +196,20 @@ $(document).ready(function () {
         }
     });
 
-    $('.info-section-pill a').click(function() {
+    $('.info-section-pill a').click(function () {
         if (!$(this).parent().hasClass('info-active')) {
             $(this).tab('show');
         }
     });
 
-    // When new poll is created we reload the home page and
-    // swap the page to the events section
-    $('#new-poll-form').bind('ajax:complete', function() {
+// When new poll is created we reload the home page and
+// swap the page to the events section
+    $('#new-poll-form').bind('ajax:complete', function () {
         swapMainWindow($('#poll-main'));
         swapSideBar($('#poll-sidebar'));
     })
-});
+})
+;
 
 
 
