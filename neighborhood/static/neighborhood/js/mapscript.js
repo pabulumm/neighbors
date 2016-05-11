@@ -1,4 +1,4 @@
- /**
+/**
  * CUSTOM ICON INSTANTIATION
  *
  * Types of Markers -
@@ -26,7 +26,6 @@ function toggleMarkerInfo() {
         $('#new-marker-info').show();
     }
 }
-
 
 
 var marker_list = [];
@@ -69,7 +68,6 @@ function newMarker(name, callback) {
     return post_marker_id;
 }
 
-
 function getAllMarkers() {
     $.ajax({
         url: "/markers/get-markers/",
@@ -81,15 +79,17 @@ function getAllMarkers() {
         success: function (data) {
             $.each(data.markers, function (markerIndex, marker) {
 
+
+                var popup_str =
+                    '<div class="popup-container"><strong>' + marker.title + '</strong><p>' + marker.description +
+                    '<br/><info>' + marker.type_of_marker +
+                    '</info><br/><small>' + marker.create_date + '</small></div>';
+
                 // create a new L.marker for each retrieved model instance
                 var mark = L.marker([marker.lat, marker.lon])
                     .setIcon(getIconType(marker.type_of_marker, false))
                     // creating the popup for our marker
-                    .bindPopup(
-                        '<h3>' + marker.title + '</h3><p>' + marker.description +
-                        '<br/><strong>' + marker.type_of_marker +
-                        '</strong><br/><small>' + marker.create_date + '</small>'
-                    ).addTo(map);
+                    .bindPopup(popup_str).addTo(map);
                 // create a marker variable reference
                 var marker_reference = {
                     'id': marker.id,

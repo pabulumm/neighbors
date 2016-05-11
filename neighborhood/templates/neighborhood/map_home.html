@@ -458,7 +458,7 @@
     {#----------------------- EVENT CALENDAR MAIN WINDOW ---------------------------#}
     <div id="event-calendar" class="main">
         <div id="calendar-head">
-            <p id="event-section-title" class="section-title">{{ neighborhood.division_title }} Events</p>
+            <p id="event-section-title" class="section-title">Calendar</p>
 
             {#            <button id="calendar-month-prev" class="btn btn-default">#}
             {#                <span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span>#}
@@ -534,38 +534,99 @@
     {#==============================================================================#}
 
     <div id="info-main" class="main">
+        <h1 id="neighborhood-title">Our {{ neighborhood.division_title }}</h1>
 
-        {#        <div id="info-tab-container">#}
-        <div class="tab-content">
-            <div id="about" class="tab-pane fade in active">
-                <p class="section-title">About our {{ neighborhood.division_title }}</p>
+            <div id="neighborhood-desc">
+                <div class="text-container">
+                    <p>NAME HERE Neighborhood is located in the beautiful City of Camarillo
+                        just off the 101 freeway. It was built in 1987 by Pardee Homes. Our
+                        association is also known as NAME HERE. Our amenities include a community
+                        pool and spa. The pool area has a shower and two restrooms. Next
+                        to the pool area is a recreational vehicle storage lot that is
+                        secured. The community's front yards are maintained by the HOA and
+                        the association provides all water, sprinkler controllers and
+                        irrigation lines to keep the area beautifully maintained.</p>
+
+                    <p>Ask residents of Camarillo why it's such a great place to live and
+                        you're likely to hear many responses: "Unspoiled" -- "Friendly" --
+                        "Clean and safe" -- "Excellent schools" -- "Caring neighbors" --
+                        "Close to everything I need." Camarillo takes pride in its unparalleled
+                        quality of life, in the many attributes of the community that
+                        have endured and strengthened throughout the years.</p>
+
+                    <p>This is the best place to find anything and everything there is to know
+                        about our wondrous neighborhood. Hop over to the calendar to
+                        see upcoming meetings and events as we're quite the active neighborhood!
+                        Reporting any issues regarding the state of our community can be done
+                        here as well. We love this town.</p>
+                </div>
+                <div id="quick-facts">
+                    <h2>Quick Facts</h2>
+                    <div class="fact-row"><p><strong>Monthly Assessments:</strong> $224 (as of 7/1/15) due on the 1st, late after the 15th.</p></div>
+                    <div class="fact-row"><p>Make sure your payments are mailed payable to NAME HERE HOA, P.O. Box 29197, Phoenix, AZ 85038-9197.  Pay Online, see links on the right.</p></div>
+                    <div class="fact-row"><p>Cost of replacement pool key: $50</p></div>
+                    <div class="fact-row"><p><strong>Insurance Agent:</strong> Steve Reich Insurance, 805-379-5159, for common area elements only, homeowners should carry insurance on their unit.</p></div>
+                </div>
+                <h3>Announcements</h3>
             </div>
-            <div id="budget-tab" class="tab-pane fade">
-                <p class="section-title">{{ neighborhood.division_title }} Budget</p>
-                <div id="piechart"></div>
-{#                <div id="linechart"></div>#}
-            </div>
-            <div id="ccr" class="tab-pane fade">
-                <p class="section-title">{{ neighborhood.division_title }} Covenants, Conditions & Restrictions.</p>
-                <p id="ccr-info">
-                </p>
-            </div>
-            <div id="board" class="tab-pane fade">
-                <p class="section-title">{{ neighborhood.division_title }} Board Members</p>
+        <div id="info-announcements-container">
+            <div id="info-announcements" class="section-container">
+                {% if feedposts %}
+                    {% for post in feedposts %}
+                        {% if post.type == 'ANNOUNCEMENT' %}
+                            <div class="announcement-item-container">
+                                <div class="announcement-item">
+                                    <small class="date">{{ post.create_date }}</small>
+                                    <p id="description">{{ post.text }}</p>
+                                    <small><strong class="user">
+                                        {{ post.user.first_name }} {{ post.user.last_name }}
+                                    </strong></small>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p id="empty-list-tag">No recent announcements.</p>
+                {% endif %}
             </div>
         </div>
-        {#        </div>#}
+
     </div>
 
 
     <div id="info-sidebar" class="sidebar">
-        <div id="info-nav-container">
-            <ul class="nav nav-pills nav-stacked">
-                <li class="info-active info-section-pill"><a href="#about">About</a></li>
-                <li class="info-section-pill"><a href="#budget-tab">Budget</a></li>
-                <li class="info-section-pill"><a href="#ccr">CC&Rs</a></li>
-                <li class="info-section-pill"><a href="#board">Board Members</a></li>
-            </ul>
+        <div id="board-members">
+            <h2>Board of Directors</h2>
+            <div class="row board-member">
+                <p class="board-member-name">Val Palmerson</p>
+                <p class="board-member-type">Director</p>
+                <p class="board-member-email">val.palmer@neighbors.com</p>
+                <p class="board-member-term">2015-2016</p>
+            </div>
+            <div class="row board-member">
+                <p class="board-member-name">Cathy Rames</p>
+                <p class="board-member-type">President</p>
+                <p class="board-member-email">val.palmer@neighbors.com</p>
+                <p class="board-member-term">2016-2017</p>
+            </div>
+            <div class="row board-member">
+                <p class="board-member-name">Steve West</p>
+                <p class="board-member-type">Vice President</p>
+                <p class="board-member-email">steve.west@neighbors.com</p>
+                <p class="board-member-term">2015-2016</p>
+            </div>
+            <div class="row board-member">
+                <p class="board-member-name">Barry Gilbert</p>
+                <p class="board-member-type">Treasurer</p>
+                <p class="board-member-email">barry.gilbert@neighbors.com</p>
+                <p class="board-member-term">2016-2017</p>
+            </div>
+            <div class="row board-member">
+                <p class="board-member-name">Barbara Williams</p>
+                <p class="board-member-type">Secretary</p>
+                <p class="board-member-email">barbara.williams@neighbors.com</p>
+                <p class="board-member-term">2016-2017</p>
+            </div>
         </div>
     </div>
 

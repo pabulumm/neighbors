@@ -25,7 +25,12 @@
     font-family: "Ultra";
 }
 
-
+.popup-container {
+    height: 150px;
+    width: 200px;
+    padding: 20px 20px;
+    background: #DD9454;
+}
 
 .section-title {
     font-size: 40px;
@@ -295,7 +300,6 @@
 
 #event-section-title {
     float: left;
-
 }
 
 #event-calendar .day-label {
@@ -688,3 +692,122 @@
     width: 700px;
     height: 500px;
 }
+
+#board-members {
+    position:relative;
+    height: auto;
+    width: 90%;
+    border-radius: 75px;
+    margin-top: 50px;
+    float:right;
+    -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    background: #FFFFFF;
+    font-family: "Roboto", sans-serif;
+}
+
+#board-members h2 {
+    text-align:center;
+    position:relative;
+}
+
+.board-member {
+    position: relative;
+    padding: 20px 40px;
+    font-size: 20px;
+}
+.board-member-name {
+    float: left;
+}
+
+.board-member-type {
+    float: right;
+}
+
+.board-member-email {
+    font-size: 16px;
+    padding-left: 10px;
+    opacity: 0.7;
+    float: left;
+}
+
+.board-member-term {
+    font-size: 16px;
+    padding-right: 10px;
+    float: right;
+    opacity: 0.7;
+    color: #0a68f5;
+}
+
+#neighborhood-title {
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+#neighborhood-desc {
+    position: absolute;
+    padding-left: 40px;
+    padding-right: 20px;
+    top:5%;
+    height:50%;
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+}
+
+.text-container {
+    position: relative;
+    margin-top:0;
+    width:800px;
+    display: inline-block;
+}
+#neighborhood-desc h3 {
+    position: relative;
+    font-size: 24px;
+    margin-bottom: -24px;
+    margin-left: 10px;
+}
+
+#quick-facts {
+    position: relative;
+    display: inline-block;
+    width: 430px;
+    height: 350px;
+    margin-left: 40px;
+    font-family: "Roboto", sans-serif;
+    -webkit-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    background: #FFFFFF;
+}
+
+#quick-facts .fact-row {
+    position: relative;
+    width: 100%;
+    height:auto;
+    padding: 10px 20px 10px 20px;
+}
+
+#quick-facts h2 {
+    padding-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#info-announcements-container {
+    position:absolute;
+    margin-left: 20px;
+    bottom: 0;
+
+    height: 50%;
+    width: auto;
+    padding-right: 30px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    font-family: "Roboto", sans-serif;
+    -webkit-box-shadow: inset 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    -moz-box-shadow:inset 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    box-shadow:inset 2px 2px 9px 3px rgba(158, 158, 158, 1);
+    background: #FFFFFF;
+}
+
