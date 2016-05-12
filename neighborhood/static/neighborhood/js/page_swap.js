@@ -112,14 +112,16 @@ $(document).ready(function () {
         $(this).tab('show');
     });
 
-    $('.menu-option button').hover(function() {
+    $('.menu-option button').hover(function () {
         $(this).stop().animate({
             'opacity': 1,
-            'font-size':"25px"}, 300);
-        }, function () {
+            'font-size': "25px"
+        }, 300);
+    }, function () {
         $(this).stop().animate({
             'opacity': 0.6,
-            "font-size":'20px'}, 100);
+            "font-size": '20px'
+        }, 100);
     });
 
     $('#status-button').click(function () {
@@ -211,11 +213,24 @@ $(document).ready(function () {
     $('#new-poll-form').bind('ajax:complete', function () {
         swapMainWindow($('#poll-main'));
         swapSideBar($('#poll-sidebar'));
-    })
-})
-;
+    });
 
-
+    $('#datetimepicker1').datetimepicker({
+        format: "YY-MM-DD HH:mm:ss",
+        defaultDate: "2016-01-01 00:00:00",
+    });
+    $('#datetimepicker2').datetimepicker({
+        useCurrent: false, //Important! See issue #1075
+        format: "YY-MM-DD HH:mm:ss",
+        defaultDate: "2016-01-02 00:00:00"
+    });
+    $("#datetimepicker1").on("dp.change", function (e) {
+        $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker2").on("dp.change", function (e) {
+        $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+    });
+});
 
 
 

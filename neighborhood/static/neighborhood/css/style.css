@@ -133,6 +133,7 @@ body {
     width: 100%;
     background-image: url('../images/transparent%20neighborhood.png');
     background-size: cover;
+    overflow:hidden;
 }
 
 .btn-circle {

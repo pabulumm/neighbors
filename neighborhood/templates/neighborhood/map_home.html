@@ -3,18 +3,18 @@
 <head>
     <meta charset=utf-8/>
     {% load staticfiles %}
+    {% load crispy_forms_tags %}
     <title>Neighbors</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
-{#    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>#}
-{#    <script type="text/javascript" src="{% static 'budget/chart.js' %}"></script>#}
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
     <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet'/>
-    {# <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' /> #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/style.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/map_home.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/status.css' %}"/>
@@ -22,12 +22,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'neighborhood/css/feed.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/profile.css' %}"/>
     <script type="text/javascript" src="{% static 'neighborhood/js/get_icon.js' %}"></script>
-    {#        <script type="text/javascript" src="{% static 'neighborhood/js/style.js' %}"></script>#}
     <script type="text/javascript" src="{% static 'markers/js/markers.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/feed.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/csrf.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/colors.js' %}"></script>
- </head>
+</head>
 <body>
 
 <div id="top-strip">
@@ -50,17 +49,17 @@
     </div>
 </div>
 
-<div id="report-container">
-    <a id="cancel" class="btn btn-circle"><span class="glyphicon glyphicon-remove"></span></a>
-    <div class='report'>
-        <form action="{% url 'neighborhood:home' %}" method="POST">
-            {% csrf_token %}
-            {{ report_form.as_p }}
+{#<div id="report-container">#}
+{#    <a id="cancel" class="btn btn-circle"><span class="glyphicon glyphicon-remove"></span></a>#}
+{#    <div class='report'>#}
+{#        <form action="{% url 'neighborhood:home' %}" method="POST">#}
+{#            {% csrf_token %}#}
+{#            {{ report_form.as_p }}#}
             {#            <button id="close-report" class="btn btn-default">Close</button>#}
-            <button id="submit-report" class="btn btn-default">Submit</button>
-        </form>
-    </div>
-</div>
+{#            <button id="submit-report" class="btn btn-default">Submit</button>#}
+{#        </form>#}
+{#    </div>#}
+{#</div>#}
 
 <div id="content" class="content">
 
@@ -73,35 +72,37 @@
         <span class="underline-fade divider"></span>
         <div class="menu-option">
             <button id="home-select"
-                style="border-bottom: 1px solid #707070;">
-            <span class="menu-option-text">Home</span></button>
+                    style="border-bottom: 1px solid #707070;">
+                <span class="menu-option-text">Home</span></button>
         </div>
         <div class="menu-option">
-        <button id="info-select"
-                style="border-bottom: 1px solid #707070;">
-            <span class="menu-option-text">Information</span></button>
+            <button id="info-select"
+                    style="border-bottom: 1px solid #707070;">
+                <span class="menu-option-text">Information</span></button>
         </div>
         <div class="menu-option">
-        <button id="poll-select"
-                style="border-bottom: 1px solid #707070;">
-            <span class="menu-option-text">Decisions</span></button></div>
+            <button id="poll-select"
+                    style="border-bottom: 1px solid #707070;">
+                <span class="menu-option-text">Decisions</span></button>
+        </div>
         <div class="menu-option">
-        <button id="event-select">
-            <span class="menu-option-text">Event Calendar</span></button>
+            <button id="event-select">
+                <span class="menu-option-text">Event Calendar</span></button>
         </div>
 
         <small class="menu-section-title">My House</small>
         <span class="underline-fade divider"></span>
         <div class="menu-option">
-        <button id="account-select"
-                style="border-bottom: 1px solid #707070;">
-            <span class="menu-option-text">Profile</span>
-            </button></div>
+            <button id="account-select"
+                    style="border-bottom: 1px solid #707070;">
+                <span class="menu-option-text">Profile</span>
+            </button>
+        </div>
 
         <div class="menu-option">
-        <a style="text-decoration:none;" href="{% url 'accounts:user_logout' %}">
-            <button><span class="menu-option-text">Logout</span></button>
-        </a></div>
+            <a style="text-decoration:none;" href="{% url 'accounts:user_logout' %}">
+                <button><span class="menu-option-text">Logout</span></button>
+            </a></div>
     </div>
 
 
@@ -149,7 +150,7 @@
                     {#                                                        <div class="flag"><p>!</p></div>#}
                     <script>
                         newPostId({{ post.id }});
-{#                        checkPostViewed({{ post.id }});#}
+                        {#                        checkPostViewed({{ post.id }});#}
                         addPostBanner({{ post.id }}, "{{ post.type }}");
                     </script>
                     <div class="feed-item-body">
@@ -183,7 +184,8 @@
                             </div>
                             <small class="feed-post-name">
                                 <strong>{{ post.user.first_name }} {{ post.user.last_name }}</strong>
-                            </small><small>on {{ post.create_date }}</small>
+                            </small>
+                            <small>on {{ post.create_date }}</small>
                         {% endif %}
                         <script>
                             $("#feed-post{{ post.id }}").click(function () {
@@ -234,17 +236,18 @@
                                 <span class="glyphicon glyphicon-thumbs-down"></span>
                                 <label id="no{{ poll.id }}"></label>
                             </div>
-{#                            <script>getVotes({{ poll.id }})</script>#}
+                            {#                            <script>getVotes({{ poll.id }})</script>#}
                         </div>
                         <div class="poll-item-body">
                             <p>{{ poll.description }}</p>
                             {% if poll.status == 'TBD' %}
                                 <button id="{{ poll.id }}poll" class="vote-button">Yes</button>
-                                <button id="{{ poll.id }}poll" style="background: #c94e50" class="vote-button">No</button>
+                                <button id="{{ poll.id }}poll" style="background: #c94e50" class="vote-button">No
+                                </button>
                             {% elif poll.status == 'CONFIRMED' %}
                                 <button style="background: #54E5B0" class="vote-result-button">CONFIRMED</button>
                             {% elif poll.status == 'DENIED' %}
-                                <button style="background: #c94e50" class="vote-result-button"> DENIED </button>
+                                <button style="background: #c94e50" class="vote-result-button"> DENIED</button>
                             {% endif %}
                         </div>
 
@@ -256,7 +259,7 @@
             {% endif %}
         </div>
 
-{#---------------------------------POLL MODAL ----------------------------------#}
+        {#---------------------------------POLL MODAL ----------------------------------#}
         <div class="container">
             <!-- Modal -->
             <div class="modal fade" id="newPollModal" role="dialog">
@@ -271,7 +274,17 @@
                                 <h4 class="modal-title">New Decision</h4>
                             </div>
                             <div class="modal-body">
-                                {{ pollform.as_p }}
+                                {{ pollform.non_field_errors }}
+                                <div id="poll-modal-question-text" class="fieldWrapper" style="margin-left:20px;">
+                                    {{ pollform.question_text.errors }}
+                                    <label style="font-size:18px"
+                                           for="{{ form.question_text.id_for_label }}">Question:</label>
+                                    {{ pollform.question_text }}
+                                </div>
+                                <div class="fieldWrapper" style="text-align: center">
+                                    {{ pollform.description.errors }}
+                                    {{ pollform.description }}
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -337,13 +350,6 @@
     </div>
 
 
-
-
-
-
-
-
-
     {#==============================================================================#}
     {#-------------------------------------- PROFILE -------------------------------#}
     {#==============================================================================#}
@@ -354,15 +360,8 @@
             <div id="profile-pic">
                 <img src="{% static 'markers/png/user-alt-256.png' %}"/>
             </div>
-            {% if board_permissions == True %}
-                <button id="announcement" type="button" class="btn btn-info btn-lg"
-                        data-toggle="modal" data-target="#myModal">
-                    Make Announcement
-                </button>
-            {% endif %}
 
-
-            <div id="profile" class="tab-pane fade in active">
+            <div id="profile">
                 <p id="account-name">{{ request.user.first_name }} {{ request.user.last_name }}</p>
                 <p>Family Name: {{ user.family_name }}</p>
                 <p>Join Date: {{ user.join_date }}</p>
@@ -378,16 +377,16 @@
 
                 <div class="tab-content">
                     <div id="activity" class="tab-pane fade in active">
-{#                        {% if activities.__len__ > 2 %}#}
-{#                            {% for activity in activities %}#}
-{#                                <div class="activity-container">#}
-{#                                    <p>Activity: {{ activity.id }} with type {{ activity.type }}#}
-{#                                    and object id: {{ activity.assoc_obj_id }}</p>#}
-{#                                </div>#}
-{#                            {% endfor %}#}
-{#                        {% else %}#}
-                            <p id="empty-list-tag">No recent activities.</p>
-{#                        {% endif %}#}
+                        {#                        {% if activities.__len__ > 2 %}#}
+                        {#                            {% for activity in activities %}#}
+                        {#                                <div class="activity-container">#}
+                        {#                                    <p>Activity: {{ activity.id }} with type {{ activity.type }}#}
+                        {#                                    and object id: {{ activity.assoc_obj_id }}</p>#}
+                        {#                                </div>#}
+                        {#                            {% endfor %}#}
+                        {#                        {% else %}#}
+                        <p id="empty-list-tag">No recent activities.</p>
+                        {#                        {% endif %}#}
                     </div>
                     <div id="messages" class="tab-pane fade">
                         {% if messages %}
@@ -397,7 +396,7 @@
                                         <p>RE:</p>
                                     {% endif %}
                                     <p>Message: {{ message.id }} with text {{ message.text }}
-                                    from {{ message.sender.username }}</p>
+                                        from {{ message.sender.username }}</p>
                                 </div>
                             {% endfor %}
                         {% else %}
@@ -410,32 +409,7 @@
                 </div> <!-- end tab-content -->
             </div>
 
-            <div class="container">
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
 
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <form method="post" action="{% url 'feed:announce' %}">
-                                {% csrf_token %}
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">New Announcement</h4>
-                                </div>
-                                <div class="modal-body">
-                                    {{ announcement_form.as_p }}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -448,20 +422,20 @@
             <span class="emphasize">Our</span> house.<br/>
             <span class="emphasize">Our</span> style.<br/>
             <span class="emphasize">Our</span> way.</h1>
-{#        <p id="account-title" class="side-window-title">Profile</p>#}
-{#        <div id="map-account-container">#}
-{#            <div id='map2'></div>#}
-{#        </div>#}
-{#        <div class="holder">#}
-{#            <a class="btn btn-primary" href="#">Edit Profile</a><br/>#}
-{#            <a class="btn btn-primary" href="#">Make Announcement</a><br/>#}
-            {#            <button id="announcement" type="button" class="btn btn-info btn-lg"#}
-            {#                    data-toggle="modal" data-target="#myModal">#}
-            {#                Make Announcement#}
-            {#            </button>#}
-{#            <a class="btn btn-primary" href="#">Report Incident</a><br/>#}
-{#            <a class="btn btn-primary" href="#">Neighbors List</a><br/>#}
-{#        </div>#}
+        {#        <p id="account-title" class="side-window-title">Profile</p>#}
+        {#        <div id="map-account-container">#}
+        {#            <div id='map2'></div>#}
+        {#        </div>#}
+        {#        <div class="holder">#}
+        {#            <a class="btn btn-primary" href="#">Edit Profile</a><br/>#}
+        {#            <a class="btn btn-primary" href="#">Make Announcement</a><br/>#}
+        {#            <button id="announcement" type="button" class="btn btn-info btn-lg"#}
+        {#                    data-toggle="modal" data-target="#myModal">#}
+        {#                Make Announcement#}
+        {#            </button>#}
+        {#            <a class="btn btn-primary" href="#">Report Incident</a><br/>#}
+        {#            <a class="btn btn-primary" href="#">Neighbors List</a><br/>#}
+        {#        </div>#}
     </div>
 
 
@@ -487,7 +461,7 @@
         </div>
 
 
-{#---------------------------------EVENT MODAL ----------------------------------#}
+        {#---------------------------------EVENT MODAL ----------------------------------#}
 
         <div class="container">
             <!-- Modal -->
@@ -503,7 +477,59 @@
                                 <h4 class="modal-title">New Event</h4>
                             </div>
                             <div class="modal-body">
-                                {{ eventform.as_p }}
+                                {{ eventform.non_field_errors }}
+                                <div id="new-event-attrs-container">
+                                    <div class="fieldWrapper">
+                                        {{ eventform.title.errors }}
+                                        <label for="{{ eventform.title.id_for_label }}">Title:</label>
+                                        {{ eventform.title }}
+                                    </div>
+                                    <div class="fieldWrapper">
+                                        {{ eventform.location.errors }}
+                                        <label for="{{ eventform.location.id_for_label }}">Location:</label>
+                                        {{ eventform.location }}
+                                    </div>
+                                    <div class="fieldWrapper">
+                                        {{ eventform.type.errors }}
+                                        <label for="{{ eventform.type.id_for_label }}">Type:</label>
+                                        {{ eventform.type }}
+                                    </div>
+                                </div>
+
+                                {#                                <label for="date-text">Start</label>#}
+                                {#                                <div class="container">#}
+                                {#                                    <div class="row">#}
+                                {#                                        <div class='col-sm-6'>#}
+                                {#                                            <div class="form-group">#}
+                                {#                                                <div class='input-group date' id='datetimepicker1'>#}
+                                {#                                                    <input id="date-text" type='text' class="form-control"/>#}
+                                {#                                                    <span class="input-group-addon">#}
+                                {#                                                        <span class="glyphicon glyphicon-calendar"></span>#}
+                                {#                                                    </span>#}
+                                {#                                                </div>#}
+                                {#                                            </div>#}
+                                {#                                        </div>#}
+                                {#                                        <script type="text/javascript">#}
+                                {#                                        </script>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                <div id="new-event-time-container">
+                                    <div class="fieldWrapper">
+                                        {{ eventform.start.errors }}
+                                        <label for="{{ eventform.start.id_for_label }}">Start time:</label>
+                                        {{ eventform.start }}
+                                    </div>
+                                    <div class="fieldWrapper">
+                                        {{ eventform.end.errors }}
+                                        <label for="{{ eventform.end.id_for_label }}">End time:</label>
+                                        {{ eventform.end }}
+                                    </div>
+                                </div>
+
+                                <div class="fieldWrapper" style="text-align: center">
+                                    {{ eventform.description.errors }}
+                                    {{ eventform.description }}
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -526,10 +552,25 @@
                 <p id="event-detail-title">Upcoming Event</p>
                 <span class="underline-fade"></span>
                 <h1 id="event-title">Event Title</h1>
-                <strong>Starts:    </strong><small id="starttime" class="event-time"></small><br/>
-                <strong>Ends:      </strong><small id="endtime" class="event-time"></small><br/>
-                <strong>Location:  </strong><small id="location" class="event-time"></small><br/>
-                <strong id="desc">Description:</strong><br/><p id="event-description"></p>
+                <strong>Starts: </strong>
+                <small id="starttime" class="event-time"></small>
+                <br/>
+                <strong>Ends: </strong>
+                <small id="endtime" class="event-time"></small>
+                <br/>
+                <strong>Location: </strong>
+                <small id="location" class="event-time"></small>
+                <br/>
+                <strong id="desc">Description:</strong><br/>
+                <p id="event-description"></p>
+                <div id="submit-attend">
+                    <button id="attend-button" class="btn btn-default">Attend
+                        <span style="color:#54E5B0;border-radius:5px;"
+                              class="glyphicon glyphicon-remove"></span></button>
+                    <button id="decline-button" class="btn btn-default">Decline
+                        <span style="color:#c94e50;border-radius:5px;"
+                              class="glyphicon glyphicon-ok"></span></button>
+                </div>
             </div>
 
             <div id="event-list-day">
@@ -544,8 +585,6 @@
     </div>
 
 
-
-
     <div class="neighborhood-background"></div>
 
     {#==============================================================================#}
@@ -555,41 +594,44 @@
     <div id="info-main" style="background-color: transparent" class="main">
         <h1 id="neighborhood-title" class="section-title">Our {{ neighborhood.division_title }}</h1>
 
-            <div id="neighborhood-desc">
-                <div class="text-container">
-                    <p>NAME HERE Neighborhood is located in the beautiful City of Camarillo
-                        just off the 101 freeway. It was built in 1987 by Pardee Homes. Our
-                        association is also known as NAME HERE. Our amenities include a community
-                        pool and spa. The pool area has a shower and two restrooms. Next
-                        to the pool area is a recreational vehicle storage lot that is
-                        secured. The community's front yards are maintained by the HOA and
-                        the association provides all water, sprinkler controllers and
-                        irrigation lines to keep the area beautifully maintained.</p>
+        <div id="neighborhood-desc">
+            <div class="text-container">
+                <p>NAME HERE Neighborhood is located in the beautiful City of Camarillo
+                    just off the 101 freeway. It was built in 1987 by Pardee Homes. Our
+                    association is also known as NAME HERE. Our amenities include a community
+                    pool and spa. The pool area has a shower and two restrooms. Next
+                    to the pool area is a recreational vehicle storage lot that is
+                    secured. The community's front yards are maintained by the HOA and
+                    the association provides all water, sprinkler controllers and
+                    irrigation lines to keep the area beautifully maintained.</p>
 
-                    <p>Ask residents of Camarillo why it's such a great place to live and
-                        you're likely to hear many responses: "Unspoiled" -- "Friendly" --
-                        "Clean and safe" -- "Excellent schools" -- "Caring neighbors" --
-                        "Close to everything I need." Camarillo takes pride in its unparalleled
-                        quality of life, in the many attributes of the community that
-                        have endured and strengthened throughout the years.</p>
+                <p>Ask residents of Camarillo why it's such a great place to live and
+                    you're likely to hear many responses: "Unspoiled" -- "Friendly" --
+                    "Clean and safe" -- "Excellent schools" -- "Caring neighbors" --
+                    "Close to everything I need." Camarillo takes pride in its unparalleled
+                    quality of life, in the many attributes of the community that
+                    have endured and strengthened throughout the years.</p>
 
-                    <p>This is the best place to find anything and everything there is to know
-                        about our wondrous neighborhood. Hop over to the calendar to
-                        see upcoming meetings and events as we're quite the active neighborhood!
-                        Reporting any issues regarding the state of our community can be done
-                        here as well. We love this town.</p>
-                </div>
-                <div id="quick-facts">
-                    <h2>Quick Facts</h2>
-                    <div class="fact-row"><p><strong>Monthly Assessments:</strong> $224 (as of 7/1/15) due on the 1st, late after the 15th.</p></div>
-                    <div class="fact-row"><p>Make sure your payments are mailed payable to NAME HERE HOA, P.O. Box 29197, Phoenix, AZ 85038-9197.  Pay Online, see links on the right.</p></div>
-                    <div class="fact-row"><p>Cost of replacement pool key: $50</p></div>
-                    <div class="fact-row"><p><strong>Insurance Agent:</strong> Steve Reich Insurance, 805-379-5159, for common area elements only, homeowners should carry insurance on their unit.</p></div>
-                </div>
-                <h3>Announcements</h3>
+                <p>This is the best place to find anything and everything there is to know
+                    about our wondrous neighborhood. Hop over to the calendar to
+                    see upcoming meetings and events as we're quite the active neighborhood!
+                    Reporting any issues regarding the state of our community can be done
+                    here as well. We love this town.</p>
             </div>
+            <div id="quick-facts">
+                <h2>Quick Facts</h2>
+                <div class="fact-row"><p><strong>Monthly Assessments:</strong> $224 (as of 7/1/15) due on the 1st, late
+                    after the 15th.</p></div>
+                <div class="fact-row"><p>Make sure your payments are mailed payable to NAME HERE HOA, P.O. Box 29197,
+                    Phoenix, AZ 85038-9197. Pay Online, see links on the right.</p></div>
+                <div class="fact-row"><p>Cost of replacement pool key: $50</p></div>
+                <div class="fact-row"><p><strong>Insurance Agent:</strong> Steve Reich Insurance, 805-379-5159, for
+                    common area elements only, homeowners should carry insurance on their unit.</p></div>
+            </div>
+            <h3>Announcements</h3>
+        </div>
         <div id="info-announcements-container">
-{#            <h3>Announcements</h3>#}
+            {#            <h3>Announcements</h3>#}
             <div id="info-announcements" class="section-container">
                 {% if feedposts %}
                     {% for post in feedposts %}
@@ -648,8 +690,42 @@
                 <p class="board-member-term">2016-2017</p>
             </div>
         </div>
+        <button id="announcement" type="button" class="btn btn-info btn-lg"
+                data-toggle="modal" data-target="#myModal">
+            Make Announcement
+        </button>
     </div>
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
 
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <form method="post" action="{% url 'feed:announce' %}">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">New Announcement</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{ announcement_form.non_field_errors }}
+                            <div class="fieldWrapper" style="text-align: center">
+                                {{ announcement_form.text.errors }}
+                                <label style="text-align:left" for="{{ announcement_form.text.id_for_label }}">Text:</label><br />
+                                {{ announcement_form.text }}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </div>
 

@@ -16,15 +16,3 @@ function colorPost(elem_id) {
         'filter': "progid:DXImageTransform.Microsoft.gradient(startColorstr='#9eecff', endColorstr='#bdd7ff', GradientType=1"
     });
 }
-//
-//
-//$(function () {
-//    alert('coloring');
-//    $.each(post_ids, function (index, id) {
-//        //$(id).css({
-//        //
-//        //$(id).addClass('blue-gradient');
-//    });
-//
-//
-//});

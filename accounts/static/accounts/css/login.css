@@ -1,28 +1,22 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Candal);
 
 h1 {
     font-size: 60px;
     color: #FFFFFF;
-    font-family: "Roboto", sans-serif;
+    font-family: "Candal";
     margin-left: auto;
 }
 
-
-.content .container {
-    background-color: #ffffff;
-    padding: 32px;
-    margin-top: 5%;
-}
-
-.content a {
-    float:right;
-}
-
 .login-page {
-    width: 360px;
+    position: relative;
+    width: 400px;
+    height: 600px;
     padding: 8% 0 0;
-    margin: auto;
     text-align: center;
+    float: right;
+    margin-top: -2%;
+    margin-right: 17%;
 }
 
 .form {
@@ -135,7 +129,7 @@ h1 {
     /*-moz-osx-font-smoothing: grayscale;*/
 /*}*/
 body {
-    background-image: url("../img/login6.png");
+    background-image: url("../img/login12.png");
     background-size: cover;
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;

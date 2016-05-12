@@ -26,7 +26,7 @@ def make_announcement(request):
 		announcement.user = request.user
 		announcement.save()
 		if announcement.id is not None:
-			activity = Activity(type='ANNOUNCEMENT', user=request.user, assoc_obj_id=announcement.id)
+			activity = Activity(activity_type='ANNOUNCEMENT', user=request.user, assoc_obj_id=announcement.id)
 			activity.save()
 
 		return HttpResponseRedirect('/neighborhood/home/')

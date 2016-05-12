@@ -24,15 +24,13 @@
 <body>
 
 <div class="login-page">
-    <h1>Neighbors</h1>
+    <h1>Nei<span style="color:#0a68f5">g</span>hbors</h1>
     <div class="form">
         <form class="register-form" action="{% url 'accounts:register_user' %}" method="post">
             {% csrf_token %}
             <input type="text" name="username" placeholder="name"/>
             <input type="password" name="password" placeholder="password"/>
             <input type="text" name="email" placeholder="email address"/>
-            <input type="text" id="neighborhood_search" name="neighborhood_text" placeholder="neighborhood"/>
-            <input type="text" id="perm_code" name="perm_code_text" placeholder="permission code"/>
             <button>create</button>
             <p class="message">Already registered? <a href="#">Sign In</a></p>
         </form>
@@ -53,7 +51,9 @@
 </div>
 
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="{% static 'accounts/js/profile.js' %}"></script>
 {#<script>#}
 {#    $(function () {#}
 {#        alert("Searching for Neighborhoods");#}

@@ -38,7 +38,6 @@ function newMarker(name, callback) {
     console.log('New Marker called.');
     if (name.length > 45) {
         title = name.substring(0, 45);
-        title.append("...");
     }
     $.ajax({
         url: "/markers/new-marker/",
@@ -81,9 +80,10 @@ function getAllMarkers() {
 
 
                 var popup_str =
-                    '<div class="popup-container"><strong>' + marker.title + '</strong><p>' + marker.description +
-                    '<br/><info>' + marker.type_of_marker +
-                    '</info><br/><small>' + marker.create_date + '</small></div>';
+                    '<div class="popup-container"><h4>' + marker.title + '</h4>'+
+                    '<span class="underline-fade"></span><p>' + marker.description +
+                    '</p><br/><p class="mark-type-popup">' + marker.type_of_marker +
+                    '</p><small>' + marker.create_date + '</small></div>';
 
                 // create a new L.marker for each retrieved model instance
                 var mark = L.marker([marker.lat, marker.lon])
@@ -116,15 +116,11 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
         position: 'topleft'
     },
     zoomControl: false
-}).setView([34.220912, -119.055079], 17);
+}).setView([34.220912, -119.055079], 16);
 
 // move zoom control location to top right corner
 new L.Control.Zoom({position: 'topright'}).addTo(map);
 //map.legendControl.addLegend(document.getElementById('legend').innerHTML);
-
-// create profile map
-//var map2 = L.mapbox.map('map2', 'mapbox.streets').setView([34.220912, -119.055079], 16);
-//var map3 = L.mapbox.map('map3', 'mapbox.streets').setView([34.220912, -119.055079], 16);
 
 // Create holders for new marker info
 var name = "Sample Marker Name";
@@ -132,7 +128,6 @@ var lat, lon;
 var pin;
 var type_of_marker = "DEFAULT";
 var pin_latlng;
-
 
 getAllMarkers();
 toggleMarkerInfo();

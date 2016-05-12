@@ -64,7 +64,7 @@ def new_poll(request):
 				feedpost.save()
 
 				# create activity for user profile
-				activity = Activity(type='POLL-CREATE', user=request.user, assoc_obj_id=poll.id)
+				activity = Activity(activity_type='POLL-CREATE', user=request.user, assoc_obj_id=poll.id)
 				activity.save()
 				return HttpResponseRedirect('/neighborhood/home')
 		else:
@@ -165,7 +165,7 @@ def poll_vote(request):
 						user=request.user,
 						poll=poll)
 		if created:
-			activity = Activity(type='POLL-VOTE', user=request.user, assoc_obj_id=vote.id)
+			activity = Activity(activity_type='POLL-VOTE', user=request.user, assoc_obj_id=vote.id)
 			activity.save()
 			return HttpResponse(json.dumps({'vote_id': vote.id}), content_type='application/json')
 	return HttpResponse(json.dumps({'vote_id': -1}), content_type='application/json')

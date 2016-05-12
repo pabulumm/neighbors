@@ -39,6 +39,7 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'django.contrib.gis',
 	'debug_toolbar',
+	'crispy_forms',
 	'markers',
 	'messaging',
 	'neighborhood',
@@ -97,6 +98,8 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
+
+CRISPY_TEMPLATE_PACK = 'uni_form'
 
 LANGUAGE_CODE = 'en-us'
 

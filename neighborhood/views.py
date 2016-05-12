@@ -205,7 +205,7 @@ def new_event(request):
 			event.save()
 			if event.id is not None:
 
-				activity = Activity(type='EVENT-CREATE', user=request.user, assoc_obj_id=event.id)
+				activity = Activity(activity_type='EVENT-CREATE', user=request.user, assoc_obj_id=event.id)
 				activity.save()
 				return HttpResponseRedirect('/neighborhood/home')
 		else:

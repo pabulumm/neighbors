@@ -97,28 +97,26 @@ function submitPost() {
 
 function createMarkerFeedPost(marker_type, post_id, post_text,
                               marker_id, marker_lat, marker_lon) {
-    console.log('createMarkerFeedPost: Received parameters: '+ marker_type+post_id+marker_id+marker_lat+marker_lon);
+    //console.log('createMarkerFeedPost: Received parameters: '+ marker_type+post_id+marker_id+marker_lat+marker_lon);
     var post_statement;
-    //if (post_text.length < 1 ) {
-    //    post_statement = getMarkerPostStatement(marker_type);
-    //}
-    //else {
-    //    post_statement = post_text;
-    //}
-    //
-    console.log(post_text);
-    post_statement = post_text;
+    if (post_text.length < 1 ) {
+        post_statement = getMarkerPostStatement(marker_type);
+    }
+    else {
+        post_statement = post_text;
+    }
     var full_post_id = "#feed-post" + post_id;
     //changeElemBorderColor(full_post_id, getPostColor(marker_type));
     var src = getIconType(marker_type, true);
     var icon_img = $("<img>", {class: 'feed-post-icon', src: src});
     $(full_post_id + " .feed-item-body").append(icon_img);
-    console.log('appending post statment: ' + post_statement);
-    $(full_post_id + " .feed-item-body").append('<p>' + post_statement + '</p>');
-    console.log('Appended statement to: '+full_post_id + " .feed-item-body");
+    //console.log('appending post statment: ' + post_statement);
+    $(full_post_id + " .feed-item-body").append('<p class="feed-post-text">' + post_statement + '</p>');
+    //console.log('Appended statement to: '+full_post_id + " .feed-item-body");
     $(full_post_id).on('click', function () {
-        viewPost(post_id);
+        //viewPost(post_id);
         // center map on clicked post designated marker
+        console.log("Centering map to: " + marker_lat+", " + marker_lon);
         centerMarker([marker_lat, marker_lon]);
         // open popup descriptor
         openPop(marker_id);
