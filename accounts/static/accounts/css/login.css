@@ -22,6 +22,7 @@ h1 {
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
+    text-align: center;
 }
 
 .form {
@@ -122,12 +123,20 @@ h1 {
 }
 
 
+
+/*body {*/
+    /*background: #2377f6; !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(right, #2377f6, #5495f8);*/
+    /*background: -moz-linear-gradient(right, #2377f6, #5495f8);*/
+    /*background: -o-linear-gradient(right, #2377f6, #5495f8);*/
+    /*background: linear-gradient(to left, #2377f6, #5495f8);*/
+    /*font-family: "Roboto", sans-serif;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*-moz-osx-font-smoothing: grayscale;*/
+/*}*/
 body {
-    background: #2377f6; /* fallback for old browsers */
-    background: -webkit-linear-gradient(right, #2377f6, #5495f8);
-    background: -moz-linear-gradient(right, #2377f6, #5495f8);
-    background: -o-linear-gradient(right, #2377f6, #5495f8);
-    background: linear-gradient(to left, #2377f6, #5495f8);
+    background-image: url("../img/login6.png");
+    background-size: cover;
     font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

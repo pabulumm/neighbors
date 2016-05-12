@@ -167,8 +167,8 @@
     margin-top: 100px;
     padding-top: 50px;
     margin-bottom: 1px;
-    font-size: 12px;
-    margin-left: 20px;
+    font-size: 16px;
+    margin-left: 40px;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     opacity: 0.8;
@@ -196,31 +196,25 @@
     padding-top: 10px;
     height:100%;
     width: 80%;
+    font-size: 20px;
     padding-bottom: 10px;
     border: none;
     background: #ffffff;
-    color: rgba(158, 158, 158, 1);
+    opacity: 0.6;
+    color: rgba(50, 50, 50, 1);
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
-}
-.menu-option span { display: block; width: 100%; height: 25px; }
-.menu-option-text {
-
-}
-
-.highlight-menu-option {
-    background: #0a68f5;
-    color: #ffffff;
 }
 
 
 #list-menu .divider {
-    margin-left: 5%;
+    margin-top:0;
+    margin-left:5%;
     margin-bottom: 10px;
     display: block;
     height: 2px;
     width: 90%;
-    background: #404040;
+    opacity: 0.9;
 }
 
 #feed-post-container {

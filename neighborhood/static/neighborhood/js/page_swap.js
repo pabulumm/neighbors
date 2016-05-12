@@ -112,10 +112,14 @@ $(document).ready(function () {
         $(this).tab('show');
     });
 
-    $('.menu-option').hover(function() {
-        $(this).stop().animate({backgroundColor:'#4E1402'}, 300);
+    $('.menu-option button').hover(function() {
+        $(this).stop().animate({
+            'opacity': 1,
+            'font-size':"25px"}, 300);
         }, function () {
-        $(this).stop().animate({backgroundColor:'#943D20'}, 100);
+        $(this).stop().animate({
+            'opacity': 0.6,
+            "font-size":'20px'}, 100);
     });
 
     $('#status-button').click(function () {

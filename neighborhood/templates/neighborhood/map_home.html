@@ -27,10 +27,7 @@
     <script type="text/javascript" src="{% static 'neighborhood/js/feed.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/csrf.js' %}"></script>
     <script type="text/javascript" src="{% static 'neighborhood/js/colors.js' %}"></script>
-    <script type="text/javascript">
-        google.load("jqueryui", "1.5.2");
-    </script>
-</head>
+ </head>
 <body>
 
 <div id="top-strip">
@@ -73,7 +70,7 @@
         <div style="height:80px"></div>
 
         <small class="menu-section-title">My Neighborhood</small>
-        <span class="divider"></span>
+        <span class="underline-fade divider"></span>
         <div class="menu-option">
             <button id="home-select"
                 style="border-bottom: 1px solid #707070;">
@@ -94,9 +91,11 @@
         </div>
 
         <small class="menu-section-title">My House</small>
-        <span class="divider"></span>
+        <span class="underline-fade divider"></span>
         <div class="menu-option">
-        <button id="account-select"><span class="menu-option-text">Profile</span>
+        <button id="account-select"
+                style="border-bottom: 1px solid #707070;">
+            <span class="menu-option-text">Profile</span>
             </button></div>
 
         <div class="menu-option">
@@ -474,6 +473,7 @@
     <div id="event-calendar" class="main">
         <div id="calendar-head">
             <p id="event-section-title" class="section-title">Calendar</p>
+            <div style="width:350px;height:50px;float:right;"></div>
 
             {#            <button id="calendar-month-prev" class="btn btn-default">#}
             {#                <span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span>#}
@@ -482,7 +482,9 @@
             {#                <span id="right-arrow" class="glyphicon glyphicon-chevron-right"></span>#}
             {#            </button>#}
         </div>
-        <div id="calendar-body"></div>
+        <div id="calendar-body">
+            <div id="calendar-container"></div>
+        </div>
 
 
 {#---------------------------------EVENT MODAL ----------------------------------#}
@@ -521,6 +523,8 @@
     <div id="event-detail-sidebar" class="sidebar">
         <div id="event-box">
             <div id="n-event-detail">
+                <p id="event-detail-title">Upcoming Event</p>
+                <span class="underline-fade"></span>
                 <h1 id="event-title">Event Title</h1>
                 <strong>Starts:    </strong><small id="starttime" class="event-time"></small><br/>
                 <strong>Ends:      </strong><small id="endtime" class="event-time"></small><br/>
@@ -542,14 +546,14 @@
 
 
 
-
+    <div class="neighborhood-background"></div>
 
     {#==============================================================================#}
     {#------------------------------- NEIGHBORHOOD INFO ----------------------------#}
     {#==============================================================================#}
 
-    <div id="info-main" class="main">
-        <h1 id="neighborhood-title">Our {{ neighborhood.division_title }}</h1>
+    <div id="info-main" style="background-color: transparent" class="main">
+        <h1 id="neighborhood-title" class="section-title">Our {{ neighborhood.division_title }}</h1>
 
             <div id="neighborhood-desc">
                 <div class="text-container">
@@ -585,6 +589,7 @@
                 <h3>Announcements</h3>
             </div>
         <div id="info-announcements-container">
+{#            <h3>Announcements</h3>#}
             <div id="info-announcements" class="section-container">
                 {% if feedposts %}
                     {% for post in feedposts %}
@@ -609,7 +614,7 @@
     </div>
 
 
-    <div id="info-sidebar" class="sidebar">
+    <div id="info-sidebar" style="background-color: transparent" class="sidebar">
         <div id="board-members">
             <h2>Board of Directors</h2>
             <div class="row board-member">

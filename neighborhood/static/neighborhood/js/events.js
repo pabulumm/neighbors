@@ -39,17 +39,26 @@ $.ajax({
             + '<h1 id="month-label">' + data.month + ' ~ ' + data.year + '</h1><button id="calendar-month-prev" class="btn btn-default">'
             + '<span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span></button>');
         // creating the header labels for the days of the week
-        $('#calendar-body').append(
-            '<div class="day-label">Monday</div>' +
-            '<div class="day-label">Tuesday</div>' +
-            '<div class="day-label">Wednesday</div>' +
-            '<div class="day-label">Thursday</div>' +
-            '<div class="day-label">Friday</div>' +
-            '<div class="day-label">Saturday</div>' +
+        $('#calendar-container').append(
+            '<div class="day-label" style="border-right: 1px solid #404040">Monday</div>' +
+            '<div class="day-label" style="border-right: 1px solid #404040">Tuesday</div>' +
+            '<div class="day-label" style="border-right: 1px solid #404040">Wednesday</div>' +
+            '<div class="day-label" style="border-right: 1px solid #404040">Thursday</div>' +
+            '<div class="day-label" style="border-right: 1px solid #404040">Friday</div>' +
+            '<div class="day-label" style="border-right: 1px solid #404040">Saturday</div>' +
             '<div class="day-label">Sunday</div>');
         $.each(days, function (index, value) {
-            $('#calendar-body').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
-                + value + '</p></div>');
+            if (value > 0) {
+                $('#calendar-container').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter">'
+                    + value + '</p></div>');
+            }
+            else {
+                $('#calendar-container').append('<div id="' + value + '" class="day"><p id="' + value + '" class="day-counter"></p></div>');
+            }
+            if ((index > 5) && (index+1) % 7 == 0) {
+                console.log(index);
+                //$('#'+value).css('border-right', "none");
+            }
             $.each(event_teasers, function (index, event) {
                 if (event.day == value) {
                     $('#' + value).append('<p id="' + value + '" class="event-link">' + event.title + '</p><br />');
