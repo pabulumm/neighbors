@@ -38,7 +38,6 @@ INSTALLED_APPS = (
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'django.contrib.gis',
-	'debug_toolbar',
 	'markers',
 	'messaging',
 	'neighborhood',
@@ -51,7 +50,6 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
 	'django.contrib.sessions.middleware.SessionMiddleware',
-	'debug_panel.middleware.DebugPanelMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
