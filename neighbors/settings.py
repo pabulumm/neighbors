@@ -39,7 +39,6 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'django.contrib.gis',
 	'debug_toolbar',
-	'crispy_forms',
 	'markers',
 	'messaging',
 	'neighborhood',
