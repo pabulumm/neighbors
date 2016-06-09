@@ -1,6 +1,27 @@
 [
   {
     "model": "auth.user",
+    "pk":3,
+    "fields": {
+      "first_name": "Austin",
+      "last_name": "Checkers",
+      "username": "acheckers",
+      "password": "password",
+      "email": "acheckers@neighbors.com"
+    }
+  },
+  {
+    "model": "accounts.userprofile",
+    "fields": {
+      "user": 3,
+      "house": 2,
+      "member_status": "neighbor",
+      "bio": "I'm just a John Doe lookin' for his lennon lemons.",
+      "neighborhood_id": 1
+    }
+  },
+  {
+    "model": "auth.user",
     "pk":4,
     "fields": {
       "first_name": "John",

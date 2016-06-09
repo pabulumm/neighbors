@@ -1,6 +1,17 @@
 [
   {
     "model": "neighborhood.house",
+    "pk": 2,
+    "fields": {
+      "address": "640 Mountain Ln",
+      "neighborhood": 1,
+      "permission_code": "ASDJKFIDS",
+      "lat": "34.221879",
+      "lon": "-119.055522"
+    }
+  },
+  {
+    "model": "neighborhood.house",
     "pk": 3,
     "fields": {
       "address": "530 Lantana St",
