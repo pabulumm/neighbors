@@ -1,0 +1,166 @@
+/********************* Colour reference chart****************
+************************* comment ********* colour ********
+
+COLOR SCHEME 1 ------ CURRENT
+white                       w               #F9FBFF
+green                       g               #54E5B0
+dark grayish green          dgg             #8DBCC4
+light blue                  lb              #35C2FF
+deep blue                   b               #2C90F9
+
+COLOR SCHEME 2
+white                       w               #E6FFFF
+blue green                  bg              #98E8CC
+light green                 lg              #98FFCO
+blue                        lb              #2697FF
+deep blue                   b               #2575DE
+
+COLOR SCHEME 3
+white                       w               #F4F4F4
+green                       g               #1BC142
+orange                      o               #DD9454
+light blue                  lb              #41B4F2
+deep blue                   b               #2671F2
+
+COLOR SCHEME 4
+white                       w               #F4F4F4
+green                       g               #1BC142
+blue green                  bg              #35E0Ad
+light blue                  lb              #41B4F2
+deep blue                   b               #2671F2
+
+EXTRA COLORS
+
+brown           #633E32
+beige           #FFE2AA
+avacado green   #87AD93
+greenish gray   #ABC8CO
+navy blue       #1D5099
+very lightgreen #DAF7DC
+
+*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.white {
+    background: #FFFFFF
+}
+
+.white-text {
+    color: #FFFFFF
+}
+
+.off-white {
+    background: #F2F2F2
+}
+
+.off-white-text {
+    color: #F2F2F2
+}
+
+.green {
+    background: #54E5B0
+}
+
+.green-text {
+    color: #54E5B0
+}
+
+.gray {
+    background: #8DBCC4
+}
+
+.gray-text {
+    color: #8DBCC4
+}
+
+.light-blue {
+    background: #35C2FF
+}
+
+.light-blue-text {
+    color: #35C2FF
+}
+
+.blue {
+    background: #2C90F9
+}
+
+.blue-text {
+    color: #2C90F9
+}
+
+.orange {
+    background: #DD9454
+}
+
+.orange-text {
+    color: #DD9454
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: rgba(32, 124, 229, 1);
+    background: -moz-linear-gradient(left, rgba(32, 124, 229, 1) 0%, rgba(73, 155, 234, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(32, 124, 229, 1)), color-stop(100%, rgba(73, 155, 234, 1)));
+    background: -webkit-linear-gradient(left, rgba(32, 124, 229, 1) 0%, rgba(73, 155, 234, 1) 100%);
+    background: -o-linear-gradient(left, rgba(32, 124, 229, 1) 0%, rgba(73, 155, 234, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(32, 124, 229, 1) 0%, rgba(73, 155, 234, 1) 100%);
+    background: linear-gradient(to right, rgba(32, 124, 229, 1) 0%, rgba(73, 155, 234, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#207ce5', endColorstr='#499bea', GradientType=1);
+}
+
+.icons a {
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    width: auto;
+    background: #35C2FF;
+    float: right;
+    margin-top: 15px;
+    margin-right: 15px;
+}
+
+#report {
+    background: #c94e50;
+}
+
+.content {
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    width: 100%;
+    background-image: url('../images/transparent%20neighborhood.png');
+    background-size: cover;
+    overflow:hidden;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+
+.btn-circle.btn-lg {
+    width: 55px;
+    height: 55px;
+    padding: 12px 12px;
+    font-size: 30px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+

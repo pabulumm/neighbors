@@ -56,7 +56,6 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'neighbors.urls'
@@ -85,8 +84,8 @@ WSGI_APPLICATION = 'neighbors.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.contrib.gis.db.backends.postgis',  # Add 'postgresql_psycopg2',
-		'NAME': 'neighborsdb',
-		'USER': 'django',
+		'NAME': 'neighbors',
+		'USER': 'neighborsdbadmin',
 		'PASSWORD': 'neighbors',
 		'HOST': 'localhost',
 		'PORT': '',
@@ -96,6 +95,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
+POSTGIS_VERSION = (2,1,5)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -111,14 +111,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATICFILES_DIRS = [
-	os.path.join(BASE_DIR, "/static/"),
+	os.path.join(BASE_DIR, "static"),
 ]
 
-STATIC_ROOT = '/opt/neighbors/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'neighbors/static/')
 
 STATIC_URL = '/static/'
-
-MEDIA_URL = '/media/'
 
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = 'neighborhood.views.neighborhood_home'

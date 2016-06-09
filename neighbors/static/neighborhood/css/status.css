@@ -1,0 +1,49 @@
+/*********************************************************************
+-----------------  STATUS.HTML SPECIFIC ------------------------------
+**********************************************************************/
+
+
+#piechart {
+    padding: 20px 20px 20px 20px;
+    width: 700px;
+    height: 500px;
+}
+
+#linechart {
+    padding: 20px 20px 20px 20px;
+    width: 700px;
+    height: 500px;
+}
+
+#calendar {
+    float:left;
+    margin-left:100px;
+    margin-top:50px;
+    margin-bottom:50px;
+    -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    -moz-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    background:#FFFFFF;
+}
+
+#budget {
+    margin-left:100px;
+    margin-top:50px;
+    margin-bottom:50px;
+    padding: 20px 20px 20px 20px;
+    -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    -moz-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    background:#FFFFFF;
+    float:left;
+}
+
+#polls {
+    float:left;
+    padding: 20px 20px 20px 20px;
+    -webkit-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    -moz-box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    box-shadow: 0 1px 2px 2px rgba(0,0,0,0.42);
+    background:#FFFFFF;
+
+}
