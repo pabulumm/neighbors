@@ -16,8 +16,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-14 18:00:00",
-      "end": "2016-05-14 22:00:00",
+      "start": "2016-06-14 18:00:00",
+      "end": "2016-06-14 22:00:00",
       "created": "2016-04-12 06:00:00",
       "location": "Community Center",
       "type": "COMMUNITY",
@@ -30,8 +30,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-07 13:00:00",
-      "end": "2016-05-07 18:00:00",
+      "start": "2016-06-07 13:00:00",
+      "end": "2016-06-07 18:00:00",
       "created": "2016-03-12 12:00:00",
       "location": "Community Center",
       "type": "COMMUNITY",
@@ -44,8 +44,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-21 08:00:00",
-      "end": "2016-05-21 12:00:00",
+      "start": "2016-06-21 08:00:00",
+      "end": "2016-06-21 12:00:00",
       "created": "2016-02-12 12:00:00",
       "location": "Community Center",
       "type": "COMMUNITY",
@@ -58,8 +58,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-04 19:00:00",
-      "end": "2016-05-04 21:00:00",
+      "start": "2016-06-04 19:00:00",
+      "end": "2016-06-04 21:00:00",
       "created": "2016-04-13 12:00:00",
       "location": "Community Center",
       "type": "OFFICIAL",
@@ -72,8 +72,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-11 19:00:00",
-      "end": "2016-05-11 21:00:00",
+      "start": "2016-06-11 19:00:00",
+      "end": "2016-06-11 21:00:00",
       "created": "2016-04-13 12:00:00",
       "location": "Community Center",
       "type": "OFFICIAL",
@@ -86,8 +86,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-18 19:00:00",
-      "end": "2016-05-18 21:00:00",
+      "start": "2016-06-18 19:00:00",
+      "end": "2016-06-18 21:00:00",
       "created": "2016-04-13 12:00:00",
       "location": "Community Center",
       "type": "OFFICIAL",
@@ -100,8 +100,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-25 19:00:00",
-      "end": "2016-05-25 21:00:00",
+      "start": "2016-06-25 19:00:00",
+      "end": "2016-06-25 21:00:00",
       "created": "2016-04-13 12:00:00",
       "location": "Community Center",
       "type": "OFFICIAL",
@@ -114,8 +114,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-08 08:00:00",
-      "end": "2016-05-08 12:00:00",
+      "start": "2016-06-08 08:00:00",
+      "end": "2016-06-08 12:00:00",
       "created": "2016-04-13 12:00:00",
       "location": "Community Center",
       "type": "COMMUNITY",
@@ -128,8 +128,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-01 18:00:00",
-      "end": "2016-05-01 22:00:00",
+      "start": "2016-06-01 18:00:00",
+      "end": "2016-06-01 22:00:00",
       "created": "2016-04-12 06:00:00",
       "location": "Community Center",
       "type": "COMMUNITY",
@@ -142,8 +142,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-08 18:00:00",
-      "end": "2016-05-08 22:00:00",
+      "start": "2016-06-08 18:00:00",
+      "end": "2016-06-08 22:00:00",
       "created": "2016-04-12 06:00:00",
       "location": "Community Center",
       "type": "COMMUNITY",
@@ -156,8 +156,8 @@
   {
     "model": "neighborhood.event",
     "fields": {
-      "start": "2016-05-28 18:00:00",
-      "end": "2016-05-28 22:00:00",
+      "start": "2016-06-28 18:00:00",
+      "end": "2016-06-28 22:00:00",
       "created": "2016-04-12 06:00:00",
       "location": "Community Center",
       "type": "COMMUNITY",
