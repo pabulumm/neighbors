@@ -413,7 +413,7 @@
 
 #calendar-month-next {
     position: relative;
-    margin-right: 5%;
+    margin-right: 10%;
     float: right;
 }
 
@@ -977,5 +977,11 @@
     -moz-box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
     box-shadow: 2px 2px 9px 3px rgba(158, 158, 158, 1);
     background: #FFFFFF;
+}
 
+#neighborhood-display-title {
+    margin-top:60px;
+    font-size: 40px;
+    font-family: "Roboto", sans-serif;
+    margin-left:100px;
 }

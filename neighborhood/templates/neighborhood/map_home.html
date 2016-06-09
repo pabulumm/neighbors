@@ -34,6 +34,7 @@
               class='glyphicon glyphicon-list'></span>
     </a>
     <h1 class="white-text">Neighbors</h1>
+    <h2 id="neighborhood-display-title">{{ neighborhood.division_title }}</h2>
     <div class="icons">
         {#        <a id="account-button" class='btn btn-default btn-circle btn-lg' href="#">#}
         {#            <span class='glyphicon glyphicon-user'></span>#}
@@ -446,7 +447,6 @@
     <div id="event-calendar" class="main">
         <div id="calendar-head">
             <p id="event-section-title" class="section-title">Calendar</p>
-            <div style="width:350px;height:50px;float:right;"></div>
 
             {#            <button id="calendar-month-prev" class="btn btn-default">#}
             {#                <span id="left-arrow" class="glyphicon glyphicon-chevron-left"></span>#}
@@ -591,7 +591,7 @@
     {#==============================================================================#}
 
     <div id="info-main" style="background-color: transparent" class="main">
-        <h1 id="neighborhood-title" class="section-title">Our {{ neighborhood.division_title }}</h1>
+        <h1 id="neighborhood-title" class="section-title">Our Neighborhood</h1>
 
         <div id="neighborhood-desc">
             <div class="text-container">
