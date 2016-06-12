@@ -22,16 +22,18 @@
 </head>
 
 <body>
-
+<div id="accountBlockModal" style="display:none;">
+    <p>Sorry! Account creation is currently prohibited. .  <a href="#" rel="modal:close">Close</a> or press ESC</p>
+</div>
 <div class="login-page">
     <h1>Nei<span style="color:#0a68f5">g</span>hbors</h1>
     <div class="form">
-        <form class="register-form" action="{% url 'accounts:register_user' %}" method="post">
+        <form class="register-form" action="#" method="post">
             {% csrf_token %}
             <input type="text" name="username" placeholder="name"/>
             <input type="password" name="password" placeholder="password"/>
             <input type="text" name="email" placeholder="email address"/>
-            <button>create</button>
+            <button data-toggle="accountBlockModla">create</button>
             <p class="message">Already registered? <a href="#">Sign In</a></p>
         </form>
         <!--- FUTURE NEIGHBORHOOD LOCATOR>
