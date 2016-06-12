@@ -3,7 +3,7 @@
 <head>
     {% load staticfiles %}
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Tucker Stone">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Neighbors - Sign in</title>
 
@@ -12,23 +12,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-    <meta charset="UTF-8">
-
-
     <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
-
 </head>
-
 <body>
-
 <div class="login-page">
 
     <h1>Nei<span style="color:#0a68f5">g</span>hbors</h1>
     <div class="form">
-        <div id="accountBlockModal" style="display:none;">
-            <p>Sorry! Account creation is currently Disabled. <a href="#" rel="modal:close">Close</a></p>
-        </div>
+
 {#        <form class="register-form" action="#" method="post">#}
 {#            {% csrf_token %}#}
 {#            <input type="text" name="username" placeholder="name"/>#}
@@ -48,13 +39,10 @@
             <input type="text" name="username_text" placeholder="username"/>
             <input type="password" name="password_text" placeholder="password"/>
             <button>login</button>
-            <p class="message">Not registered? <a href="#accountBlockModal" rel="modal:open">Create an account</a></p>
+            <p class="message">Not registered? <a id="create-acct-btn">Create an account</a></p>
         </form>
     </div>
 </div>
-
-
-
-
+<script>$('#create-acct-btn').click(alert("Account creations is currently disabled"));</script>
 </body>
 </html>
