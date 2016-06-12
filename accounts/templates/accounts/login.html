@@ -19,27 +19,12 @@
 
     <h1>Nei<span style="color:#0a68f5">g</span>hbors</h1>
     <div class="form">
-
-{#        <form class="register-form" action="#" method="post">#}
-{#            {% csrf_token %}#}
-{#            <input type="text" name="username" placeholder="name"/>#}
-{#            <input type="password" name="password" placeholder="password"/>#}
-{#            <input type="text" name="email" placeholder="email address"/>#}
-{#            <button>create</button>#}
-{#            <p class="message">Already registered? <a href="#">Sign In</a></p>#}
-{#        </form>#}
-        <!--- FUTURE NEIGHBORHOOD LOCATOR>
-        <div id="locate-form" class="ui-widget">
-            <input type="text" id="neighborhood_search" name="neighborhood_text" placeholder="neighborhood"/>
-            <input type="text" id="perm_code" name="perm_code_text" placeholder="permission code"/>
-            <button>Find Neighborhood</button>
-        </div> -->
         <form class="login-form" action="{% url 'accounts:user_login' %}" method="post">
             {% csrf_token %}
             <input type="text" name="username_text" placeholder="username"/>
             <input type="password" name="password_text" placeholder="password"/>
             <button>login</button>
-            <p class="message">Not registered? <a id="create-acct-btn">Create an account</a></p>
+            <p class="message">Not registered? <a id="create-acct-btn" href="#">Create an account</a></p>
         </form>
     </div>
 </div>

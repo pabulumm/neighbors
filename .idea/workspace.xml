@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5bff289d-a442-44ca-b9ba-f7d20d3fb670" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/templates/accounts/login.html" afterPath="$PROJECT_DIR$/accounts/templates/accounts/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" afterPath="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" />
     </list>
     <ignored path="neighbors.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +46,8 @@
       <file leaf-file-name="login.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
+            <state relative-caret-position="378">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1414,8 +1412,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
+        <state relative-caret-position="378">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
