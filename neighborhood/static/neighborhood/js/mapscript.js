@@ -112,11 +112,11 @@ function getAllMarkers() {
 
 L.mapbox.accessToken = 'pk.eyJ1IjoicGFidWx1bSIsImEiOiIwZTUwZmViZjQxZjYyMDJmNTQ0ZDY3YTdkNDE5ZjM0ZCJ9.MZqD7DtnmRFQfWLMGRMP_w';
 var map = L.mapbox.map('map', 'mapbox.streets', {
-    legendControl: {
-        position: 'topleft'
-    },
-    zoomControl: false
-}).setView([37.627556, -118.982436], 16);
+        legendControl: {
+            position: 'topleft'
+        },
+        zoomControl: false
+    }).setView([37.627556, -118.982436], 16);
 
 // move zoom control location to top right corner
 new L.Control.Zoom({position: 'topright'}).addTo(map);
@@ -214,20 +214,6 @@ $('#map').on('click', '#default', function () {
     pin.setIcon(getIconType(type_of_marker));
     pin.closePopup();
 });
-//$('#map').on('click', '.save', function () {
-//    newMarker(name, pin_latlng.lat, pin_latlng.lng, type_of_marker);
-//});
-
-function centerUserMap(lat, lng) {
-    //console.log('centering user map to ' + lat + ', ' + lng);
-    //new L.marker([lat, lng]).setIcon(getIconType("HOUSE", false)).addTo(map2);
-    //map2.setView([lat, lng], 17);
-}
-
-function centerEventMap(latlng) {
-    //new L.marker(latlng).setIcon(getIconType("EVENT", false)).addTo(map3);
-    //map3.setView(latlng, 17);
-}
 
 function openPop(marker_id) {
     $.each(marker_list, function (markerIndex, marker) {
