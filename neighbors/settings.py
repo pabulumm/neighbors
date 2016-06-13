@@ -22,9 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+rthh(c=v$m45b+8cv6c)jjmd7%zqwlqfkpvcxb^+3q!3l$&(0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+	'.neighborslive.com'
+]
 # Application definition
 
 AUTH_PROFILE_MODEL = 'accounts.UserProfile'
