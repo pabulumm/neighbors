@@ -111,7 +111,7 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#207ce5', endColorstr='#499bea', GradientType=1);
 }
 
-.icons button {
+.icons a {
     outline: none;
     border: none;
     color: #FFFFFF;
