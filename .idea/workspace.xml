@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5bff289d-a442-44ca-b9ba-f7d20d3fb670" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js" afterPath="$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" afterPath="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" />
     </list>
     <ignored path="neighbors.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,11 +36,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="map_home.css" pinned="false" current-in-tab="false">
+          <file leaf-file-name="map_home.css" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="702">
-                  <caret line="39" column="1" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+                <state relative-caret-position="17424">
+                  <caret line="968" column="10" selection-start-line="968" selection-start-column="10" selection-end-line="968" selection-end-column="10" />
                   <folding />
                 </state>
               </provider>
@@ -69,14 +69,16 @@
           <file leaf-file-name="map_home.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-9339">
-                  <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
-                  <folding />
+                <state relative-caret-position="540">
+                  <caret line="36" column="61" selection-start-line="36" selection-start-column="61" selection-end-line="36" selection-end-column="61" />
+                  <folding>
+                    <element signature="n#style#0;n#h1#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="mapscript.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="mapscript.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="570">
@@ -174,15 +176,15 @@
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/style.css" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/temp.js" />
         <option value="$PROJECT_DIR$/neighborhood/templates/neighborhood/status.html" />
-        <option value="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" />
         <option value="$PROJECT_DIR$/neighbors/settings.py" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css" />
         <option value="$PROJECT_DIR$/accounts/views.py" />
         <option value="$PROJECT_DIR$/accounts/urls.py" />
         <option value="$PROJECT_DIR$/accounts/templates/accounts/login.html" />
         <option value="$PROJECT_DIR$/accounts/static/accounts/css/login.css" />
-        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" />
         <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js" />
+        <option value="$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css" />
+        <option value="$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html" />
       </list>
     </option>
   </component>
@@ -1287,14 +1289,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="21" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/feed.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
@@ -1303,26 +1297,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="215" column="3" selection-start-line="215" selection-start-column="3" selection-end-line="215" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="21" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/templates/neighborhood/map_home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9339">
-          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
-          <folding />
+        <state relative-caret-position="540">
+          <caret line="36" column="61" selection-start-line="36" selection-start-column="61" selection-end-line="36" selection-end-column="61" />
+          <folding>
+            <element signature="n#style#0;n#h1#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/css/map_home.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="39" column="1" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/neighborhood/static/neighborhood/js/mapscript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="215" column="3" selection-start-line="215" selection-start-column="3" selection-end-line="215" selection-end-column="3" />
+        <state relative-caret-position="17424">
+          <caret line="968" column="10" selection-start-line="968" selection-start-column="10" selection-end-line="968" selection-end-column="10" />
           <folding />
         </state>
       </provider>
