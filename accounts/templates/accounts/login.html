@@ -15,8 +15,13 @@
     <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
 </head>
 <body>
-<div class="login-page">
 
+<div class="demo-info">
+    <p>What's Neighbors?</p>
+    <button>Take a tour</button>
+</div>
+
+<div class="login-page">
     <h1>Nei<span style="color:#0a68f5">g</span>hbors</h1>
     <div class="form">
         <form class="login-form" action="{% url 'accounts:user_login' %}" method="post">

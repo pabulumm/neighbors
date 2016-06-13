@@ -134,10 +134,11 @@
 
 #toggle-user-post {
     border: none;
-    background: #ffffff;
+    background: transparent;
     position: relative;
     margin-top: 10px;
     margin-bottom: 10px;
+    color: #4c87cf;
 }
 
 #toggle-user-post span {
