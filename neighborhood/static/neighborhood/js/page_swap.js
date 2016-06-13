@@ -239,6 +239,10 @@ $(document).ready(function () {
         $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
     });
 
+    $('#help-button').click(function() {
+        alert('Help info section under construction! I appreciate your patience!');
+    })
+
 });
 
 
