@@ -116,7 +116,7 @@ var map = L.mapbox.map('map', 'mapbox.streets', {
         position: 'topleft'
     },
     zoomControl: false
-}).setView([37.67.6670, -119.418438], 16);
+}).setView([37.676670, -119.418438], 16);
 
 // move zoom control location to top right corner
 new L.Control.Zoom({position: 'topright'}).addTo(map);
