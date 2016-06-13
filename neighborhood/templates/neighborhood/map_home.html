@@ -190,10 +190,17 @@
 
     <div id="poll-main" class="main">
         <h1 id="poll-title" class="section-title">{{ neighborhood.division_title }} Decisions</h1>
+    {% if user.member_status == 'demo' %}
+        <button id="new-poll-button" class="add-content-button" type="button"
+                data-toggle="modal" data-target="#demoModal">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    {% else %}
         <button id="new-poll-button" class="add-content-button" type="button"
                 data-toggle="modal" data-target="#newPollModal">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
+    {% endif %}
         <div id="poll-container" class="section-container">
             {% if polls %}
                 {% for poll in polls %}
@@ -483,10 +490,18 @@
                 <div id="event-list-header"><h1 id="event-list-header-text"></h1></div>
                 <div id="event-list-items"></div>
             </div>
+
+        {% if user.member_status == 'demo' %}
+            <button id="new-event-button" class="add-content-button" type="button"
+                    data-toggle="modal" data-target="#demoModal">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        {% else %}
             <button id="new-event-button" class="add-content-button" type="button"
                     data-toggle="modal" data-target="#newEventModal">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
+        {% endif %}
         </div>
     </div>
 
@@ -592,10 +607,17 @@
                 <p class="board-member-term">2016-2017</p>
             </div>
         </div>
+    {% if user.member_status == 'demo' %}
+        <button id="announcement" type="button" class="btn btn-info btn-lg"
+                data-toggle="modal" data-target="#demoModal">
+            Make Announcement
+        </button>
+    {% else %}
         <button id="announcement" type="button" class="btn btn-info btn-lg"
                 data-toggle="modal" data-target="#myModal">
             Make Announcement
         </button>
+    {% endif %}
     </div>
     <div class="container">
         <!-- Modal -->
@@ -636,6 +658,5 @@
 <script type="text/javascript" src="{% static 'neighborhood/js/page_swap.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/events.js' %}"></script>
-<script>setDemoSettings();</script>
 </body>
 </html>

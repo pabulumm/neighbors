@@ -38,6 +38,7 @@ function submitPost(member_status) {
     console.log('Called submit post!');
     if (member_status == 'demo') {
         alert("You are logged in with a demo account. You may not post to the database.");
+        $('#post-text').val('');
     }
     else {
         if (can_place_marker && confirm(confirm_post_phrase)) {
