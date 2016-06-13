@@ -66,13 +66,12 @@
 }
 
 .side-window-title {
-    font-family: "Holtwood One SC";
+    font-family: "Roboto", sans-serif;
     letter-spacing: 0.1em;
     padding-top: 16px;
     padding-left: 16px;
     text-align: left;
     font-size: 40px;
-    font-weight: 300;
     color: #ffb15e;
 }
 
