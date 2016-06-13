@@ -2,7 +2,7 @@ var nav_visible;
 
 function setDemoSettings(memberStatus) {
     if (memberStatus == 'demo') {
-        $('#lnkDialog').click();
+        $('#welcomeDemo').click();
     }
 }
 
