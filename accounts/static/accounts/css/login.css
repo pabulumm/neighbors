@@ -133,10 +133,14 @@ body {
 }
 
 .demo-info p {
-    font-size:20px;
+    font-size:40px;
     color:#fff;
     display:inline-block;
     padding-right:40px;
+}
+
+.demo-info form {
+    display:inline-block;
 }
 
 .demo-info button {

@@ -19,6 +19,7 @@
 <div class="demo-info">
     <p>What's Neighbors?</p>
     <form action="{% url 'accounts:demo_login' %}" method="POST">
+        {% csrf_token %}
         <button>Take a tour</button>
     </form>
 </div>
