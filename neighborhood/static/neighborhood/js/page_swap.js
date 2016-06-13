@@ -1,5 +1,13 @@
 var nav_visible;
 
+function setDemoSettings(memberStatus) {
+    if (memberStatus == 'demo') {
+        $('.add-content-button').each(function() {
+            $(this).css('data-target', '#demoModal');
+        })
+    }
+}
+
 function showMap() {
     swapMainWindow($('#map-container'));
     if (!($('#feed').hasClass('side-visible'))) {
@@ -231,9 +239,6 @@ $(document).ready(function () {
         $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
     });
 
-    $('#content').on('modal.shown', function() {
-        alert("modal in view");
-    });
 });
 
 
