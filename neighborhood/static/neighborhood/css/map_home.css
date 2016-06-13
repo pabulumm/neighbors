@@ -982,9 +982,9 @@
 
 #neighborhood-display-title {
     float:left;
-    margin-top:60px;
+    margin-top:45px;
     margin-left:100px;
-    font-size: 40px;
-    font-family: "Candall", sans-serif;
+    font-size: 45px;
+    font-family: "Candall";
     color:#54E5B0;
 }
