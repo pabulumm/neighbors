@@ -45,7 +45,6 @@
 
 
 <div id="content" class="content">
-
     <div class="container" style="text-align:center">
         <!-- Modal -->
         <div class="modal fade" id="demoModal" role="dialog">
@@ -53,11 +52,31 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div style="background-color:#c94e50" class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Oops!</h4>
                     </div>
                     <div class="modal-body">
                         <p>You are logged in with a demo account. You may not post to the database.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a id='lnkDialog' href="#welcomeModal" data-rel="dialog" data-transition="pop" style='display:none;'></a>
+    <div class="container" style="text-align:center">
+        <!-- Modal -->
+        <div class="modal fade" id="welcomeModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Welcome!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>You are currently logged in with a demo account. You may not create new content but feel free explore and have a look around!</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
@@ -659,5 +678,6 @@
 <script type="text/javascript" src="{% static 'neighborhood/js/page_swap.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/polls.js' %}"></script>
 <script type="text/javascript" src="{% static 'neighborhood/js/events.js' %}"></script>
+<script>setDemoSettings('{{ user.member_status }}');</script>
 </body>
 </html>

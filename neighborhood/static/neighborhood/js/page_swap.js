@@ -2,9 +2,7 @@ var nav_visible;
 
 function setDemoSettings(memberStatus) {
     if (memberStatus == 'demo') {
-        $('.add-content-button').each(function() {
-            $(this).css('data-target', '#demoModal');
-        })
+        $('#lnkDialog').click();
     }
 }
 
@@ -241,7 +239,7 @@ $(document).ready(function () {
 
     $('#help-button').click(function() {
         alert('Help info section under construction! I appreciate your patience!');
-    })
+    });
 
 });
 
