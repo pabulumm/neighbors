@@ -230,6 +230,10 @@ $(document).ready(function () {
     $("#datetimepicker2").on("dp.change", function (e) {
         $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
     });
+
+    $('#content').on('modal.shown', function() {
+        alert("modal in view");
+    });
 });
 
 

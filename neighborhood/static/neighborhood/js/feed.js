@@ -34,63 +34,69 @@ function addPostBanner(post_id, post_type) {
 }
 
 var confirm_post_phrase = "Are you sure the marker you've chosen is of the correct type and in the correct place?";
-function submitPost() {
+function submitPost(member_status) {
     console.log('Called submit post!');
-    if (can_place_marker && confirm(confirm_post_phrase)) {
-        var text = $('#post-text').val();
-        newMarker(text, function(result) {
-            if (result > 0) {
-                console.log('newMarker returned marker id: ' + result);
-                $.ajax({
-                    url: '/feed/submit-post/',
-                    type: 'POST',
-                    data: {
-                        'text': text,
-                        'has_marker': 1,
-                        'marker_id': result,
-                        'post_type': 'POST-MARKER',
-                        csrfmiddlewaretoken: csrftoken
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        if (!data.success) {
-                            console.log('AJAX: New Feed creation successful');
-                            $('#post-text').val('');
-                            location.reload();
-                        }
-                    },
-                    error: function (xhr, errmsg, err) {
-                        alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
-                    }
-                });
-            }
-        });
-
+    if (member_status == 'demo') {
+        alert("You are logged in with a demo account. You may not post to the database.");
     }
     else {
-        $.ajax({
-            url: '/feed/submit-post/',
-            type: 'POST',
-            data: {
-                'text': $('#post-text').val(),
-                'has_marker': 0,
-                'marker_id': -1,
-                'post_type': 'POST-NORMAL',
-                csrfmiddlewaretoken: csrftoken
-            },
-            dataType: 'json',
-            success: function (data) {
-                if (!data.success) {
-                    console.log('AJAX: New Feed creation successful');
-                    $('#post-text').val('');
-                    location.reload();
+        if (can_place_marker && confirm(confirm_post_phrase)) {
+            var text = $('#post-text').val();
+            newMarker(text, function(result) {
+                if (result > 0) {
+                    console.log('newMarker returned marker id: ' + result);
+                    $.ajax({
+                        url: '/feed/submit-post/',
+                        type: 'POST',
+                        data: {
+                            'text': text,
+                            'has_marker': 1,
+                            'marker_id': result,
+                            'post_type': 'POST-MARKER',
+                            csrfmiddlewaretoken: csrftoken
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (!data.success) {
+                                console.log('AJAX: New Feed creation successful');
+                                $('#post-text').val('');
+                                location.reload();
+                            }
+                        },
+                        error: function (xhr, errmsg, err) {
+                            alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
+                        }
+                    });
                 }
-            },
-            error: function (xhr, errmsg, err) {
-                alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
-            }
-        });
+            });
+
+        }
+        else {
+            $.ajax({
+                url: '/feed/submit-post/',
+                type: 'POST',
+                data: {
+                    'text': $('#post-text').val(),
+                    'has_marker': 0,
+                    'marker_id': -1,
+                    'post_type': 'POST-NORMAL',
+                    csrfmiddlewaretoken: csrftoken
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (!data.success) {
+                        console.log('AJAX: New feed post creation successful');
+                        $('#post-text').val('');
+                        location.reload();
+                    }
+                },
+                error: function (xhr, errmsg, err) {
+                    alert('ERROR: ' + xhr.status + ": " + xhr.responseText);
+                }
+            });
+        }
     }
+
 
 }
 
