@@ -18,7 +18,9 @@
 
 <div class="demo-info">
     <p>What's Neighbors?</p>
-    <button>Take a tour</button>
+    <form action="{% url 'accounts:demo_login' %}" method="POST">
+        <button>Take a tour</button>
+    </form>
 </div>
 
 <div class="login-page">

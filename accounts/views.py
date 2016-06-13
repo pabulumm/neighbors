@@ -42,6 +42,20 @@ def user_login(request):
 		return render(request, 'accounts/login.html', {})
 
 
+def demo_login(request):
+	user = authenticate(username="demouser", password="demopass")
+	if user:
+		# Is the account active? It could have been disabled.
+		if user.is_active:
+			# If the account is valid and active, we can log the user in.
+			# We'll send the user back to the homepage.
+			login(request, user)
+			return HttpResponseRedirect('/neighborhood/home/')
+		else:
+			# An inactive account was used - no logging in!
+			return HttpResponse("Your Neighbors account is disabled.")
+
+
 @login_required
 def user_logout(request):
 	"""
