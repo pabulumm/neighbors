@@ -77,7 +77,9 @@
                         <h4 class="modal-title">Welcome!</h4>
                     </div>
                     <div class="modal-body">
-                        <p>You are currently logged in with a demo account. You may not create new content but feel free explore and have a look around!
+                        <p>You are currently logged in with a demo account. You may not
+                            create new content but feel free to explore and have a look
+                            around! Use the navigation menu on the left to get around.
                         <br /><br/>Please note all information is made up for the purpose of demonstration. This application is still
                         in development so please forgive any bugs you uncover!</p>
                     </div>
@@ -100,7 +102,7 @@
                 <span class="menu-option-text">Home</span></button>
         </div>
         <div class="menu-option">
-            <button id="info-select"
+            <button id="info-select" title="Neighborhood information"
                     style="border-bottom: 1px solid #707070;">
                 <span class="menu-option-text">Information</span></button>
         </div>
@@ -155,7 +157,7 @@
             </form>
         </div>
         <div id="feed-header-toggle">
-            <button id="toggle-user-post">
+            <button id="toggle-user-post" style="background:transparent;" title="Toggle post window">
                 <span id="toggle-post-icon" class="glyphicon glyphicon-menu-up"></span>
             </button>
         </div>
@@ -216,7 +218,7 @@
         <h1 id="poll-title" class="section-title">{{ neighborhood.division_title }} Decisions</h1>
     {% if user.member_status == 'demo' %}
         <button id="new-poll-button" class="add-content-button" type="button"
-                data-toggle="modal" data-target="#demoModal">
+                data-toggle="modal" data-target="#demoModal" title="Create new decision">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     {% else %}
@@ -500,10 +502,10 @@
                 <strong id="desc">Description:</strong><br/>
                 <p id="event-description"></p>
                 <div id="submit-attend">
-                    <button id="attend-button" class="btn btn-default">Attend
+                    <button id="attend-button" title="Attending event" class="btn btn-default">Attend
                         <span style="color:#54E5B0;border-radius:5px;"
                               class="glyphicon glyphicon-remove"></span></button>
-                    <button id="decline-button" class="btn btn-default">Decline
+                    <button id="decline-button" title="Not attending event" class="btn btn-default">Decline
                         <span style="color:#c94e50;border-radius:5px;"
                               class="glyphicon glyphicon-ok"></span></button>
                 </div>
@@ -516,12 +518,12 @@
 
         {% if user.member_status == 'demo' %}
             <button id="new-event-button" class="add-content-button" type="button"
-                    data-toggle="modal" data-target="#demoModal">
+                    data-toggle="modal" data-target="#demoModal" title="Create new event">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         {% else %}
             <button id="new-event-button" class="add-content-button" type="button"
-                    data-toggle="modal" data-target="#newEventModal">
+                    data-toggle="modal" data-target="#newEventModal" title="Create new event">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         {% endif %}
@@ -632,12 +634,12 @@
         </div>
     {% if user.member_status == 'demo' %}
         <button id="announcement" type="button" class="btn btn-info btn-lg"
-                data-toggle="modal" data-target="#demoModal">
+                data-toggle="modal" data-target="#demoModal" title="Create new announcement">
             Make Announcement
         </button>
     {% else %}
         <button id="announcement" type="button" class="btn btn-info btn-lg"
-                data-toggle="modal" data-target="#myModal">
+                data-toggle="modal" data-target="#myModal" title="Create new announcement">
             Make Announcement
         </button>
     {% endif %}
